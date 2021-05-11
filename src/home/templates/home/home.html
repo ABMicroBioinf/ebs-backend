@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style type="text/css">
+.container {
+    padding: 2rem 0rem;
+    max-width: 90%;
+  }
+  
+  h4 {
+    margin: 2rem 0rem 1rem;
+  }
+  
+  .table-image {
+    td, th {
+      vertical-align: middle;
+    }
+  
+</style>
+
+<div class="container">
+    <h3 class="text-center">Landing page when user login</h3>
+    
+    <div class="d-flex flex-row-reverse p-4" >
+        <div class="dropdown">
+            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Select actions for the selected dataset
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Predefned Action 1</a>
+              <a class="dropdown-item" href="#">Predefined Action 2</a>
+              <a class="dropdown-item" href="#">Predefined Action 3</a>
+            </div>
+          </div>
+    </div>
+    
+    
+        
+    <div class="table table-responsive">
+    <table class="table w-100 small table-bordered table-striped">
+        <thead>
+            <tr>
+                <th class="active">
+                    <div class="checkbox select-all">
+                          <input type="checkbox" class="check" id="all"> 
+                      </div>
+                </th>
+                <th scope="col">Run</th>
+                <th scope="col">Experiment</th>
+                <th scope="col">Sample</th>
+                <th scope="col">Study</th>
+                <th scope="col">Taxid</th>
+                <th scope="col">scientific_name</th>
+                <th scope="col">Count</th>
+                <th scope="col">Bases</th>
+                <th scope="col">AvgLen</th>
+                <th scope="col">Instrument</th>
+                <th scope="col">LibraryLayout</th>
+                <th scope="col">LibrarySelection</th>
+                <th scope="col">LibrarySource</th>
+                <th scope="col">Date created</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+    {% for study in studies %}
+   
+    {% for sample in study.samples.all %}
+   
+    {% for experiment in sample.experiments.all %}
+    
+    {% for run in experiment.runs.all %}
+    
+   
+        
+                <tr>
+                    <td>
+                        <div class="checkbox rows">
+                        <input type="checkbox" class="check" value="{{experiment.title}}" id="{{experiment.id}}">
+                    </div>
+                </td>
+        <!-- td><a href="{% url 'study:detail' study.slug %}">{{study.title}}</a> </td -->
+         <td>{{run.name}}</td>
+       
+    
+    <td>{{experiment.title}}</td>
+    <td>{{sample.title}}</td>
+    <td>{{study.title}}</td>
+    <td>{{sample.taxon_id}}</td>
+    <td>{{sample.scientific_name}}</td>
+    <td>N/A</td>
+    <td>N/A</td>
+    <td>N/A</td>
+    <td>{{experiment.platform}}</td>
+    <td>{{experiment.library_layout}}</td>
+    <td>{{experiment.library_selection}}</td>
+    <td>{{experiment.library_source}}</td>
+    <td>{{study.date_created|date:'Y-m-d H:i'}}</td> 
+    <td>processing</td>
+    <td style='white-space: nowrap'>
+        <button type="button" class="btn btn-primary btn-sm"><i class="far fa-eye"></i></button>
+        <!-- button type="button" class="btn btn-success btn-sm"><i class="fas fa-edit"></i></button -->
+      <button type="button" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></button>
+      </td>
+</tr>
+    {% endfor %}
+    {% endfor %}
+    {% endfor %}
+    {% endfor %}
+</tbody>
+</table>
+
+</div>
+</div>
+{% endblock content %}

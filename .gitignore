@@ -1,0 +1,12 @@
+.vscode
+src/*/__pycache__
+src/*/migrations
+sradb*
+src/.vscode
+src/.venv
+src/media_cdn/*
+src/media_cdn/*/*
+src/tmp
+src/*/__pycache__/*
+src/*/migratons/*
+test_data
