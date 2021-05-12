@@ -2,48 +2,72 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-from .serializers import LoginSerializer, RegistrationSerializer
+from account.models import Account
+
+from .serializers import AccountSerializer
 
 
-@api_view(['GET', 'POST'])
+@api_view(['POST', ])
+def register_view(request):
+    if request.method == 'POST':
+        serializer = AccountSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', ])
+def detail_view(request, email):
+    try:
+        account = Account.objects.get(email=email)
+    except Account.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializers = AccountSerializer(account)
+        return Response(serializers.data)
+
+
+@api_view(['PUT', ])
+def update_view(request, email):
+    try:
+        account = Account.objects.get(email=email)
+    except Account.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'PUT':
+        serializers = AccountSerializer(account, data=request.data)
+        data = {}
+        if serializers.is_valid():
+            serializers.save()
+            data["response"] = "update successful"
+            return Response(data=data)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['DELETE', ])
+def delete_view(request, email):
+    try:
+        account = Account.objects.get(email=email)
+    except Account.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'DELETE':
+        operation = account.delete()
+        data = {}
+        if operation:
+            data["response"] = "delete successful"
+        else:
+            data["response"] = "delete failed"
+        return Response(data=data)
+
+
+@api_view(['POST', ])
 def login_view(request):
-    # GET Mapping; It will be removed
-    if request.method == 'GET':
-        return Response("login view")
-    # POST Mapping
-    elif request.method == 'POST':
-        serializer = LoginSerializer(data=request.data)
-        data = {}
-        if serializer.is_valid():
-            account = serializer.save()
-        else:
-            data = serializer.errors
-        return Response(data)
+    pass
 
-@api_view(['GET',])
+
+@api_view(['GET', ])
 def logout_view(request):
-    if request.method == 'GET':
-        return Response("You will be redirected to main page")
-
-@api_view(['GET', 'POST',])
-def registration_view(request):
-    # GET Mapping; It will be removed
-    if request.method == 'GET':
-        return Response("Display registration form here")
-    # POST Mapping
-    elif request.method == 'POST':
-        serializer = RegistrationSerializer(data=request.data)
-        data = {}
-        if serializer.is_valid():
-            account = serializer.save()
-            data['response'] = "Successfully registered a new user."
-            data['email'] = account.email
-            data['username'] = account.username
-        else:
-            data = serializer.errors
-        return Response(data)
-
-@api_view(['GET',])
-def overview_view(request):
-    if request.method == 'GET':
-        return Response("An account information will be returned")
+    pass
