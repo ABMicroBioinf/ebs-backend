@@ -18,38 +18,36 @@ def register_view(request):
 
 
 @api_view(['GET', ])
-def detail_view(request, email):
+def detail_view(request, slug):
     try:
-        account = Account.objects.get(email=email)
+        account = Account.objects.get(username=slug)
     except Account.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializers = AccountSerializer(account)
-        return Response(serializers.data)
+        serializer = AccountSerializer(account)
+        return Response(serializer.data)
 
 
 @api_view(['PUT', ])
-def update_view(request, email):
+def update_view(request, slug):
     try:
-        account = Account.objects.get(email=email)
+        account = Account.objects.get(username=slug)
     except Account.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'PUT':
-        serializers = AccountSerializer(account, data=request.data)
-        data = {}
-        if serializers.is_valid():
-            serializers.save()
-            data["response"] = "update successful"
-            return Response(data=data)
-        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer = AccountSerializer(account, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['DELETE', ])
-def delete_view(request, email):
+def delete_view(request, slug):
     try:
-        account = Account.objects.get(email=email)
+        account = Account.objects.get(username=slug)
     except Account.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
