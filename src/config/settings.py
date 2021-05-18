@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'account',
     'study',
     'seq',
+    'sandbox',
+    #
+    'djongo',
 
     # rest framework
     'rest_framework',
@@ -86,19 +89,15 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'learning',
-        'CLIENT': {
-            'host': 'ideapot.net',
-            'port': 27017,
-            'username': 'ebsdbmaster',
-            'password': 'ebsdbPASS',
-            'authSource': 'admin',
-        }
+        'NAME': 'ebsdb',
+        'ENFORCE_SCHEMA': False,
     }
 }
+
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
