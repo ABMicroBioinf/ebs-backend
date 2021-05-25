@@ -4,7 +4,7 @@ from django.conf import settings
 from django.db.models.signals import pre_save
 from django.utils.text import slugify
 # Create your models here.
-from django import forms
+#from django import forms
 
 class Study(models.Model):
     _id = models.ObjectIdField()
@@ -12,31 +12,31 @@ class Study(models.Model):
     description = models.TextField(max_length=5000, null=True, blank=True)
     slug = models.SlugField(blank=True, unique=True)
     owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL, related_name="owners", on_delete=models.CASCADE)
+        settings.AUTH_USER_MODEL, related_name="owners", on_delete=models.CASCADE, null=True)
   
     def __str__(self):
         return self.title
 
-def pre_save_project_receiver(sender, instance, *args, **kwargs):
+def pre_save_study_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = slugify(instance.owner.username + "-" + instance.title)
 
-pre_save.connect(pre_save_project_receiver, sender=Study)
+pre_save.connect(pre_save_study_receiver, sender=Study)
 
-class Seqstat(models.Model):
-    name = models.CharField(max_length=100)
-    minLen = models.IntegerField()
-    maxLen = models.IntegerField()
-    avgLen = models.IntegerField()
-    count = models.IntegerField()
-    bases = models.IntegerField()
-    avgQual = models.FloatField()
-    gc = models.FloatField()
+
+
+class Sample(models.Model):
+    title = models.CharField(max_length=100, unique=True)
+    taxon_id = models.CharField(max_length=100, null=True, blank=True)
+    scientific_name = models.CharField(max_length=100, null=True, blank=True)
+    common_name = models.CharField(max_length=100, null=True, blank=True)
+    description = models.CharField(max_length=100, null=True, blank=True)
 
     class Meta:
         abstract = True
+
     def __str__(self):
-        return self.name
+        return self.title
 
 """
 Library Layout: whether to expect SINGLE or PAIRED end reads.
@@ -147,14 +147,14 @@ class Experiment(models.Model):
         ('SINGLE', 'SINGLE')
     )
 
-    title = models.CharField(max_length=100)
-    library_name = models.CharField(max_length=100)
-    platform = models.CharField(max_length=100, choices=platforms) #illumina MiSeq
+    title = models.CharField(max_length=100, unique=True)
+    library_name = models.CharField(max_length=100, null=True, blank=True)
+    platform = models.CharField(max_length=100, choices=platforms, null=True, blank=True) #illumina MiSeq
     instrument_model = models.CharField(max_length=100, null=True, blank=True)
-    library_strategy = models.CharField(max_length=100, choices=strategies) # WGS
-    library_source = models.CharField(max_length=100, choices=sources) # metagenomics
-    library_layout = models.CharField(max_length=100, choices=layouts) # paired
-    library_selection = models.CharField(max_length=100, choices=selections) #random
+    library_strategy = models.CharField(max_length=100, choices=strategies, null=True, blank=True) # WGS
+    library_source = models.CharField(max_length=100, choices=sources, null=True, blank=True) # metagenomics
+    library_layout = models.CharField(max_length=100, choices=layouts, null=True, blank=True) # paired
+    library_selection = models.CharField(max_length=100, choices=selections, null=True, blank=True) #random
     description = models.CharField(max_length=100, null=True, blank=True)
     
     class Meta:
@@ -162,35 +162,69 @@ class Experiment(models.Model):
     def __str__(self):
         return self.title
 
-class Run(models.Model):
-    name = models.CharField(max_length=100)
-    date_run = models.DateTimeField(blank=True, null=True)
-    seqstats = models.ArrayField(
-        model_container= Seqstat
+
+
+class SeqFile(models.Model):
+    _id = models.ObjectIdField()
+    seqfile = models.FileField(upload_to='seqfiles/', null=True, blank=True)
+    class Meta:
+        abstract = True
+
+class SeqStat(models.Model):
+    count = models.IntegerField()
+    bp = models.IntegerField()
+    ns = models.IntegerField()
+    gaps = models.IntegerField()
+    minLen = models.IntegerField()
+    avgLen = models.FloatField()
+    maxLen = models.IntegerField()
+    n50 = models.IntegerField()
+    class Meta:
+        abstract = True
+
+class RawSeq(models.Model):
+    name = models.CharField(max_length=100, null=True)
+    sequence_file = models.FileField(upload_to='seqfiles/', null=True, blank=True)
+    raw_sequence_stats = models.EmbeddedField(
+        model_container=SeqStat
     )
     class Meta:
         abstract = True
-    def __str__(self):
-        return self.name
 
-
-class Sample(models.Model):
-    title = models.CharField(max_length=100)
-    taxon_id = models.CharField(max_length=100, null=True, blank=True)
-    scientific_name = models.CharField(max_length=100, null=True, blank=True)
-    common_name = models.CharField(max_length=100, null=True, blank=True)
-    description = models.CharField(max_length=100, null=True, blank=True)
-    study = models.ForeignKey(
-        Study, related_name = 'samples', on_delete=models.CASCADE, null=True)
-
-    experiments = models.ArrayField(
-        model_container = Experiment
+class QCSeq(models.Model):
+    name = models.CharField(max_length=100, null=True)
+    tool_name = models.CharField(max_length=100, null=True)
+    sequence_file = models.FileField(upload_to='seqfiles/', null=True, blank=True)
+    description = models.CharField(max_length=100, null=True)
+    quality_controlled_sequence_stats = models.EmbeddedField(
+        model_container=SeqStat
     )
-    """ runs = models.ArrayField(
-        model_container = Run
-    ) """
+    class Meta:
+        abstract = True
+
+class Run(models.Model):
+    _id = models.ObjectIdField()
+    run_name = models.CharField(max_length=100, unique=True)
+    study = models.ForeignKey(
+        Study,on_delete=models.CASCADE)
+    sample = models.EmbeddedField(
+        model_container=Sample
+    )
+    experiment = models.EmbeddedField(
+        model_container=Experiment,
+    )
+    metadata_file = models.FileField(upload_to='metadata/', null=True, blank=True)
+    raw_sequences= models.EmbeddedField(
+        model_container=RawSeq
+    )
+    quality_controlled_sequences = models.EmbeddedField(
+        model_container=QCSeq
+    )
     objects = models.DjongoManager()
     
     def __str__(self):
-        return self.title
+        return self.run_name
+
+
+
 

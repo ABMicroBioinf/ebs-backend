@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'study',
     'seq',
     'sandbox',
+    'isolate',
     #
     'djongo',
 
