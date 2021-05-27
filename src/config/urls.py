@@ -31,7 +31,6 @@ from account.views import (
     must_authenticate_view
 )
 
-
 urlpatterns = [
     # Django Default Settings
     path('admin/', admin.site.urls),
@@ -39,7 +38,8 @@ urlpatterns = [
     # API Settings
     path('api/account/', include('account.api.urls', 'account_api')),
     path('api/study/', include('study.api.urls', 'study_api')),
-
+    path('api/sandbox/', include('sandbox.api.urls', 'sandbox_api')),
+    
     # Traditional Settings
     path('', home_screen_view, name="home"),
     path('account/', account_view, name="account"),
