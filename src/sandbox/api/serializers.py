@@ -8,5 +8,5 @@ class CompanySerializer(ModelSerializer):
         model = Company
         fields = (
             'id', 'name', 'description', 'website', 'street_line_1', 'street_line_2',
-            'city', 'state', 'zipcode'
+            'city', 'state', 'zipcode, avatar'
         )

@@ -11,4 +11,5 @@ src/media_cdn/*/*
 src/tmp
 src/*/__pycache__/*
 src/*/migratons/*
+src/*/*/__pycache__
 test_data

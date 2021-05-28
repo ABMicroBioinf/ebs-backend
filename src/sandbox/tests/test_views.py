@@ -25,7 +25,7 @@ class CompanyViewSetTestCase(TestCase):
 
         response = self.client.get(self.list_url)
         
-        """ print("**********************************")
+        print("**********************************")
         print(type(response.data))
         print(response.__dict__)
         
@@ -33,7 +33,7 @@ class CompanyViewSetTestCase(TestCase):
             print("data......................")
             print(dict)
             print(dict['id'])
- """
+ 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         
         
@@ -124,12 +124,13 @@ class CompanyViewSetTestCase(TestCase):
 
         with self.subTest('GET list page'):
             response = self.client.get(self.list_url)
-            self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+            #self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+            self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
         with self.subTest('GET detail page'):
             response = self.client.get(self.get_detail_url(company.id))
-            self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-
+            #self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+            self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         with self.subTest('PUT'):
             data = {
                 'name': 'New name',
@@ -140,7 +141,8 @@ class CompanyViewSetTestCase(TestCase):
                 'zipcode': '12345',
             }
             response = self.client.put(self.get_detail_url(company.id), data=data)
-            self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+            #self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+            self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
             # The company was not updated
             company.refresh_from_db()
             self.assertNotEqual(company.name, data['name'])
@@ -148,7 +150,8 @@ class CompanyViewSetTestCase(TestCase):
         with self.subTest('PATCH'):
             data = {'name': 'New name'}
             response = self.client.patch(self.get_detail_url(company.id), data=data)
-            self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+            #self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+            self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
             # The company was not updated
             company.refresh_from_db()
             self.assertNotEqual(company.name, data['name'])
@@ -163,10 +166,12 @@ class CompanyViewSetTestCase(TestCase):
                 'zipcode': '12345',
             }
             response = self.client.put(self.list_url, data=data)
-            self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+            #self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+            self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
         with self.subTest('DELETE'):
                 response = self.client.delete(self.get_detail_url(company.id))
-                self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+                #self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+                self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
                 # The company was not deleted
                 self.assertTrue(Company.objects.filter(id=company.id).exists())

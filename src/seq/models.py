@@ -7,7 +7,8 @@ from django.utils.text import slugify
 #from django import forms
 
 class Study(models.Model):
-    _id = models.ObjectIdField()
+    id = models.BigAutoField(primary_key=True)
+    #_id = models.ObjectIdField()
     title = models.CharField(max_length=100, null=False, blank=False)
     description = models.TextField(max_length=5000, null=True, blank=True)
     slug = models.SlugField(blank=True, unique=True)
@@ -165,7 +166,7 @@ class Experiment(models.Model):
 
 
 class SeqFile(models.Model):
-    _id = models.ObjectIdField()
+    id = models.BigAutoField(primary_key=True)
     seqfile = models.FileField(upload_to='seqfiles/', null=True, blank=True)
     class Meta:
         abstract = True
@@ -203,7 +204,7 @@ class QCSeq(models.Model):
         abstract = True
 
 class Run(models.Model):
-    _id = models.ObjectIdField()
+    id = models.BigAutoField(primary_key=True)
     run_name = models.CharField(max_length=100, unique=True)
     study = models.ForeignKey(
         Study,on_delete=models.CASCADE)
@@ -213,13 +214,13 @@ class Run(models.Model):
     experiment = models.EmbeddedField(
         model_container=Experiment,
     )
-    metadata_file = models.FileField(upload_to='metadata/', null=True, blank=True)
+    """metadata_file = models.FileField(upload_to='metadata/', null=True, blank=True)
     raw_sequences= models.EmbeddedField(
         model_container=RawSeq
     )
     quality_controlled_sequences = models.EmbeddedField(
         model_container=QCSeq
-    )
+    )"""
     objects = models.DjongoManager()
     
     def __str__(self):

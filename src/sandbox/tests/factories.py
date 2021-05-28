@@ -12,7 +12,6 @@ class CompanyFactory(DjangoModelFactory):
     city = Faker('city')
     state = Faker('state_abbr')
     zipcode = Faker('zipcode')
-
     class Meta:
         model = Company
 

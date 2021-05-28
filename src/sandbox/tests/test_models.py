@@ -8,4 +8,5 @@ class CompanyTestCase(TestCase):
     def test_str(self):
         """Test for string representation."""
         company = CompanyFactory()
+        
         self.assertEqual(str(company), company.name)
