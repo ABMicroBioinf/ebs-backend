@@ -1,5 +1,17 @@
 from djongo import models
 
+import os
+_roles_path = "company"
+ 
+ 
+def var_dir(instance, filename):
+    return os.path.join(_roles_path, instance.id, 'vars', filename)
+ 
+ 
+def task_dir(instance, filename):
+    return os.path.join(_roles_path, instance.id, 'tasks', filename)
+ 
+
 class Company(models.Model):
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=255)
@@ -10,8 +22,10 @@ class Company(models.Model):
     city = models.CharField(max_length=80)
     state = models.CharField(max_length=80)
     zipcode = models.CharField(max_length=10)
-    slug = models.SlugField(blank=True, unique=True)
+   
+    #directory = models.FilePathField(path=_roles_path, match='*.yml', recursive=True, max_length=200)
+    tasks = models.FileField(upload_to=task_dir, blank=False)
+    vars = models.FileField(upload_to=var_dir)
 
-    #avatar = models.FileField(upload_to='sandbox/', verbose_name="Head portrait", null=True)
     def __str__(self):
         return self.name

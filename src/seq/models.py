@@ -163,45 +163,18 @@ class Experiment(models.Model):
     def __str__(self):
         return self.title
 
-
-
-class SeqFile(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    seqfile = models.FileField(upload_to='seqfiles/', null=True, blank=True)
-    class Meta:
-        abstract = True
-
 class SeqStat(models.Model):
-    count = models.IntegerField()
-    bp = models.IntegerField()
-    ns = models.IntegerField()
-    gaps = models.IntegerField()
-    minLen = models.IntegerField()
-    avgLen = models.FloatField()
-    maxLen = models.IntegerField()
-    n50 = models.IntegerField()
+    count = models.IntegerField(null=True, blank=True)
+    bp = models.IntegerField(null=True, blank=True)
+    ns = models.IntegerField(null=True, blank=True)
+    gaps = models.IntegerField(null=True, blank=True)
+    minLen = models.IntegerField(null=True, blank=True)
+    avgLen = models.FloatField(null=True, blank=True)
+    maxLen = models.IntegerField(null=True, blank=True)
+    n50 = models.IntegerField(null=True, blank=True)
     class Meta:
         abstract = True
 
-class RawSeq(models.Model):
-    name = models.CharField(max_length=100, null=True)
-    sequence_file = models.FileField(upload_to='seqfiles/', null=True, blank=True)
-    raw_sequence_stats = models.EmbeddedField(
-        model_container=SeqStat
-    )
-    class Meta:
-        abstract = True
-
-class QCSeq(models.Model):
-    name = models.CharField(max_length=100, null=True)
-    tool_name = models.CharField(max_length=100, null=True)
-    sequence_file = models.FileField(upload_to='seqfiles/', null=True, blank=True)
-    description = models.CharField(max_length=100, null=True)
-    quality_controlled_sequence_stats = models.EmbeddedField(
-        model_container=SeqStat
-    )
-    class Meta:
-        abstract = True
 
 class Run(models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -214,13 +187,13 @@ class Run(models.Model):
     experiment = models.EmbeddedField(
         model_container=Experiment,
     )
-    """metadata_file = models.FileField(upload_to='metadata/', null=True, blank=True)
-    raw_sequences= models.EmbeddedField(
-        model_container=RawSeq
+    raw_sequence_stats = models.EmbeddedField(
+        model_container=SeqStat
     )
-    quality_controlled_sequences = models.EmbeddedField(
-        model_container=QCSeq
-    )"""
+    qc_sequence_stats = models.EmbeddedField(
+        model_container=SeqStat
+    )
+
     objects = models.DjongoManager()
     
     def __str__(self):
@@ -228,4 +201,26 @@ class Run(models.Model):
 
 
 
+import os
 
+def raw_dir(instance, filename):
+    return os.path.join(str(instance.run.study.id), str(instance.run.id), 'seqFiles', 'raw', filename)
+ 
+def qc_dir(instance, filename):
+    return os.path.join(str(instance.run.study.id), str(instance.run.id), 'seqFiles', 'qc', filename)
+ 
+
+class SeqFile(models.Model):
+    id = models.AutoField(primary_key=True)
+    raw_seq_file = models.FileField(upload_to=raw_dir, blank=False)
+    qc_seq_file = models.FileField(upload_to=qc_dir)
+    run = models.ForeignKey(Run, on_delete=models.CASCADE)
+    
+def metadata_dir(instance, filename):
+    return os.path.join(str(instance.run.study.id), str(instance.run.id), 'metadata', filename)
+
+class MetadataFile(models.Model):
+    id = models.AutoField(primary_key=True)
+    metadata_file = models.FileField(upload_to=metadata_dir, blank=False)
+    run = models.ForeignKey(Run, on_delete=models.CASCADE)
+    
