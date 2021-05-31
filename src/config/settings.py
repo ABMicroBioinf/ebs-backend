@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     # my apps
     'home',
     'account',
-    'study',
     'seq',
     'sandbox',
     'isolate',

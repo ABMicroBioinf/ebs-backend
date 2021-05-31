@@ -37,13 +37,12 @@ urlpatterns = [
 
     # API Settings
     path('api/account/', include('account.api.urls', 'account_api')),
-    path('api/study/', include('study.api.urls', 'study_api')),
     path('api/sandbox/', include('sandbox.api.urls', 'sandbox_api')),
+    path('api/seq/', include('seq.api.urls', 'seq_api')),
     
     # Traditional Settings
     path('', home_screen_view, name="home"),
     path('account/', account_view, name="account"),
-    path('study/', include('study.urls', 'study')),
     path('register/', registration_view, name="register"),
     path('logout/', logout_view, name="logout"),
     path('login/', login_view, name="login"),

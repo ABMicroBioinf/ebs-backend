@@ -4,7 +4,7 @@ from rest_framework.mixins import (
 from rest_framework.viewsets import GenericViewSet
 
 from sandbox.models import Company
-from .serializers import CompanySerializer
+from .serializers import *
 
 
 class CompanyViewSet(GenericViewSet,  # generic view functionality
@@ -15,3 +15,4 @@ class CompanyViewSet(GenericViewSet,  # generic view functionality
 
       serializer_class = CompanySerializer
       queryset = Company.objects.all()
+
