@@ -178,23 +178,6 @@ class SeqStat(models.Model):
     class Meta:
         abstract = True
 
-import os
-
-def raw_dir(instance, filename):
-    return os.path.join(str(instance.run.study.id), str(instance.run.id), 'seqFiles', 'raw', filename)
- 
-def qc_dir(instance, filename):
-    return os.path.join(str(instance.run.study.id), str(instance.run.id), 'seqFiles', 'qc', filename)
- 
-
-class MyRawSeqFile(models.Model):
-    id = models.AutoField(primary_key=True)
-    raw_seq_file = models.FileField(upload_to=raw_dir, blank=False)
-    raw_stats = models.EmbeddedField(
-        model_container=SeqStat
-    )
-    
-
 class Run(models.Model):
     id = models.BigAutoField(primary_key=True)
     run_name = models.CharField(max_length=100, unique=True)
@@ -207,16 +190,13 @@ class Run(models.Model):
     experiment = models.EmbeddedField(
         model_container=Experiment
     )
-    """raw_seq = models.ArrayField(
-        model_container=MyRawSeqFile
-    )
     
     raw_stats = models.EmbeddedField(
         model_container=SeqStat
     )
     qc_stats = models.EmbeddedField(
         model_container=SeqStat
-    ) """
+    ) 
     
     objects = models.DjongoManager()
     

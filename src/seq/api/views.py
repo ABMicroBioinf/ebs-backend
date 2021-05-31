@@ -46,3 +46,4 @@ class MetadataFileViewSet(GenericViewSet,  # generic view functionality
 
       serializer_class = MetadataFileSerializer
       queryset = SeqFile.objects.all()
+
