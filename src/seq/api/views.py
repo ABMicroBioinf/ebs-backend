@@ -3,7 +3,7 @@ from rest_framework.mixins import (
 )
 from rest_framework.viewsets import GenericViewSet
 
-from seq.models import SeqFile, Study, Run
+from seq.models import MetadataFile, SeqFile, Study, Run
 from .serializers import StudySerializer, RunSerializer, SeqFileSerializer, MetadataFileSerializer
 
 
@@ -45,5 +45,5 @@ class MetadataFileViewSet(GenericViewSet,  # generic view functionality
                      ListModelMixin):  # handles GETs for many Companies
 
       serializer_class = MetadataFileSerializer
-      queryset = SeqFile.objects.all()
+      queryset = MetadataFile.objects.all()
 

@@ -40,6 +40,6 @@ class MetadataFileSerializer(serializers.ModelSerializer):
     class Meta:
         model = MetadataFile
         fields = (
-            'id', 'metadata_file', 'run_id'
+            'id', 'metadata_file', 'run'
         )
 

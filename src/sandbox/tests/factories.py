@@ -1,4 +1,5 @@
 import factory
+factory.Faker._DEFAULT_LOCALE = 'en_US'
 from factory.django import DjangoModelFactory
 from factory import Faker
 from sandbox.models import Company
