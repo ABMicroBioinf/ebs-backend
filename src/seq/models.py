@@ -9,12 +9,14 @@ from account.models import Account
 
 class Study(models.Model):
     id = models.BigAutoField(primary_key=True)
-    #_id = models.ObjectIdField()
-    title = models.CharField(max_length=100, null=False, blank=False)
+    title = models.CharField(max_length=100, unique=True, null=False, blank=False)
+    data_type = models.CharField(max_length=100, null=False, blank=False)
+    abstract = models.TextField(max_length=5000, null=True, blank=True)
     description = models.TextField(max_length=5000, null=True, blank=True)
+    date_created = models.DateTimeField(
+        verbose_name='date created', auto_now_add=True)
+    last_update = models.DateTimeField(verbose_name='last update', auto_now=True)
     slug = models.SlugField(blank=True, unique=True)
-    #owner = models.ForeignKey(
-        #settings.AUTH_USER_MODEL, related_name="studies", on_delete=models.CASCADE, null=True)
     owner = models.ForeignKey(
         Account, related_name="studies", on_delete=models.CASCADE, null=True)
   
@@ -30,12 +32,10 @@ pre_save.connect(pre_save_study_receiver, sender=Study)
 
 
 class Sample(models.Model):
-    title = models.CharField(max_length=100, unique=True)
-    taxon_id = models.CharField(max_length=100, null=True, blank=True)
-    scientific_name = models.CharField(max_length=100, null=True, blank=True)
-    common_name = models.CharField(max_length=100, null=True, blank=True)
+    sampleName = models.CharField(max_length=100, unique=True)
+    organism = models.CharField(max_length=100, null=True, blank=True)
+    strain = models.CharField(max_length=100, null=True, blank=True)
     description = models.CharField(max_length=100, null=True, blank=True)
-
     class Meta:
         abstract = False
 
@@ -151,14 +151,13 @@ class Experiment(models.Model):
         ('SINGLE', 'SINGLE')
     )
 
-    title = models.CharField(max_length=100, unique=True)
-    library_name = models.CharField(max_length=100, null=True, blank=True)
+    libraryName = models.CharField(max_length=100, unique=True)
     platform = models.CharField(max_length=100, choices=platforms, null=True, blank=True) #illumina MiSeq
-    instrument_model = models.CharField(max_length=100, null=True, blank=True)
+    instrument = models.CharField(max_length=100, null=True, blank=True)
     library_strategy = models.CharField(max_length=100, choices=strategies, null=True, blank=True) # WGS
-    library_source = models.CharField(max_length=100, choices=sources, null=True, blank=True) # metagenomics
-    library_layout = models.CharField(max_length=100, choices=layouts, null=True, blank=True) # paired
-    library_selection = models.CharField(max_length=100, choices=selections, null=True, blank=True) #random
+    librarySource = models.CharField(max_length=100, choices=sources, null=True, blank=True) # metagenomics
+    libraryLayout = models.CharField(max_length=100, choices=layouts, null=True, blank=True) # paired
+    librarySelection = models.CharField(max_length=100, choices=selections, null=True, blank=True) #random
     description = models.CharField(max_length=100, null=True, blank=True)
     
     class Meta:
@@ -167,14 +166,15 @@ class Experiment(models.Model):
         return self.title
 
 class SeqStat(models.Model):
-    count = models.IntegerField(null=True, blank=True)
-    bp = models.IntegerField(null=True, blank=True)
-    ns = models.IntegerField(null=True, blank=True)
-    gaps = models.IntegerField(null=True, blank=True)
+    reads = models.IntegerField(null=True, blank=True)
+    total_bp = models.IntegerField(null=True, blank=True)
     minLen = models.IntegerField(null=True, blank=True)
     avgLen = models.FloatField(null=True, blank=True)
     maxLen = models.IntegerField(null=True, blank=True)
-    n50 = models.IntegerField(null=True, blank=True)
+    avgQual = models.FloatField(null=True, blank=True)
+    errQual = models.FloatField(null=True, blank=True)
+    geecee = models.FloatField(null=True, blank=True)
+    ambiguous = models.FloatField(null=True, blank=True)
     class Meta:
         abstract = True
 
@@ -191,11 +191,13 @@ class Run(models.Model):
         model_container=Experiment
     )
     
-    raw_stats = models.EmbeddedField(
+    stats_raw = models.EmbeddedField(
         model_container=SeqStat
+        
     )
-    qc_stats = models.EmbeddedField(
-        model_container=SeqStat
+    stats_qc = models.EmbeddedField(
+        model_container=SeqStat,
+         null=True
     ) 
     
     objects = models.DjongoManager()

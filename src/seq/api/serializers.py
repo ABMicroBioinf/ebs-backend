@@ -13,7 +13,7 @@ class StudySerializer(serializers.ModelSerializer):
     class Meta:
         model = Study
         fields = (
-            'id', 'title', 'description', 'slug', 'owner'
+            'id', 'title', 'data_type', 'abstract', 'description', 'date_created', 'last_update', 'slug', 'owner'
         )
         read_only_fields = ('owner', 'slug')
 
@@ -24,7 +24,7 @@ class RunSerializer(DjongoModelSerializer):
     class Meta:
         model = Run
         fields = (
-            'id', 'run_name', 'study', 'sample', 'experiment', 'raw_stats', 'qc_stats'
+            'id', 'run_name', 'study', 'sample', 'experiment', 'stats_raw', 'stats_qc'
         )
         
 

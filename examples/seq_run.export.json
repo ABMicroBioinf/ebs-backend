@@ -1,0 +1,3487 @@
+[{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4b2"
+  },
+  "id": 42,
+  "study_id": "11",
+  "experiment": {
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySelection": "RANDOM",
+    "platform": "ILLUMINA",
+    "libraryName": "NT204356T",
+    "libraryLayout": "PAIRED"
+  },
+  "stats_qc": {
+    "minLen": 30,
+    "maxLen": 60,
+    "avgQual": 31.6,
+    "reads": 3871352,
+    "errQual": 24.2,
+    "total_bp": 419301377,
+    "ambiguous": 0,
+    "avgLen": 54,
+    "geecee": 63.4
+  },
+  "stats_raw": {
+    "ambiguous": 0.2,
+    "avgLen": 57,
+    "geecee": 63.7,
+    "maxLen": 60,
+    "avgQual": 30.6,
+    "minLen": 54,
+    "errQual": 19,
+    "total_bp": 478073934,
+    "reads": 4193631
+  },
+  "sample": {
+    "strain": "05_07509",
+    "sampleName": "SAMEA838049",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "run_name": "ERR019568"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4b3"
+  },
+  "experiment": {
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC",
+    "librarySelection": "RANDOM",
+    "platform": "ILLUMINA",
+    "libraryName": "NT20196N",
+    "libraryLayout": "PAIRED"
+  },
+  "study_id": "11",
+  "id": 60,
+  "sample": {
+    "sampleName": "SAMEA837965",
+    "strain": "06_01971",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "run_name": "ERR019861",
+  "stats_qc": {
+    "avgLen": 52,
+    "geecee": 63.4,
+    "ambiguous": 0,
+    "total_bp": 100389710,
+    "errQual": 24,
+    "reads": 960324,
+    "avgQual": 29.5,
+    "maxLen": 60,
+    "minLen": 30
+  },
+  "stats_raw": {
+    "avgLen": 57,
+    "geecee": 63.9,
+    "ambiguous": 0,
+    "total_bp": 132003792,
+    "errQual": 13,
+    "reads": 1157928,
+    "avgQual": 26.9,
+    "maxLen": 60,
+    "minLen": 54
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4b4"
+  },
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA838006",
+    "strain": "08_14354"
+  },
+  "run_name": "ERR019553",
+  "stats_qc": {
+    "geecee": 64.7,
+    "avgLen": 54,
+    "ambiguous": 0,
+    "total_bp": 95863213,
+    "errQual": 28.3,
+    "reads": 875086,
+    "avgQual": 32.8,
+    "maxLen": 60,
+    "minLen": 30
+  },
+  "stats_raw": {
+    "ambiguous": 0.2,
+    "avgLen": 57,
+    "geecee": 64.4,
+    "minLen": 54,
+    "maxLen": 60,
+    "avgQual": 32.5,
+    "reads": 921394,
+    "errQual": 24.2,
+    "total_bp": 105038916
+  },
+  "experiment": {
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC",
+    "librarySelection": "RANDOM",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "libraryName": "NT204352P"
+  },
+  "id": 30,
+  "study_id": "11"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4b5"
+  },
+  "run_name": "ERR017792",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis variant bovis",
+    "sampleName": "SAMEA837980",
+    "strain": "06_01518"
+  },
+  "stats_raw": {
+    "reads": 1666405,
+    "errQual": 21.1,
+    "total_bp": 189970170,
+    "minLen": 54,
+    "maxLen": 60,
+    "avgQual": 31.6,
+    "ambiguous": 0.1,
+    "avgLen": 57,
+    "geecee": 62.7
+  },
+  "stats_qc": {
+    "errQual": 26.9,
+    "total_bp": 167908413,
+    "reads": 1540888,
+    "maxLen": 60,
+    "avgQual": 32.3,
+    "minLen": 30,
+    "ambiguous": 0,
+    "avgLen": 54,
+    "geecee": 62.5
+  },
+  "experiment": {
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySelection": "RANDOM",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "libraryName": "NT20208A"
+  },
+  "study_id": "11",
+  "id": 16
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4b6"
+  },
+  "run_name": "ERR015616",
+  "sample": {
+    "strain": "M08_14556",
+    "sampleName": "SAMEA838034",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "stats_raw": {
+    "avgLen": 54,
+    "geecee": 64.8,
+    "ambiguous": 0.2,
+    "reads": 19038094,
+    "total_bp": 2056114152,
+    "errQual": 23.1,
+    "minLen": 54,
+    "avgQual": 34.2,
+    "maxLen": 54
+  },
+  "stats_qc": {
+    "avgLen": 49,
+    "geecee": 64.7,
+    "ambiguous": 0,
+    "reads": 18262415,
+    "total_bp": 1814885521,
+    "errQual": 27.7,
+    "minLen": 30,
+    "avgQual": 35,
+    "maxLen": 50
+  },
+  "experiment": {
+    "libraryName": "STB0814556 89310",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC"
+  },
+  "id": 83,
+  "study_id": "11"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4b7"
+  },
+  "stats_raw": {
+    "errQual": 19.4,
+    "total_bp": 386609112,
+    "reads": 3391308,
+    "maxLen": 60,
+    "avgQual": 30.7,
+    "minLen": 54,
+    "ambiguous": 0.2,
+    "avgLen": 57,
+    "geecee": 63.5
+  },
+  "stats_qc": {
+    "reads": 3163968,
+    "errQual": 24.3,
+    "total_bp": 342732425,
+    "minLen": 30,
+    "maxLen": 60,
+    "avgQual": 31.7,
+    "ambiguous": 0,
+    "geecee": 63.4,
+    "avgLen": 54
+  },
+  "run_name": "ERR019571",
+  "sample": {
+    "strain": "05_03633",
+    "sampleName": "SAMEA838045",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "id": 45,
+  "study_id": "11",
+  "experiment": {
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySelection": "RANDOM",
+    "libraryLayout": "PAIRED",
+    "platform": "ILLUMINA",
+    "libraryName": "NT204359W"
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4b8"
+  },
+  "run_name": "ERR019854",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis variant africanum",
+    "sampleName": "SAMEA837973",
+    "strain": "05_04169"
+  },
+  "stats_raw": {
+    "avgLen": 57,
+    "geecee": 65,
+    "ambiguous": 0.1,
+    "minLen": 54,
+    "avgQual": 26.5,
+    "maxLen": 60,
+    "reads": 2488791,
+    "total_bp": 283722174,
+    "errQual": 12.6
+  },
+  "stats_qc": {
+    "total_bp": 211374362,
+    "errQual": 23.9,
+    "reads": 2024935,
+    "avgQual": 29.5,
+    "maxLen": 60,
+    "minLen": 30,
+    "avgLen": 52,
+    "geecee": 64.3,
+    "ambiguous": 0
+  },
+  "experiment": {
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC",
+    "libraryName": "NT20196N",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM"
+  },
+  "id": 53,
+  "study_id": "11"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4b9"
+  },
+  "stats_raw": {
+    "avgLen": 56,
+    "geecee": 61.4,
+    "ambiguous": 2.8,
+    "avgQual": 22.7,
+    "maxLen": 60,
+    "minLen": 53,
+    "total_bp": 13684452,
+    "errQual": 9.3,
+    "reads": 120344
+  },
+  "stats_qc": {
+    "maxLen": 60,
+    "avgQual": 29.2,
+    "minLen": 30,
+    "errQual": 23.4,
+    "total_bp": 7686742,
+    "reads": 76242,
+    "ambiguous": 0,
+    "geecee": 62.9,
+    "avgLen": 50
+  },
+  "run_name": "ERR019864",
+  "sample": {
+    "organism": "human gut metagenome",
+    "sampleName": "unidentified",
+    "strain": ""
+  },
+  "study_id": "11",
+  "id": 63,
+  "experiment": {
+    "platform": "ILLUMINA",
+    "libraryName": "SamaraTB-batch1-group2 1",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC"
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4ba"
+  },
+  "id": 13,
+  "study_id": "11",
+  "experiment": {
+    "libraryLayout": "PAIRED",
+    "platform": "ILLUMINA",
+    "libraryName": "NT20196N",
+    "librarySelection": "RANDOM",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  },
+  "stats_qc": {
+    "total_bp": 121669526,
+    "errQual": 26,
+    "reads": 1120560,
+    "avgQual": 32.1,
+    "maxLen": 60,
+    "minLen": 30,
+    "geecee": 63.5,
+    "avgLen": 54,
+    "ambiguous": 0
+  },
+  "stats_raw": {
+    "avgQual": 31.3,
+    "maxLen": 60,
+    "minLen": 54,
+    "total_bp": 136104372,
+    "errQual": 20.4,
+    "reads": 1193898,
+    "geecee": 63.8,
+    "avgLen": 57,
+    "ambiguous": 0.1
+  },
+  "sample": {
+    "strain": "05_06899",
+    "sampleName": "SAMEA837961",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "run_name": "ERR017789"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4bb"
+  },
+  "run_name": "ERR019562",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "strain": "08_14556",
+    "sampleName": "SAMEA838053"
+  },
+  "stats_raw": {
+    "reads": 1098932,
+    "errQual": 24.4,
+    "total_bp": 125278248,
+    "minLen": 54,
+    "maxLen": 60,
+    "avgQual": 32.6,
+    "ambiguous": 0.2,
+    "avgLen": 57,
+    "geecee": 63.3
+  },
+  "stats_qc": {
+    "ambiguous": 0,
+    "avgLen": 54,
+    "geecee": 63.8,
+    "errQual": 28.4,
+    "total_bp": 113034431,
+    "reads": 1031457,
+    "maxLen": 60,
+    "avgQual": 33,
+    "minLen": 30
+  },
+  "experiment": {
+    "libraryLayout": "PAIRED",
+    "platform": "ILLUMINA",
+    "libraryName": "NT204350N",
+    "librarySelection": "RANDOM",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC"
+  },
+  "id": 38,
+  "study_id": "11"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4bc"
+  },
+  "run_name": "ERR019860",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "strain": "08_14329",
+    "sampleName": "SAMEA837963"
+  },
+  "stats_raw": {
+    "ambiguous": 0.1,
+    "geecee": 64.1,
+    "avgLen": 57,
+    "maxLen": 60,
+    "avgQual": 26.3,
+    "minLen": 54,
+    "errQual": 12.2,
+    "total_bp": 160457394,
+    "reads": 1407521
+  },
+  "stats_qc": {
+    "ambiguous": 0,
+    "avgLen": 52,
+    "geecee": 63.6,
+    "maxLen": 60,
+    "avgQual": 29.5,
+    "minLen": 30,
+    "errQual": 23.9,
+    "total_bp": 117019909,
+    "reads": 1119793
+  },
+  "experiment": {
+    "libraryLayout": "PAIRED",
+    "platform": "ILLUMINA",
+    "libraryName": "NT20196N",
+    "librarySelection": "RANDOM",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC"
+  },
+  "study_id": "11",
+  "id": 59
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4bd"
+  },
+  "stats_qc": {
+    "avgLen": 51,
+    "geecee": 64.4,
+    "ambiguous": 0,
+    "total_bp": 87628997,
+    "errQual": 23.9,
+    "reads": 851287,
+    "avgQual": 29.3,
+    "maxLen": 60,
+    "minLen": 30
+  },
+  "stats_raw": {
+    "ambiguous": 0,
+    "avgLen": 57,
+    "geecee": 65.4,
+    "errQual": 12.1,
+    "total_bp": 121289844,
+    "reads": 1063946,
+    "maxLen": 60,
+    "avgQual": 26.1,
+    "minLen": 54
+  },
+  "sample": {
+    "strain": "08_14300",
+    "sampleName": "SAMEA837969",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "run_name": "ERR019867",
+  "id": 66,
+  "study_id": "11",
+  "experiment": {
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySelection": "RANDOM",
+    "libraryLayout": "PAIRED",
+    "platform": "ILLUMINA",
+    "libraryName": "NT20208A"
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4be"
+  },
+  "run_name": "ERR019865",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA837967",
+    "strain": "08_14303"
+  },
+  "stats_raw": {
+    "ambiguous": 0,
+    "geecee": 63.9,
+    "avgLen": 57,
+    "maxLen": 60,
+    "avgQual": 25.5,
+    "minLen": 54,
+    "errQual": 11.3,
+    "total_bp": 83911980,
+    "reads": 736070
+  },
+  "stats_qc": {
+    "maxLen": 60,
+    "avgQual": 29.4,
+    "minLen": 30,
+    "errQual": 24,
+    "total_bp": 57238824,
+    "reads": 554115,
+    "ambiguous": 0,
+    "avgLen": 51,
+    "geecee": 63.4
+  },
+  "experiment": {
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC",
+    "libraryLayout": "PAIRED",
+    "platform": "ILLUMINA",
+    "libraryName": "NT20208A",
+    "librarySelection": "RANDOM"
+  },
+  "id": 64,
+  "study_id": "11"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4bf"
+  },
+  "id": 9,
+  "study_id": "11",
+  "experiment": {
+    "librarySelection": "RANDOM",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "libraryName": "NT20196N",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  },
+  "stats_qc": {
+    "ambiguous": 0,
+    "avgLen": 54,
+    "geecee": 63.6,
+    "reads": 1345212,
+    "errQual": 25.9,
+    "total_bp": 146016493,
+    "minLen": 30,
+    "maxLen": 60,
+    "avgQual": 32.1
+  },
+  "stats_raw": {
+    "maxLen": 60,
+    "avgQual": 31.1,
+    "minLen": 54,
+    "errQual": 19.8,
+    "total_bp": 167742678,
+    "reads": 1471427,
+    "ambiguous": 0.1,
+    "avgLen": 57,
+    "geecee": 63.7
+  },
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA837976",
+    "strain": "08_14337"
+  },
+  "run_name": "ERR017785"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4c0"
+  },
+  "run_name": "ERR019876",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "strain": "05_04354",
+    "sampleName": "SAMEA838052"
+  },
+  "stats_raw": {
+    "avgQual": 26.1,
+    "maxLen": 60,
+    "minLen": 54,
+    "total_bp": 109450602,
+    "errQual": 12,
+    "reads": 960093,
+    "geecee": 64.3,
+    "avgLen": 57,
+    "ambiguous": 0
+  },
+  "stats_qc": {
+    "avgLen": 51,
+    "geecee": 63.5,
+    "ambiguous": 0,
+    "avgQual": 29.4,
+    "maxLen": 60,
+    "minLen": 30,
+    "total_bp": 79156693,
+    "errQual": 24,
+    "reads": 767482
+  },
+  "experiment": {
+    "platform": "ILLUMINA",
+    "libraryName": "NT20208A",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC"
+  },
+  "study_id": "11",
+  "id": 75
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4c1"
+  },
+  "stats_raw": {
+    "avgLen": 57,
+    "geecee": 63.6,
+    "ambiguous": 0.1,
+    "avgQual": 31,
+    "maxLen": 60,
+    "minLen": 54,
+    "total_bp": 228981426,
+    "errQual": 19.6,
+    "reads": 2008609
+  },
+  "stats_qc": {
+    "avgQual": 32,
+    "maxLen": 60,
+    "minLen": 30,
+    "total_bp": 198491124,
+    "errQual": 25.7,
+    "reads": 1827915,
+    "avgLen": 54,
+    "geecee": 63.4,
+    "ambiguous": 0
+  },
+  "run_name": "ERR017783",
+  "sample": {
+    "strain": "08_14306",
+    "sampleName": "SAMEA838015",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "id": 7,
+  "study_id": "11",
+  "experiment": {
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySelection": "RANDOM",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "libraryName": "NT20196N"
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4c2"
+  },
+  "sample": {
+    "sampleName": "SAMEA837959",
+    "strain": "08_00483",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "run_name": "ERR017788",
+  "stats_qc": {
+    "minLen": 30,
+    "maxLen": 60,
+    "avgQual": 32.1,
+    "reads": 2269835,
+    "errQual": 25.9,
+    "total_bp": 246471010,
+    "ambiguous": 0,
+    "avgLen": 54,
+    "geecee": 62.8
+  },
+  "stats_raw": {
+    "errQual": 20.5,
+    "total_bp": 274611294,
+    "reads": 2408871,
+    "maxLen": 60,
+    "avgQual": 31.3,
+    "minLen": 54,
+    "ambiguous": 0.1,
+    "avgLen": 57,
+    "geecee": 63
+  },
+  "experiment": {
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySelection": "RANDOM",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "libraryName": "NT20196N"
+  },
+  "study_id": "11",
+  "id": 12
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4c3"
+  },
+  "experiment": {
+    "librarySelection": "RANDOM",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "libraryName": "NT204363S",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC"
+  },
+  "study_id": "11",
+  "id": 47,
+  "run_name": "ERR019573",
+  "sample": {
+    "strain": "05_12611",
+    "sampleName": "SAMEA837898",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "stats_raw": {
+    "reads": 2410240,
+    "errQual": 20,
+    "total_bp": 274767360,
+    "minLen": 54,
+    "maxLen": 60,
+    "avgQual": 30.9,
+    "ambiguous": 0.2,
+    "avgLen": 57,
+    "geecee": 63.6
+  },
+  "stats_qc": {
+    "total_bp": 249441474,
+    "errQual": 24.2,
+    "reads": 2302594,
+    "avgQual": 31.7,
+    "maxLen": 60,
+    "minLen": 30,
+    "avgLen": 54,
+    "geecee": 63.4,
+    "ambiguous": 0
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4c4"
+  },
+  "study_id": "11",
+  "id": 49,
+  "experiment": {
+    "librarySelection": "RANDOM",
+    "platform": "ILLUMINA",
+    "libraryName": "NT204365U",
+    "libraryLayout": "PAIRED",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  },
+  "stats_raw": {
+    "maxLen": 60,
+    "avgQual": 30.8,
+    "minLen": 54,
+    "errQual": 19.7,
+    "total_bp": 284383716,
+    "reads": 2494594,
+    "ambiguous": 0.2,
+    "avgLen": 57,
+    "geecee": 63.6
+  },
+  "stats_qc": {
+    "avgLen": 54,
+    "geecee": 63.4,
+    "ambiguous": 0,
+    "total_bp": 254945975,
+    "errQual": 24.3,
+    "reads": 2353157,
+    "avgQual": 31.7,
+    "maxLen": 60,
+    "minLen": 30
+  },
+  "run_name": "ERR019575",
+  "sample": {
+    "sampleName": "SAMEA837931",
+    "strain": "08_14559",
+    "organism": "Mycobacterium tuberculosis"
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4c5"
+  },
+  "experiment": {
+    "platform": "ILLUMINA",
+    "libraryName": "NT20196N",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  },
+  "id": 10,
+  "study_id": "11",
+  "run_name": "ERR017786",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "strain": "08_14329",
+    "sampleName": "SAMEA837963"
+  },
+  "stats_raw": {
+    "reads": 2120964,
+    "errQual": 19.8,
+    "total_bp": 241789896,
+    "minLen": 54,
+    "maxLen": 60,
+    "avgQual": 31.1,
+    "ambiguous": 0.1,
+    "geecee": 63.9,
+    "avgLen": 57
+  },
+  "stats_qc": {
+    "ambiguous": 0,
+    "avgLen": 54,
+    "geecee": 63.6,
+    "reads": 1940334,
+    "errQual": 25.9,
+    "total_bp": 210718336,
+    "minLen": 30,
+    "maxLen": 60,
+    "avgQual": 32.1
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4c6"
+  },
+  "sample": {
+    "sampleName": "SAMEA837950",
+    "strain": "05_03802",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "run_name": "ERR019569",
+  "stats_qc": {
+    "geecee": 63.3,
+    "avgLen": 54,
+    "ambiguous": 0,
+    "avgQual": 31.6,
+    "maxLen": 60,
+    "minLen": 30,
+    "total_bp": 277556553,
+    "errQual": 24.2,
+    "reads": 2561668
+  },
+  "stats_raw": {
+    "reads": 2766582,
+    "total_bp": 315390348,
+    "errQual": 19.1,
+    "minLen": 54,
+    "avgQual": 30.6,
+    "maxLen": 60,
+    "avgLen": 57,
+    "geecee": 63.5,
+    "ambiguous": 0.2
+  },
+  "experiment": {
+    "platform": "ILLUMINA",
+    "libraryName": "NT204357U",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  },
+  "id": 43,
+  "study_id": "11"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4c7"
+  },
+  "experiment": {
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySelection": "RANDOM",
+    "libraryName": "NT20208A",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED"
+  },
+  "study_id": "11",
+  "id": 70,
+  "run_name": "ERR019871",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "strain": "06_02537",
+    "sampleName": "SAMEA838026"
+  },
+  "stats_raw": {
+    "ambiguous": 0,
+    "avgLen": 57,
+    "geecee": 64.5,
+    "minLen": 54,
+    "maxLen": 60,
+    "avgQual": 25.8,
+    "reads": 3193244,
+    "errQual": 11.7,
+    "total_bp": 364029816
+  },
+  "stats_qc": {
+    "avgQual": 29.4,
+    "maxLen": 60,
+    "minLen": 30,
+    "total_bp": 257318222,
+    "errQual": 24,
+    "reads": 2494886,
+    "avgLen": 51,
+    "geecee": 63.8,
+    "ambiguous": 0
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4c8"
+  },
+  "experiment": {
+    "librarySelection": "RANDOM",
+    "libraryName": "NT20208A",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  },
+  "study_id": "11",
+  "id": 67,
+  "run_name": "ERR019868",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "strain": "05_04575",
+    "sampleName": "SAMEA838009"
+  },
+  "stats_raw": {
+    "avgQual": 26.2,
+    "maxLen": 60,
+    "minLen": 54,
+    "total_bp": 179649180,
+    "errQual": 12.1,
+    "reads": 1575870,
+    "avgLen": 57,
+    "geecee": 63.5,
+    "ambiguous": 0
+  },
+  "stats_qc": {
+    "ambiguous": 0,
+    "avgLen": 51,
+    "geecee": 62.9,
+    "reads": 1257538,
+    "errQual": 24,
+    "total_bp": 129731727,
+    "minLen": 30,
+    "maxLen": 60,
+    "avgQual": 29.4
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4c9"
+  },
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA838044",
+    "strain": "M08_14569"
+  },
+  "run_name": "ERR015612",
+  "stats_qc": {
+    "ambiguous": 0,
+    "avgLen": 49,
+    "geecee": 64.8,
+    "maxLen": 50,
+    "avgQual": 34.5,
+    "minLen": 30,
+    "errQual": 26.9,
+    "total_bp": 1911148335,
+    "reads": 19264010
+  },
+  "stats_raw": {
+    "ambiguous": 0.2,
+    "avgLen": 54,
+    "geecee": 64.7,
+    "maxLen": 54,
+    "avgQual": 33.7,
+    "minLen": 54,
+    "errQual": 22.3,
+    "total_bp": 2276361360,
+    "reads": 21077420
+  },
+  "experiment": {
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC",
+    "libraryName": "STB0814569 89311",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM"
+  },
+  "study_id": "11",
+  "id": 82
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4ca"
+  },
+  "experiment": {
+    "librarySelection": "RANDOM",
+    "libraryName": "STB0814521 89309",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  },
+  "id": 79,
+  "study_id": "11",
+  "run_name": "ERR015614",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "strain": "M08_14521",
+    "sampleName": "SAMEA838000"
+  },
+  "stats_raw": {
+    "maxLen": 54,
+    "avgQual": 33.2,
+    "minLen": 54,
+    "errQual": 21.5,
+    "total_bp": 2657462580,
+    "reads": 24606135,
+    "ambiguous": 0.1,
+    "geecee": 64.9,
+    "avgLen": 54
+  },
+  "stats_qc": {
+    "avgLen": 49,
+    "geecee": 64.8,
+    "ambiguous": 0,
+    "avgQual": 34.1,
+    "maxLen": 50,
+    "minLen": 30,
+    "total_bp": 2340803243,
+    "errQual": 26.1,
+    "reads": 23652351
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4cb"
+  },
+  "stats_qc": {
+    "geecee": 63.7,
+    "avgLen": 54,
+    "ambiguous": 0,
+    "minLen": 30,
+    "avgQual": 33,
+    "maxLen": 60,
+    "reads": 779445,
+    "total_bp": 85416791,
+    "errQual": 28.5
+  },
+  "stats_raw": {
+    "reads": 800142,
+    "errQual": 24.5,
+    "total_bp": 91216188,
+    "minLen": 54,
+    "maxLen": 60,
+    "avgQual": 32.7,
+    "ambiguous": 0.2,
+    "avgLen": 57,
+    "geecee": 63.6
+  },
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA837919",
+    "strain": "08_14493"
+  },
+  "run_name": "ERR019556",
+  "id": 32,
+  "study_id": "11",
+  "experiment": {
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC",
+    "librarySelection": "RANDOM",
+    "platform": "ILLUMINA",
+    "libraryName": "NT204344P",
+    "libraryLayout": "PAIRED"
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4cc"
+  },
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA837894",
+    "strain": "05_10261"
+  },
+  "run_name": "ERR019574",
+  "stats_qc": {
+    "avgLen": 54,
+    "geecee": 62.5,
+    "ambiguous": 0,
+    "avgQual": 31.7,
+    "maxLen": 60,
+    "minLen": 30,
+    "total_bp": 520748982,
+    "errQual": 24.3,
+    "reads": 4805865
+  },
+  "stats_raw": {
+    "reads": 5146202,
+    "errQual": 19.3,
+    "total_bp": 586667028,
+    "minLen": 54,
+    "maxLen": 60,
+    "avgQual": 30.7,
+    "ambiguous": 0.2,
+    "avgLen": 57,
+    "geecee": 62.7
+  },
+  "experiment": {
+    "libraryName": "NT204364T",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC"
+  },
+  "study_id": "11",
+  "id": 48
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4cd"
+  },
+  "study_id": "11",
+  "id": 22,
+  "experiment": {
+    "platform": "ILLUMINA",
+    "libraryName": "NT20208A",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC"
+  },
+  "stats_qc": {
+    "avgLen": 54,
+    "geecee": 63.8,
+    "ambiguous": 0,
+    "avgQual": 32.3,
+    "maxLen": 60,
+    "minLen": 30,
+    "total_bp": 162776154,
+    "errQual": 26.8,
+    "reads": 1495052
+  },
+  "stats_raw": {
+    "ambiguous": 0.1,
+    "avgLen": 57,
+    "geecee": 63.9,
+    "errQual": 20.6,
+    "total_bp": 187020876,
+    "reads": 1640534,
+    "maxLen": 60,
+    "avgQual": 31.4,
+    "minLen": 54
+  },
+  "sample": {
+    "strain": "05_10091",
+    "sampleName": "SAMEA837957",
+    "organism": "Mycobacterium tuberculosis variant africanum"
+  },
+  "run_name": "ERR017798"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4ce"
+  },
+  "stats_qc": {
+    "minLen": 30,
+    "maxLen": 60,
+    "avgQual": 29.4,
+    "reads": 1374315,
+    "errQual": 23.9,
+    "total_bp": 141843084,
+    "ambiguous": 0,
+    "avgLen": 51,
+    "geecee": 63.4
+  },
+  "stats_raw": {
+    "reads": 1796530,
+    "total_bp": 204804420,
+    "errQual": 11.4,
+    "minLen": 54,
+    "avgQual": 25.6,
+    "maxLen": 60,
+    "avgLen": 57,
+    "geecee": 64.1,
+    "ambiguous": 0
+  },
+  "sample": {
+    "strain": "06_01909",
+    "sampleName": "SAMEA838032",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "run_name": "ERR019870",
+  "id": 69,
+  "study_id": "11",
+  "experiment": {
+    "libraryLayout": "PAIRED",
+    "platform": "ILLUMINA",
+    "libraryName": "NT20208A",
+    "librarySelection": "RANDOM",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC"
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4cf"
+  },
+  "experiment": {
+    "librarySelection": "RANDOM",
+    "platform": "ILLUMINA",
+    "libraryName": "NT20208A",
+    "libraryLayout": "PAIRED",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  },
+  "id": 17,
+  "study_id": "11",
+  "run_name": "ERR017793",
+  "sample": {
+    "strain": "08_14300",
+    "sampleName": "SAMEA837969",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "stats_raw": {
+    "avgLen": 57,
+    "geecee": 65,
+    "ambiguous": 0.1,
+    "total_bp": 184436724,
+    "errQual": 21.4,
+    "reads": 1617866,
+    "avgQual": 31.6,
+    "maxLen": 60,
+    "minLen": 54
+  },
+  "stats_qc": {
+    "avgLen": 54,
+    "geecee": 64.9,
+    "ambiguous": 0,
+    "minLen": 30,
+    "avgQual": 32.2,
+    "maxLen": 60,
+    "reads": 1522496,
+    "total_bp": 165685762,
+    "errQual": 26.7
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4d0"
+  },
+  "study_id": "11",
+  "id": 65,
+  "experiment": {
+    "librarySelection": "RANDOM",
+    "libraryLayout": "PAIRED",
+    "platform": "ILLUMINA",
+    "libraryName": "NT20208A",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  },
+  "stats_qc": {
+    "ambiguous": 0,
+    "avgLen": 51,
+    "geecee": 62.5,
+    "minLen": 30,
+    "maxLen": 60,
+    "avgQual": 29.4,
+    "reads": 841990,
+    "errQual": 24,
+    "total_bp": 86947805
+  },
+  "stats_raw": {
+    "avgLen": 57,
+    "geecee": 63.2,
+    "ambiguous": 0,
+    "reads": 1059552,
+    "total_bp": 120788928,
+    "errQual": 11.9,
+    "minLen": 54,
+    "avgQual": 26.1,
+    "maxLen": 60
+  },
+  "sample": {
+    "sampleName": "SAMEA837980",
+    "strain": "06_01518",
+    "organism": "Mycobacterium tuberculosis variant bovis"
+  },
+  "run_name": "ERR019866"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4d1"
+  },
+  "run_name": "ERR017797",
+  "sample": {
+    "strain": "06_02537",
+    "sampleName": "SAMEA838026",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "stats_raw": {
+    "ambiguous": 0.1,
+    "avgLen": 57,
+    "geecee": 64.1,
+    "errQual": 20.8,
+    "total_bp": 565703454,
+    "reads": 4962311,
+    "maxLen": 60,
+    "avgQual": 31.5,
+    "minLen": 54
+  },
+  "stats_qc": {
+    "ambiguous": 0,
+    "avgLen": 54,
+    "geecee": 63.9,
+    "errQual": 26.8,
+    "total_bp": 494688877,
+    "reads": 4541989,
+    "maxLen": 60,
+    "avgQual": 32.3,
+    "minLen": 30
+  },
+  "experiment": {
+    "platform": "ILLUMINA",
+    "libraryName": "NT20208A",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC"
+  },
+  "id": 21,
+  "study_id": "11"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4d2"
+  },
+  "id": 40,
+  "study_id": "11",
+  "experiment": {
+    "librarySelection": "RANDOM",
+    "libraryName": "NT204355S",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  },
+  "stats_qc": {
+    "maxLen": 60,
+    "avgQual": 31.7,
+    "minLen": 30,
+    "errQual": 24.3,
+    "total_bp": 248323989,
+    "reads": 2291297,
+    "ambiguous": 0,
+    "avgLen": 54,
+    "geecee": 63.4
+  },
+  "stats_raw": {
+    "avgLen": 57,
+    "geecee": 63.5,
+    "ambiguous": 0.2,
+    "total_bp": 275834628,
+    "errQual": 19.9,
+    "reads": 2419602,
+    "avgQual": 30.9,
+    "maxLen": 60,
+    "minLen": 54
+  },
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA837928",
+    "strain": "08_14558"
+  },
+  "run_name": "ERR019564"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4d3"
+  },
+  "study_id": "11",
+  "id": 2,
+  "experiment": {
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC",
+    "libraryName": "NT20196N",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM"
+  },
+  "stats_qc": {
+    "errQual": 25.9,
+    "total_bp": 279453202,
+    "reads": 2572321,
+    "maxLen": 60,
+    "avgQual": 32.1,
+    "minLen": 30,
+    "ambiguous": 0,
+    "avgLen": 54,
+    "geecee": 63.4
+  },
+  "stats_raw": {
+    "geecee": 63.6,
+    "avgLen": 57,
+    "ambiguous": 0.1,
+    "total_bp": 335667642,
+    "errQual": 19,
+    "reads": 2944453,
+    "avgQual": 30.7,
+    "maxLen": 60,
+    "minLen": 54
+  },
+  "sample": {
+    "organism": "Mycobacterium tuberculosis variant bovis",
+    "sampleName": "SAMEA837978",
+    "strain": "05_03289"
+  },
+  "run_name": "ERR017778"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4d4"
+  },
+  "run_name": "ERR019875",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA838030",
+    "strain": "05_11459"
+  },
+  "stats_raw": {
+    "ambiguous": 0,
+    "avgLen": 57,
+    "geecee": 63.3,
+    "maxLen": 60,
+    "avgQual": 25.7,
+    "minLen": 54,
+    "errQual": 11.6,
+    "total_bp": 191504952,
+    "reads": 1679868
+  },
+  "stats_qc": {
+    "minLen": 30,
+    "avgQual": 29.4,
+    "maxLen": 60,
+    "reads": 1302638,
+    "total_bp": 134409380,
+    "errQual": 24,
+    "geecee": 62.9,
+    "avgLen": 51,
+    "ambiguous": 0
+  },
+  "experiment": {
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II",
+    "libraryName": "NT20208A",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM"
+  },
+  "study_id": "11",
+  "id": 74
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4d5"
+  },
+  "experiment": {
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC",
+    "libraryName": "NT20196N",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM"
+  },
+  "study_id": "11",
+  "id": 55,
+  "run_name": "ERR019856",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA838051",
+    "strain": "06_01910"
+  },
+  "stats_raw": {
+    "minLen": 54,
+    "avgQual": 26.5,
+    "maxLen": 60,
+    "reads": 1281304,
+    "total_bp": 146068656,
+    "errQual": 12.5,
+    "avgLen": 57,
+    "geecee": 64,
+    "ambiguous": 0
+  },
+  "stats_qc": {
+    "minLen": 30,
+    "maxLen": 60,
+    "avgQual": 29.5,
+    "reads": 1035705,
+    "errQual": 23.9,
+    "total_bp": 108257773,
+    "ambiguous": 0,
+    "avgLen": 52,
+    "geecee": 63.5
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4d6"
+  },
+  "experiment": {
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC",
+    "librarySelection": "RANDOM",
+    "libraryLayout": "PAIRED",
+    "platform": "ILLUMINA",
+    "libraryName": "NT20196N"
+  },
+  "id": 5,
+  "study_id": "11",
+  "sample": {
+    "sampleName": "SAMEA838054",
+    "strain": "M05/06174",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "run_name": "ERR017781",
+  "stats_qc": {
+    "ambiguous": 0,
+    "avgLen": 54,
+    "geecee": 60.2,
+    "minLen": 30,
+    "maxLen": 60,
+    "avgQual": 32.3,
+    "reads": 2267429,
+    "errQual": 26.6,
+    "total_bp": 246971600
+  },
+  "stats_raw": {
+    "reads": 2402470,
+    "errQual": 21.2,
+    "total_bp": 273881580,
+    "minLen": 54,
+    "maxLen": 60,
+    "avgQual": 31.6,
+    "ambiguous": 0.1,
+    "avgLen": 57,
+    "geecee": 60.4
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4d7"
+  },
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA838047",
+    "strain": "08_14304"
+  },
+  "run_name": "ERR019874",
+  "stats_qc": {
+    "maxLen": 60,
+    "avgQual": 29.4,
+    "minLen": 30,
+    "errQual": 23.9,
+    "total_bp": 121853099,
+    "reads": 1182356,
+    "ambiguous": 0,
+    "avgLen": 51,
+    "geecee": 63.7
+  },
+  "stats_raw": {
+    "reads": 1473189,
+    "errQual": 12.1,
+    "total_bp": 167943546,
+    "minLen": 54,
+    "maxLen": 60,
+    "avgQual": 26.2,
+    "ambiguous": 0,
+    "geecee": 64.5,
+    "avgLen": 57
+  },
+  "experiment": {
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC",
+    "librarySelection": "RANDOM",
+    "libraryName": "NT20208A",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED"
+  },
+  "id": 73,
+  "study_id": "11"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4d8"
+  },
+  "run_name": "ERR017779",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA837971",
+    "strain": "06_02213"
+  },
+  "stats_raw": {
+    "minLen": 54,
+    "avgQual": 31.3,
+    "maxLen": 60,
+    "reads": 1595632,
+    "total_bp": 181902048,
+    "errQual": 20.5,
+    "geecee": 63,
+    "avgLen": 57,
+    "ambiguous": 0.1
+  },
+  "stats_qc": {
+    "geecee": 62.7,
+    "avgLen": 54,
+    "ambiguous": 0,
+    "minLen": 30,
+    "avgQual": 32.1,
+    "maxLen": 60,
+    "reads": 1500649,
+    "total_bp": 162973735,
+    "errQual": 25.9
+  },
+  "experiment": {
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC",
+    "librarySelection": "RANDOM",
+    "libraryName": "NT20196N",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED"
+  },
+  "study_id": "11",
+  "id": 3
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4d9"
+  },
+  "study_id": "11",
+  "id": 39,
+  "experiment": {
+    "librarySelection": "RANDOM",
+    "platform": "ILLUMINA",
+    "libraryName": "SamaraTB B2 P4",
+    "libraryLayout": "PAIRED",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  },
+  "stats_qc": {
+    "reads": 151499,
+    "total_bp": 15990322,
+    "errQual": 23.6,
+    "minLen": 30,
+    "avgQual": 31.3,
+    "maxLen": 60,
+    "avgLen": 52,
+    "geecee": 63.2,
+    "ambiguous": 0
+  },
+  "stats_raw": {
+    "ambiguous": 17.9,
+    "avgLen": 56,
+    "geecee": 51.8,
+    "minLen": 53,
+    "maxLen": 60,
+    "avgQual": 23.9,
+    "reads": 258253,
+    "errQual": 9.5,
+    "total_bp": 29364021
+  },
+  "sample": {
+    "organism": "human gut metagenome",
+    "sampleName": "unidentified",
+    "strain": ""
+  },
+  "run_name": "ERR019563"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4da"
+  },
+  "sample": {
+    "strain": "",
+    "sampleName": "unidentified",
+    "organism": "human gut metagenome"
+  },
+  "run_name": "ERR019550",
+  "stats_qc": {
+    "reads": 35901,
+    "total_bp": 3836251,
+    "errQual": 22.6,
+    "minLen": 30,
+    "avgQual": 31.4,
+    "maxLen": 60,
+    "avgLen": 53,
+    "geecee": 59.5,
+    "ambiguous": 0
+  },
+  "stats_raw": {
+    "avgLen": 56,
+    "geecee": 39.2,
+    "ambiguous": 13.5,
+    "minLen": 53,
+    "avgQual": 21.1,
+    "maxLen": 60,
+    "reads": 81820,
+    "total_bp": 9310804,
+    "errQual": 8.7
+  },
+  "experiment": {
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "libraryName": "SamaraTB B2 P3",
+    "librarySelection": "RANDOM"
+  },
+  "study_id": "11",
+  "id": 27
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4db"
+  },
+  "stats_raw": {
+    "avgQual": 31.2,
+    "maxLen": 60,
+    "minLen": 54,
+    "total_bp": 223353132,
+    "errQual": 20,
+    "reads": 1959238,
+    "geecee": 63.7,
+    "avgLen": 57,
+    "ambiguous": 0.1
+  },
+  "stats_qc": {
+    "avgLen": 54,
+    "geecee": 63.5,
+    "ambiguous": 0,
+    "minLen": 30,
+    "avgQual": 32.1,
+    "maxLen": 60,
+    "reads": 1812936,
+    "total_bp": 196855333,
+    "errQual": 25.9
+  },
+  "run_name": "ERR017782",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "strain": "06_01910",
+    "sampleName": "SAMEA838051"
+  },
+  "study_id": "11",
+  "id": 6,
+  "experiment": {
+    "libraryName": "NT20196N",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC"
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4dc"
+  },
+  "run_name": "ERR019852",
+  "sample": {
+    "strain": "05_03289",
+    "sampleName": "SAMEA837978",
+    "organism": "Mycobacterium tuberculosis variant bovis"
+  },
+  "stats_raw": {
+    "avgLen": 57,
+    "geecee": 63.6,
+    "ambiguous": 0,
+    "avgQual": 25.7,
+    "maxLen": 60,
+    "minLen": 54,
+    "total_bp": 226313826,
+    "errQual": 11.5,
+    "reads": 1985209
+  },
+  "stats_qc": {
+    "reads": 1494981,
+    "total_bp": 156356319,
+    "errQual": 23.8,
+    "minLen": 30,
+    "avgQual": 29.5,
+    "maxLen": 60,
+    "avgLen": 52,
+    "geecee": 63.3,
+    "ambiguous": 0
+  },
+  "experiment": {
+    "librarySelection": "RANDOM",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "libraryName": "NT20196N",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC"
+  },
+  "study_id": "11",
+  "id": 51
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4dd"
+  },
+  "study_id": "11",
+  "id": 14,
+  "experiment": {
+    "libraryLayout": "PAIRED",
+    "platform": "ILLUMINA",
+    "libraryName": "SamaraTB-batch1-group2 1",
+    "librarySelection": "RANDOM",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  },
+  "stats_raw": {
+    "avgQual": 22.7,
+    "maxLen": 60,
+    "minLen": 53,
+    "total_bp": 26989200,
+    "errQual": 8.4,
+    "reads": 237416,
+    "avgLen": 56,
+    "geecee": 46.3,
+    "ambiguous": 25.7
+  },
+  "stats_qc": {
+    "errQual": 25.5,
+    "total_bp": 11487930,
+    "reads": 108561,
+    "maxLen": 60,
+    "avgQual": 32,
+    "minLen": 30,
+    "ambiguous": 0,
+    "avgLen": 52,
+    "geecee": 62.9
+  },
+  "run_name": "ERR017790",
+  "sample": {
+    "organism": "human gut metagenome",
+    "strain": "",
+    "sampleName": "unidentified"
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4de"
+  },
+  "experiment": {
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC",
+    "platform": "ILLUMINA",
+    "libraryName": "STB0814350 89305",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM"
+  },
+  "study_id": "11",
+  "id": 77,
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "strain": "M08_14350",
+    "sampleName": "SAMEA838028"
+  },
+  "run_name": "ERR015611",
+  "stats_qc": {
+    "total_bp": 2107564001,
+    "errQual": 25.9,
+    "reads": 21307345,
+    "avgQual": 34.2,
+    "maxLen": 50,
+    "minLen": 30,
+    "avgLen": 49,
+    "geecee": 64.6,
+    "ambiguous": 0
+  },
+  "stats_raw": {
+    "errQual": 20.9,
+    "total_bp": 2438635248,
+    "reads": 22579956,
+    "maxLen": 54,
+    "avgQual": 33.2,
+    "minLen": 54,
+    "ambiguous": 0.2,
+    "avgLen": 54,
+    "geecee": 64.7
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4df"
+  },
+  "run_name": "ERR017777",
+  "sample": {
+    "strain": "",
+    "sampleName": "unidentified",
+    "organism": "human gut metagenome"
+  },
+  "stats_raw": {
+    "geecee": 48.7,
+    "avgLen": 56,
+    "ambiguous": 22,
+    "avgQual": 23.4,
+    "maxLen": 60,
+    "minLen": 53,
+    "total_bp": 29627697,
+    "errQual": 8.9,
+    "reads": 260612
+  },
+  "stats_qc": {
+    "avgLen": 52,
+    "geecee": 62.6,
+    "ambiguous": 0,
+    "reads": 139572,
+    "total_bp": 14624422,
+    "errQual": 22.9,
+    "minLen": 30,
+    "avgQual": 31.5,
+    "maxLen": 60
+  },
+  "experiment": {
+    "libraryName": "SamaraTB-batch1 1",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC"
+  },
+  "study_id": "11",
+  "id": 1
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4e0"
+  },
+  "run_name": "ERR017796",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA838032",
+    "strain": "06_01909"
+  },
+  "stats_raw": {
+    "geecee": 63.8,
+    "avgLen": 57,
+    "ambiguous": 0.1,
+    "avgQual": 31.3,
+    "maxLen": 60,
+    "minLen": 54,
+    "total_bp": 320753934,
+    "errQual": 20.3,
+    "reads": 2813631
+  },
+  "stats_qc": {
+    "total_bp": 275721771,
+    "errQual": 26.9,
+    "reads": 2531269,
+    "avgQual": 32.3,
+    "maxLen": 60,
+    "minLen": 30,
+    "avgLen": 54,
+    "geecee": 63.6,
+    "ambiguous": 0
+  },
+  "experiment": {
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC",
+    "librarySelection": "RANDOM",
+    "libraryLayout": "PAIRED",
+    "platform": "ILLUMINA",
+    "libraryName": "NT20208A"
+  },
+  "id": 20,
+  "study_id": "11"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4e1"
+  },
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA838036",
+    "strain": "05_12834"
+  },
+  "run_name": "ERR019869",
+  "stats_qc": {
+    "minLen": 30,
+    "avgQual": 29.4,
+    "maxLen": 60,
+    "reads": 593243,
+    "total_bp": 61212361,
+    "errQual": 24,
+    "geecee": 63.4,
+    "avgLen": 51,
+    "ambiguous": 0
+  },
+  "stats_raw": {
+    "errQual": 11.8,
+    "total_bp": 85900026,
+    "reads": 753509,
+    "maxLen": 60,
+    "avgQual": 25.9,
+    "minLen": 54,
+    "ambiguous": 0,
+    "avgLen": 57,
+    "geecee": 64.1
+  },
+  "experiment": {
+    "libraryName": "NT20208A",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  },
+  "id": 68,
+  "study_id": "11"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4e2"
+  },
+  "id": 29,
+  "study_id": "11",
+  "experiment": {
+    "platform": "ILLUMINA",
+    "libraryName": "NT204351O",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  },
+  "stats_raw": {
+    "ambiguous": 0.2,
+    "avgLen": 57,
+    "geecee": 62.4,
+    "errQual": 24.5,
+    "total_bp": 113395686,
+    "reads": 994699,
+    "maxLen": 60,
+    "avgQual": 32.7,
+    "minLen": 54
+  },
+  "stats_qc": {
+    "ambiguous": 0,
+    "avgLen": 54,
+    "geecee": 62.8,
+    "reads": 949151,
+    "errQual": 28.5,
+    "total_bp": 104021235,
+    "minLen": 30,
+    "maxLen": 60,
+    "avgQual": 33
+  },
+  "run_name": "ERR019552",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "strain": "08_14546",
+    "sampleName": "SAMEA838046"
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4e3"
+  },
+  "study_id": "11",
+  "id": 44,
+  "experiment": {
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "libraryName": "NT204358V",
+    "librarySelection": "RANDOM"
+  },
+  "stats_qc": {
+    "ambiguous": 0,
+    "geecee": 63.4,
+    "avgLen": 54,
+    "errQual": 24.3,
+    "total_bp": 332635600,
+    "reads": 3069503,
+    "maxLen": 60,
+    "avgQual": 31.7,
+    "minLen": 30
+  },
+  "stats_raw": {
+    "avgLen": 57,
+    "geecee": 63.6,
+    "ambiguous": 0.2,
+    "avgQual": 30.7,
+    "maxLen": 60,
+    "minLen": 54,
+    "total_bp": 374393670,
+    "errQual": 19.4,
+    "reads": 3284155
+  },
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA838011",
+    "strain": "05_03798"
+  },
+  "run_name": "ERR019570"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4e4"
+  },
+  "id": 31,
+  "study_id": "11",
+  "experiment": {
+    "librarySelection": "RANDOM",
+    "libraryLayout": "PAIRED",
+    "platform": "ILLUMINA",
+    "libraryName": "NT204343O",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  },
+  "stats_raw": {
+    "avgQual": 32.7,
+    "maxLen": 60,
+    "minLen": 54,
+    "total_bp": 92389590,
+    "errQual": 24.6,
+    "reads": 810435,
+    "avgLen": 57,
+    "geecee": 62.8,
+    "ambiguous": 0.2
+  },
+  "stats_qc": {
+    "avgQual": 33,
+    "maxLen": 60,
+    "minLen": 30,
+    "total_bp": 80342476,
+    "errQual": 28.6,
+    "reads": 733140,
+    "geecee": 63.6,
+    "avgLen": 54,
+    "ambiguous": 0
+  },
+  "run_name": "ERR019555",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA837922",
+    "strain": "08_14522"
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4e5"
+  },
+  "experiment": {
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II",
+    "libraryLayout": "PAIRED",
+    "platform": "ILLUMINA",
+    "libraryName": "NT204366V",
+    "librarySelection": "RANDOM"
+  },
+  "id": 41,
+  "study_id": "11",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA838013",
+    "strain": "05_09310"
+  },
+  "run_name": "ERR019565",
+  "stats_qc": {
+    "avgQual": 31.7,
+    "maxLen": 60,
+    "minLen": 30,
+    "total_bp": 225004989,
+    "errQual": 24.3,
+    "reads": 2075796,
+    "avgLen": 54,
+    "geecee": 62.4,
+    "ambiguous": 0
+  },
+  "stats_raw": {
+    "avgQual": 28.2,
+    "maxLen": 60,
+    "minLen": 54,
+    "total_bp": 342488946,
+    "errQual": 14.9,
+    "reads": 3004289,
+    "avgLen": 57,
+    "geecee": 63,
+    "ambiguous": 0.2
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4e6"
+  },
+  "id": 35,
+  "study_id": "11",
+  "experiment": {
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC",
+    "libraryName": "NT204347S",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM"
+  },
+  "stats_raw": {
+    "ambiguous": 0.2,
+    "avgLen": 57,
+    "geecee": 63.7,
+    "minLen": 54,
+    "maxLen": 60,
+    "avgQual": 32.7,
+    "reads": 831073,
+    "errQual": 24.5,
+    "total_bp": 94742322
+  },
+  "stats_qc": {
+    "ambiguous": 0,
+    "avgLen": 54,
+    "geecee": 64,
+    "maxLen": 60,
+    "avgQual": 33,
+    "minLen": 30,
+    "errQual": 28.5,
+    "total_bp": 86898800,
+    "reads": 793009
+  },
+  "run_name": "ERR019559",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA837910",
+    "strain": "08_14471"
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4e7"
+  },
+  "study_id": "11",
+  "id": 62,
+  "experiment": {
+    "librarySelection": "RANDOM",
+    "libraryName": "NT20196N",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  },
+  "stats_qc": {
+    "ambiguous": 0,
+    "avgLen": 52,
+    "geecee": 63.5,
+    "maxLen": 60,
+    "avgQual": 29.5,
+    "minLen": 30,
+    "errQual": 24.1,
+    "total_bp": 67502339,
+    "reads": 645912
+  },
+  "stats_raw": {
+    "ambiguous": 0,
+    "avgLen": 57,
+    "geecee": 64.1,
+    "reads": 784412,
+    "errQual": 12.9,
+    "total_bp": 89422968,
+    "minLen": 54,
+    "maxLen": 60,
+    "avgQual": 26.8
+  },
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "strain": "05_06899",
+    "sampleName": "SAMEA837961"
+  },
+  "run_name": "ERR019863"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4e8"
+  },
+  "stats_raw": {
+    "avgLen": 57,
+    "geecee": 63.6,
+    "ambiguous": 0.1,
+    "reads": 1132091,
+    "total_bp": 129058374,
+    "errQual": 20.1,
+    "minLen": 54,
+    "avgQual": 31.2,
+    "maxLen": 60
+  },
+  "stats_qc": {
+    "ambiguous": 0,
+    "geecee": 63.5,
+    "avgLen": 54,
+    "maxLen": 60,
+    "avgQual": 32.3,
+    "minLen": 30,
+    "errQual": 26.9,
+    "total_bp": 109429151,
+    "reads": 1004374
+  },
+  "run_name": "ERR017791",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA837967",
+    "strain": "08_14303"
+  },
+  "study_id": "11",
+  "id": 15,
+  "experiment": {
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySelection": "RANDOM",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "libraryName": "NT20208A"
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4e9"
+  },
+  "experiment": {
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "libraryName": "STB0504169 89867",
+    "librarySelection": "RANDOM",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC"
+  },
+  "study_id": "11",
+  "id": 80,
+  "sample": {
+    "strain": "M05_04169",
+    "sampleName": "SAMEA838048",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "run_name": "ERR015615",
+  "stats_qc": {
+    "reads": 16854137,
+    "errQual": 28.6,
+    "total_bp": 1674262733,
+    "minLen": 30,
+    "maxLen": 50,
+    "avgQual": 35.1,
+    "ambiguous": 0,
+    "geecee": 64.9,
+    "avgLen": 49
+  },
+  "stats_raw": {
+    "maxLen": 54,
+    "avgQual": 34.5,
+    "minLen": 54,
+    "errQual": 23.7,
+    "total_bp": 1853028684,
+    "reads": 17157673,
+    "ambiguous": 0,
+    "avgLen": 54,
+    "geecee": 64.9
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4ea"
+  },
+  "run_name": "ERR019851",
+  "sample": {
+    "sampleName": "unidentified",
+    "strain": "",
+    "organism": "human gut metagenome"
+  },
+  "stats_raw": {
+    "total_bp": 13336552,
+    "errQual": 9.8,
+    "reads": 117286,
+    "avgQual": 23.6,
+    "maxLen": 60,
+    "minLen": 53,
+    "avgLen": 56,
+    "geecee": 61.4,
+    "ambiguous": 2.4
+  },
+  "stats_qc": {
+    "errQual": 23.4,
+    "total_bp": 8035985,
+    "reads": 78566,
+    "maxLen": 60,
+    "avgQual": 29.3,
+    "minLen": 30,
+    "ambiguous": 0,
+    "avgLen": 51,
+    "geecee": 62.9
+  },
+  "experiment": {
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC",
+    "libraryName": "SamaraTB-batch1 1",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM"
+  },
+  "id": 50,
+  "study_id": "11"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4eb"
+  },
+  "stats_raw": {
+    "avgLen": 57,
+    "geecee": 64.4,
+    "ambiguous": 0,
+    "avgQual": 25.1,
+    "maxLen": 60,
+    "minLen": 54,
+    "total_bp": 65260326,
+    "errQual": 10.9,
+    "reads": 572459
+  },
+  "stats_qc": {
+    "avgLen": 51,
+    "geecee": 63.7,
+    "ambiguous": 0,
+    "reads": 420383,
+    "total_bp": 43381060,
+    "errQual": 23.9,
+    "minLen": 30,
+    "avgQual": 29.4,
+    "maxLen": 60
+  },
+  "run_name": "ERR019873",
+  "sample": {
+    "sampleName": "SAMEA837901",
+    "strain": "H37Rv",
+    "organism": "Mycobacterium tuberculosis H37Rv"
+  },
+  "study_id": "11",
+  "id": 72,
+  "experiment": {
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II",
+    "libraryLayout": "PAIRED",
+    "platform": "ILLUMINA",
+    "libraryName": "NT20208A",
+    "librarySelection": "RANDOM"
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4ec"
+  },
+  "sample": {
+    "sampleName": "SAMEA838007",
+    "strain": "08_14350",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "run_name": "ERR019551",
+  "stats_qc": {
+    "ambiguous": 0,
+    "avgLen": 54,
+    "geecee": 63.8,
+    "minLen": 30,
+    "maxLen": 60,
+    "avgQual": 33,
+    "reads": 192088,
+    "errQual": 28.5,
+    "total_bp": 21052715
+  },
+  "stats_raw": {
+    "ambiguous": 0.2,
+    "avgLen": 57,
+    "geecee": 63,
+    "errQual": 24.6,
+    "total_bp": 23977734,
+    "reads": 210331,
+    "maxLen": 60,
+    "avgQual": 32.7,
+    "minLen": 54
+  },
+  "experiment": {
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "libraryName": "NT204342N",
+    "librarySelection": "RANDOM",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC"
+  },
+  "study_id": "11",
+  "id": 28
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4ed"
+  },
+  "id": 57,
+  "study_id": "11",
+  "experiment": {
+    "libraryName": "NT20196N",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC"
+  },
+  "stats_qc": {
+    "total_bp": 124580451,
+    "errQual": 23.9,
+    "reads": 1191354,
+    "avgQual": 29.5,
+    "maxLen": 60,
+    "minLen": 30,
+    "avgLen": 52,
+    "geecee": 63.4,
+    "ambiguous": 0
+  },
+  "stats_raw": {
+    "avgQual": 26.6,
+    "maxLen": 60,
+    "minLen": 54,
+    "total_bp": 166976598,
+    "errQual": 12.6,
+    "reads": 1464707,
+    "avgLen": 57,
+    "geecee": 63.9,
+    "ambiguous": 0
+  },
+  "sample": {
+    "sampleName": "SAMEA837974",
+    "strain": "08_14310",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "run_name": "ERR019858"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4ee"
+  },
+  "run_name": "ERR019557",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "strain": "08_14487",
+    "sampleName": "SAMEA837916"
+  },
+  "stats_raw": {
+    "reads": 466740,
+    "total_bp": 53208360,
+    "errQual": 24.6,
+    "minLen": 54,
+    "avgQual": 32.7,
+    "maxLen": 60,
+    "avgLen": 57,
+    "geecee": 63.5,
+    "ambiguous": 0.2
+  },
+  "stats_qc": {
+    "maxLen": 60,
+    "avgQual": 33,
+    "minLen": 30,
+    "errQual": 28.6,
+    "total_bp": 48669157,
+    "reads": 444122,
+    "ambiguous": 0,
+    "avgLen": 54,
+    "geecee": 63.8
+  },
+  "experiment": {
+    "librarySelection": "RANDOM",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "libraryName": "NT204345Q",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  },
+  "study_id": "11",
+  "id": 33
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4ef"
+  },
+  "experiment": {
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC",
+    "libraryName": "NT20196N",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM"
+  },
+  "study_id": "11",
+  "id": 52,
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA837971",
+    "strain": "06_02213"
+  },
+  "run_name": "ERR019853",
+  "stats_qc": {
+    "total_bp": 88927178,
+    "errQual": 24.1,
+    "reads": 850736,
+    "avgQual": 29.6,
+    "maxLen": 60,
+    "minLen": 30,
+    "avgLen": 52,
+    "geecee": 62.9,
+    "ambiguous": 0
+  },
+  "stats_raw": {
+    "total_bp": 117641616,
+    "errQual": 12.9,
+    "reads": 1031944,
+    "avgQual": 26.8,
+    "maxLen": 60,
+    "minLen": 54,
+    "avgLen": 57,
+    "geecee": 63.3,
+    "ambiguous": 0
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4f0"
+  },
+  "sample": {
+    "sampleName": "SAMEA838030",
+    "strain": "05_11459",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "run_name": "ERR017801",
+  "stats_qc": {
+    "minLen": 30,
+    "avgQual": 32.3,
+    "maxLen": 60,
+    "reads": 2380372,
+    "total_bp": 259300896,
+    "errQual": 26.8,
+    "avgLen": 54,
+    "geecee": 62.8,
+    "ambiguous": 0
+  },
+  "stats_raw": {
+    "minLen": 54,
+    "avgQual": 31.4,
+    "maxLen": 60,
+    "reads": 2619236,
+    "total_bp": 298592904,
+    "errQual": 20.4,
+    "avgLen": 57,
+    "geecee": 62.9,
+    "ambiguous": 0.1
+  },
+  "experiment": {
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II",
+    "libraryLayout": "PAIRED",
+    "platform": "ILLUMINA",
+    "libraryName": "NT20208A",
+    "librarySelection": "RANDOM"
+  },
+  "id": 25,
+  "study_id": "11"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4f1"
+  },
+  "stats_raw": {
+    "reads": 455064,
+    "errQual": 24.5,
+    "total_bp": 51877296,
+    "minLen": 54,
+    "maxLen": 60,
+    "avgQual": 32.7,
+    "ambiguous": 0.2,
+    "avgLen": 57,
+    "geecee": 62.6
+  },
+  "stats_qc": {
+    "geecee": 62.9,
+    "avgLen": 54,
+    "ambiguous": 0,
+    "minLen": 30,
+    "avgQual": 33,
+    "maxLen": 60,
+    "reads": 440240,
+    "total_bp": 48244265,
+    "errQual": 28.5
+  },
+  "run_name": "ERR019561",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA838024",
+    "strain": "M08/14357"
+  },
+  "study_id": "11",
+  "id": 37,
+  "experiment": {
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II",
+    "platform": "ILLUMINA",
+    "libraryName": "NT204349U",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM"
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4f2"
+  },
+  "id": 61,
+  "study_id": "11",
+  "experiment": {
+    "librarySelection": "RANDOM",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "libraryName": "NT20196N",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  },
+  "stats_raw": {
+    "avgQual": 26.8,
+    "maxLen": 60,
+    "minLen": 54,
+    "total_bp": 179626836,
+    "errQual": 12.9,
+    "reads": 1575674,
+    "avgLen": 57,
+    "geecee": 63.3,
+    "ambiguous": 0
+  },
+  "stats_qc": {
+    "avgLen": 52,
+    "geecee": 63,
+    "ambiguous": 0,
+    "minLen": 30,
+    "avgQual": 29.5,
+    "maxLen": 60,
+    "reads": 1301878,
+    "total_bp": 136020116,
+    "errQual": 24
+  },
+  "run_name": "ERR019862",
+  "sample": {
+    "strain": "08_00483",
+    "sampleName": "SAMEA837959",
+    "organism": "Mycobacterium tuberculosis"
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4f3"
+  },
+  "run_name": "ERR017787",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA837965",
+    "strain": "06_01971"
+  },
+  "stats_raw": {
+    "avgLen": 57,
+    "geecee": 63.6,
+    "ambiguous": 0.1,
+    "avgQual": 31.4,
+    "maxLen": 60,
+    "minLen": 54,
+    "total_bp": 201729384,
+    "errQual": 20.6,
+    "reads": 1769556
+  },
+  "stats_qc": {
+    "reads": 1670648,
+    "total_bp": 181434908,
+    "errQual": 25.9,
+    "minLen": 30,
+    "avgQual": 32.1,
+    "maxLen": 60,
+    "geecee": 63.4,
+    "avgLen": 54,
+    "ambiguous": 0
+  },
+  "experiment": {
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "libraryName": "NT20196N",
+    "librarySelection": "RANDOM",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  },
+  "study_id": "11",
+  "id": 11
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4f4"
+  },
+  "run_name": "ERR017800",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA838047",
+    "strain": "08_14304"
+  },
+  "stats_raw": {
+    "geecee": 64,
+    "avgLen": 57,
+    "ambiguous": 0.1,
+    "reads": 2302039,
+    "total_bp": 262432446,
+    "errQual": 21.5,
+    "minLen": 54,
+    "avgQual": 31.7,
+    "maxLen": 60
+  },
+  "stats_qc": {
+    "errQual": 26.8,
+    "total_bp": 234795904,
+    "reads": 2156181,
+    "maxLen": 60,
+    "avgQual": 32.3,
+    "minLen": 30,
+    "ambiguous": 0,
+    "geecee": 63.9,
+    "avgLen": 54
+  },
+  "experiment": {
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II",
+    "libraryName": "NT20208A",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM"
+  },
+  "id": 24,
+  "study_id": "11"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4f5"
+  },
+  "experiment": {
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySelection": "RANDOM",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "libraryName": "STB0814477 89308"
+  },
+  "study_id": "11",
+  "id": 78,
+  "run_name": "ERR015613",
+  "sample": {
+    "strain": "M08_14477",
+    "sampleName": "SAMEA838038",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "stats_raw": {
+    "ambiguous": 0.1,
+    "avgLen": 54,
+    "geecee": 64.8,
+    "minLen": 54,
+    "maxLen": 54,
+    "avgQual": 34.7,
+    "reads": 14215209,
+    "errQual": 24.1,
+    "total_bp": 1535242572
+  },
+  "stats_qc": {
+    "minLen": 30,
+    "avgQual": 35.3,
+    "maxLen": 50,
+    "reads": 13730402,
+    "total_bp": 1366573059,
+    "errQual": 28.7,
+    "geecee": 64.9,
+    "avgLen": 49,
+    "ambiguous": 0
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4f6"
+  },
+  "stats_raw": {
+    "maxLen": 60,
+    "avgQual": 26.5,
+    "minLen": 54,
+    "errQual": 12.4,
+    "total_bp": 111666420,
+    "reads": 979530,
+    "ambiguous": 0,
+    "avgLen": 57,
+    "geecee": 64
+  },
+  "stats_qc": {
+    "ambiguous": 0,
+    "avgLen": 52,
+    "geecee": 63.6,
+    "minLen": 30,
+    "maxLen": 60,
+    "avgQual": 29.5,
+    "reads": 780249,
+    "errQual": 24,
+    "total_bp": 81501825
+  },
+  "run_name": "ERR019859",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA837976",
+    "strain": "08_14337"
+  },
+  "study_id": "11",
+  "id": 58,
+  "experiment": {
+    "librarySelection": "RANDOM",
+    "libraryName": "NT20196N",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4f7"
+  },
+  "sample": {
+    "sampleName": "SAMEA838015",
+    "strain": "08_14306",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "run_name": "ERR019857",
+  "stats_qc": {
+    "total_bp": 109325467,
+    "errQual": 23.6,
+    "reads": 1047375,
+    "avgQual": 29.3,
+    "maxLen": 60,
+    "minLen": 30,
+    "avgLen": 52,
+    "geecee": 63.3,
+    "ambiguous": 0
+  },
+  "stats_raw": {
+    "avgLen": 57,
+    "geecee": 63.8,
+    "ambiguous": 0.1,
+    "reads": 1327059,
+    "total_bp": 151284726,
+    "errQual": 12,
+    "minLen": 54,
+    "avgQual": 26,
+    "maxLen": 60
+  },
+  "experiment": {
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC",
+    "libraryName": "NT20196N",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM"
+  },
+  "id": 56,
+  "study_id": "11"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4f8"
+  },
+  "stats_raw": {
+    "avgQual": 31.6,
+    "maxLen": 60,
+    "minLen": 54,
+    "total_bp": 170523138,
+    "errQual": 21.3,
+    "reads": 1495817,
+    "avgLen": 57,
+    "geecee": 63.8,
+    "ambiguous": 0.1
+  },
+  "stats_qc": {
+    "total_bp": 151640204,
+    "errQual": 26.8,
+    "reads": 1392351,
+    "avgQual": 32.3,
+    "maxLen": 60,
+    "minLen": 30,
+    "avgLen": 54,
+    "geecee": 63.7,
+    "ambiguous": 0
+  },
+  "run_name": "ERR017802",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA838052",
+    "strain": "05_04354"
+  },
+  "id": 26,
+  "study_id": "11",
+  "experiment": {
+    "librarySelection": "RANDOM",
+    "libraryLayout": "PAIRED",
+    "platform": "ILLUMINA",
+    "libraryName": "NT20208A",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4f9"
+  },
+  "run_name": "ERR019558",
+  "sample": {
+    "strain": "08_14477",
+    "sampleName": "SAMEA837913",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "stats_raw": {
+    "avgLen": 57,
+    "geecee": 63,
+    "ambiguous": 0.2,
+    "minLen": 54,
+    "avgQual": 32.7,
+    "maxLen": 60,
+    "reads": 883224,
+    "total_bp": 100687536,
+    "errQual": 24.7
+  },
+  "stats_qc": {
+    "avgLen": 54,
+    "geecee": 63.8,
+    "ambiguous": 0,
+    "avgQual": 33,
+    "maxLen": 60,
+    "minLen": 30,
+    "total_bp": 87912078,
+    "errQual": 28.6,
+    "reads": 802178
+  },
+  "experiment": {
+    "platform": "ILLUMINA",
+    "libraryName": "NT204346R",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  },
+  "study_id": "11",
+  "id": 34
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4fa"
+  },
+  "experiment": {
+    "librarySelection": "RANDOM",
+    "libraryName": "NT20208A",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC"
+  },
+  "id": 23,
+  "study_id": "11",
+  "sample": {
+    "sampleName": "SAMEA837901",
+    "strain": "H37Rv",
+    "organism": "Mycobacterium tuberculosis H37Rv"
+  },
+  "run_name": "ERR017799",
+  "stats_qc": {
+    "maxLen": 60,
+    "avgQual": 32.3,
+    "minLen": 30,
+    "errQual": 26.8,
+    "total_bp": 83438691,
+    "reads": 766180,
+    "ambiguous": 0,
+    "geecee": 63.9,
+    "avgLen": 54
+  },
+  "stats_raw": {
+    "avgLen": 57,
+    "geecee": 64,
+    "ambiguous": 0.1,
+    "reads": 876863,
+    "total_bp": 99962382,
+    "errQual": 19.6,
+    "minLen": 54,
+    "avgQual": 31.1,
+    "maxLen": 60
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4fb"
+  },
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "strain": "08_14567",
+    "sampleName": "SAMEA838004"
+  },
+  "run_name": "ERR019572",
+  "stats_qc": {
+    "total_bp": 275911626,
+    "errQual": 24.4,
+    "reads": 2545490,
+    "avgQual": 31.7,
+    "maxLen": 60,
+    "minLen": 30,
+    "avgLen": 54,
+    "geecee": 62.1,
+    "ambiguous": 0
+  },
+  "stats_raw": {
+    "geecee": 62.4,
+    "avgLen": 57,
+    "ambiguous": 0.2,
+    "total_bp": 311591868,
+    "errQual": 19.4,
+    "reads": 2733262,
+    "avgQual": 30.8,
+    "maxLen": 60,
+    "minLen": 54
+  },
+  "experiment": {
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySelection": "RANDOM",
+    "libraryLayout": "PAIRED",
+    "platform": "ILLUMINA",
+    "libraryName": "NT204362R"
+  },
+  "id": 46,
+  "study_id": "11"
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4fc"
+  },
+  "experiment": {
+    "librarySelection": "RANDOM",
+    "libraryLayout": "PAIRED",
+    "platform": "ILLUMINA",
+    "libraryName": "NT20208A",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC"
+  },
+  "id": 18,
+  "study_id": "11",
+  "run_name": "ERR017794",
+  "sample": {
+    "sampleName": "SAMEA838009",
+    "strain": "05_04575",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "stats_raw": {
+    "ambiguous": 0.1,
+    "geecee": 63.1,
+    "avgLen": 57,
+    "maxLen": 60,
+    "avgQual": 31.6,
+    "minLen": 54,
+    "errQual": 21.3,
+    "total_bp": 280451970,
+    "reads": 2460105
+  },
+  "stats_qc": {
+    "ambiguous": 0,
+    "avgLen": 54,
+    "geecee": 62.9,
+    "maxLen": 60,
+    "avgQual": 32.3,
+    "minLen": 30,
+    "errQual": 26.8,
+    "total_bp": 249362051,
+    "reads": 2289768
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4fd"
+  },
+  "id": 8,
+  "study_id": "11",
+  "experiment": {
+    "librarySelection": "RANDOM",
+    "platform": "ILLUMINA",
+    "libraryName": "NT20196N",
+    "libraryLayout": "PAIRED",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  },
+  "stats_raw": {
+    "ambiguous": 0.1,
+    "avgLen": 57,
+    "geecee": 63.7,
+    "maxLen": 60,
+    "avgQual": 31.2,
+    "minLen": 54,
+    "errQual": 20.3,
+    "total_bp": 253963044,
+    "reads": 2227746
+  },
+  "stats_qc": {
+    "ambiguous": 0,
+    "geecee": 63.5,
+    "avgLen": 54,
+    "reads": 2068274,
+    "errQual": 26,
+    "total_bp": 224716244,
+    "minLen": 30,
+    "maxLen": 60,
+    "avgQual": 32.1
+  },
+  "run_name": "ERR017784",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA837974",
+    "strain": "08_14310"
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4fe"
+  },
+  "id": 19,
+  "study_id": "11",
+  "experiment": {
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC",
+    "platform": "ILLUMINA",
+    "libraryName": "NT20208A",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM"
+  },
+  "stats_raw": {
+    "errQual": 20.9,
+    "total_bp": 134754156,
+    "reads": 1182054,
+    "maxLen": 60,
+    "avgQual": 31.5,
+    "minLen": 54,
+    "ambiguous": 0.1,
+    "avgLen": 57,
+    "geecee": 63.7
+  },
+  "stats_qc": {
+    "total_bp": 118534737,
+    "errQual": 26.8,
+    "reads": 1088505,
+    "avgQual": 32.3,
+    "maxLen": 60,
+    "minLen": 30,
+    "avgLen": 54,
+    "geecee": 63.6,
+    "ambiguous": 0
+  },
+  "run_name": "ERR017795",
+  "sample": {
+    "strain": "05_12834",
+    "sampleName": "SAMEA838036",
+    "organism": "Mycobacterium tuberculosis"
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb4ff"
+  },
+  "experiment": {
+    "librarySelection": "RANDOM",
+    "libraryName": "STB0814361 89306",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II"
+  },
+  "study_id": "11",
+  "id": 76,
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "sampleName": "SAMEA838042",
+    "strain": "M08_14361"
+  },
+  "run_name": "ERR015610",
+  "stats_qc": {
+    "avgLen": 49,
+    "geecee": 64.7,
+    "ambiguous": 0,
+    "avgQual": 35,
+    "maxLen": 50,
+    "minLen": 30,
+    "total_bp": 1631168678,
+    "errQual": 27.9,
+    "reads": 16410528
+  },
+  "stats_raw": {
+    "reads": 17072824,
+    "total_bp": 1843864992,
+    "errQual": 23.2,
+    "minLen": 54,
+    "avgQual": 34.2,
+    "maxLen": 54,
+    "avgLen": 54,
+    "geecee": 64.8,
+    "ambiguous": 0.1
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb500"
+  },
+  "experiment": {
+    "librarySource": "GENOMIC",
+    "instrument": "Illumina Genome Analyzer II",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "libraryName": "NT204348T",
+    "librarySelection": "RANDOM"
+  },
+  "id": 36,
+  "study_id": "11",
+  "run_name": "ERR019560",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "strain": "M08/14387",
+    "sampleName": "SAMEA838022"
+  },
+  "stats_raw": {
+    "total_bp": 44841900,
+    "errQual": 24.6,
+    "reads": 393350,
+    "avgQual": 32.7,
+    "maxLen": 60,
+    "minLen": 54,
+    "avgLen": 57,
+    "geecee": 63.5,
+    "ambiguous": 0.2
+  },
+  "stats_qc": {
+    "ambiguous": 0,
+    "avgLen": 54,
+    "geecee": 63.7,
+    "maxLen": 60,
+    "avgQual": 33,
+    "minLen": 30,
+    "errQual": 28.4,
+    "total_bp": 41842707,
+    "reads": 381857
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb501"
+  },
+  "experiment": {
+    "libraryName": "NT20196N",
+    "platform": "ILLUMINA",
+    "libraryLayout": "PAIRED",
+    "librarySelection": "RANDOM",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC"
+  },
+  "id": 4,
+  "study_id": "11",
+  "sample": {
+    "organism": "Mycobacterium tuberculosis variant africanum",
+    "strain": "05_04169",
+    "sampleName": "SAMEA837973"
+  },
+  "run_name": "ERR017780",
+  "stats_qc": {
+    "minLen": 30,
+    "avgQual": 32,
+    "maxLen": 60,
+    "reads": 3476368,
+    "total_bp": 377319695,
+    "errQual": 25.8,
+    "avgLen": 54,
+    "geecee": 64.5,
+    "ambiguous": 0
+  },
+  "stats_raw": {
+    "ambiguous": 0.1,
+    "avgLen": 57,
+    "geecee": 64.7,
+    "maxLen": 60,
+    "avgQual": 31.2,
+    "minLen": 54,
+    "errQual": 20.2,
+    "total_bp": 424880166,
+    "reads": 3727019
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb502"
+  },
+  "run_name": "ERR015609",
+  "sample": {
+    "strain": "M08_14443",
+    "sampleName": "SAMEA838040",
+    "organism": "Mycobacterium tuberculosis"
+  },
+  "stats_raw": {
+    "avgLen": 54,
+    "geecee": 64.8,
+    "ambiguous": 0.1,
+    "reads": 23465587,
+    "total_bp": 2534283396,
+    "errQual": 21.1,
+    "minLen": 54,
+    "avgQual": 33.2,
+    "maxLen": 54
+  },
+  "stats_qc": {
+    "avgLen": 49,
+    "geecee": 64.6,
+    "ambiguous": 0,
+    "reads": 22460364,
+    "total_bp": 2220429427,
+    "errQual": 26.3,
+    "minLen": 30,
+    "avgQual": 34.2,
+    "maxLen": 50
+  },
+  "experiment": {
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC",
+    "librarySelection": "RANDOM",
+    "libraryLayout": "PAIRED",
+    "platform": "ILLUMINA",
+    "libraryName": "STB0814443 89307"
+  },
+  "study_id": "11",
+  "id": 81
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb503"
+  },
+  "stats_qc": {
+    "minLen": 30,
+    "maxLen": 60,
+    "avgQual": 29.9,
+    "reads": 1310609,
+    "errQual": 24.5,
+    "total_bp": 138456511,
+    "ambiguous": 0,
+    "avgLen": 52,
+    "geecee": 60.4
+  },
+  "stats_raw": {
+    "minLen": 54,
+    "maxLen": 60,
+    "avgQual": 27.6,
+    "reads": 1542076,
+    "errQual": 13.7,
+    "total_bp": 175796664,
+    "ambiguous": 0.1,
+    "avgLen": 57,
+    "geecee": 60.7
+  },
+  "sample": {
+    "organism": "Mycobacterium tuberculosis",
+    "strain": "M05/06174",
+    "sampleName": "SAMEA838054"
+  },
+  "run_name": "ERR019855",
+  "study_id": "11",
+  "id": 54,
+  "experiment": {
+    "librarySelection": "RANDOM",
+    "platform": "ILLUMINA",
+    "libraryName": "NT20196N",
+    "libraryLayout": "PAIRED",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC"
+  }
+},{
+  "_id": {
+    "$oid": "60c8d06c8f8f2d14d8cbb504"
+  },
+  "stats_qc": {
+    "minLen": 30,
+    "avgQual": 29.4,
+    "maxLen": 60,
+    "reads": 822535,
+    "total_bp": 84762828,
+    "errQual": 24,
+    "avgLen": 51,
+    "geecee": 63.7,
+    "ambiguous": 0
+  },
+  "stats_raw": {
+    "ambiguous": 0,
+    "geecee": 64.3,
+    "avgLen": 57,
+    "minLen": 54,
+    "maxLen": 60,
+    "avgQual": 25.8,
+    "reads": 1060480,
+    "errQual": 11.7,
+    "total_bp": 120894720
+  },
+  "sample": {
+    "sampleName": "SAMEA837957",
+    "strain": "05_10091",
+    "organism": "Mycobacterium tuberculosis variant africanum"
+  },
+  "run_name": "ERR019872",
+  "id": 71,
+  "study_id": "11",
+  "experiment": {
+    "libraryLayout": "PAIRED",
+    "platform": "ILLUMINA",
+    "libraryName": "NT20208A",
+    "librarySelection": "RANDOM",
+    "instrument": "Illumina Genome Analyzer II",
+    "librarySource": "GENOMIC"
+  }
+}]
