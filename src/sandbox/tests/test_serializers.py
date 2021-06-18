@@ -1,5 +1,5 @@
 from django.test import TestCase
-from sandbox.api.serializers import CompanySerializer
+from ..serializers import CompanySerializer
 from sandbox.tests.factories import CompanyFactory
 from ..models import Company
 

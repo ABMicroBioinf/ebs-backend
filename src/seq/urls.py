@@ -1,6 +1,11 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import StudyViewSet, RunViewSet, SeqFileViewSet, MetadataFileViewSet
+from .api import (
+    StudyViewSet,
+    RunViewSet,
+    SeqFileViewSet,
+    MetadataFileViewSet
+)
 app_name = "seq"
 router = DefaultRouter()
 router.register(r'study', StudyViewSet, basename='study')

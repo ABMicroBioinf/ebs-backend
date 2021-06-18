@@ -1,7 +1,7 @@
 
 from rest_framework.serializers import ModelSerializer
 
-from sandbox.models import Company
+from .models import Company
 
 class CompanySerializer(ModelSerializer):
     class Meta:

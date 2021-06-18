@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from account.models import Account
+from .models import Account
 
 #custome admin interface
 class AccountAdmin(UserAdmin):

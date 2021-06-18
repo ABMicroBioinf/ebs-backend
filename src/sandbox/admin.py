@@ -1,3 +1,3 @@
 from django.contrib import admin
-from sandbox.models import Company
+from .models import Company
 admin.site.register(Company)

@@ -3,9 +3,9 @@ from rest_framework import serializers
 from rest_framework.fields import FileField, ReadOnlyField
 from rest_framework.relations import PrimaryKeyRelatedField
 from account.models import Account
-from seq.models import Study, Sample, Run, SeqFile, MetadataFile
+from .models import Study, Sample, Run, SeqFile, MetadataFile
 
-from account.api.serializers import AccountSerializer
+from account.serializers import AccountSerializer
 
 class StudySerializer(serializers.ModelSerializer):
     

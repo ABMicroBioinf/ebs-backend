@@ -3,7 +3,7 @@ from rest_framework.mixins import (
 )
 from rest_framework.viewsets import GenericViewSet
 
-from seq.models import MetadataFile, SeqFile, Study, Run
+from .models import MetadataFile, SeqFile, Study, Run
 from .serializers import StudySerializer, RunSerializer, SeqFileSerializer, MetadataFileSerializer
 
 

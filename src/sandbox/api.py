@@ -3,7 +3,7 @@ from rest_framework.mixins import (
 )
 from rest_framework.viewsets import GenericViewSet
 
-from sandbox.models import Company
+from .models import Company
 from .serializers import *
 
 
