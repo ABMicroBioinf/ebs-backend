@@ -17,17 +17,25 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.schemas import get_schema_view
 from rest_framework.documentation import include_docs_urls
-
-
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import AllowAny
 from django.conf.urls.static import static
 from django.conf import settings
 
-# from rest_framework_simplejwt.views import (
-#     TokenObtainPairView,
-#     TokenRefreshView,
-# )
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 urlpatterns = [
+    path('docs/', include_docs_urls(title='ebsAPI', permission_classes = [AllowAny], public=True)),
+    path('schema', get_schema_view(
+        title="ebs API",
+        description="API for the ebs",
+        version="1.0.0",
+        permission_classes = [AllowAny],
+    ), name='openapi-schema'),
+
     # Django Default Settings
     path('admin/', admin.site.urls),
 
@@ -35,14 +43,10 @@ urlpatterns = [
     path('api/account/', include('account.urls', 'account_api')),
     path('api/sandbox/', include('sandbox.urls', 'sandbox_api')),
     path('api/seq/', include('seq.urls', 'seq_api')),
-    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('docs/', include_docs_urls(title='ebsAPI')),
-    path('schema', get_schema_view(
-        title="ebsAPI",
-        description="API for the ebsAPI",
-        version="1.0.0"
-    ), name='openapi-schema'),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    
 ]
 
 if settings.DEBUG:

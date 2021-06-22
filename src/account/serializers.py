@@ -13,9 +13,19 @@ class AccountSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+    def update(self, instance, validated_data):
+        instance.username = validated_data.get('username', instance.username)
+        instance.email = validated_data.get('email', instance.email)
+        password = validated_data.pop('password', None)
+        if password is not None:
+            instance.set_password(password)
+
+        instance.save()
+        return instance
+
     class Meta:
         model = Account
-        fields = ('email', 'password', 'username', )
+        fields = ('email', 'username', 'password')
         extra_kwargs = {
             'password': {'write_only': True}
         }
