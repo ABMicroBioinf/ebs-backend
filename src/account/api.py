@@ -9,6 +9,7 @@ from django.conf import settings
 from .models import Account
 from .serializers import AccountSerializer
 
+
 @api_view(['POST', ])
 @permission_classes([AllowAny, ])
 def register_view(request):
@@ -100,18 +101,3 @@ def login_view(request):
         return res
     return Response(status=status.HTTP_404_NOT_FOUND)
 
-""" @api_view(['POST', ])
-def logout_view(request):
-    import uuid
-    try:
-        user = request.user
-    except Account.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    user.jwt_secret = uuid.uuid4()
-    serializer = AccountSerializer(user, request.data, partial=True)
-    serializer.is_valid(raise_exception=True)
-    serializer.save()
-    data = {}
-    data["response"] = "logout successful"
-    return Response(data=data, status=status.HTTP_200_OK)
-     """

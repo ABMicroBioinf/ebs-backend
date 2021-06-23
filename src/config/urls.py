@@ -28,12 +28,16 @@ from rest_framework_simplejwt.views import (
 )
 
 urlpatterns = [
-    path('docs/', include_docs_urls(title='ebsAPI', permission_classes = [AllowAny], public=True)),
+    path('docs/', 
+    include_docs_urls(title='ebsAPI', 
+    #permission_classes = [AllowAny], 
+    public=False)
+    ),
     path('schema', get_schema_view(
         title="ebs API",
         description="API for the ebs",
         version="1.0.0",
-        permission_classes = [AllowAny],
+        #permission_classes = [AllowAny],
     ), name='openapi-schema'),
 
     # Django Default Settings

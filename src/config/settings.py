@@ -107,10 +107,10 @@ TEMPLATES = [
 AUTH_USER_MODEL = 'account.Account'
 WSGI_APPLICATION = 'config.wsgi.application'
 
-AUTHENTICATION_BACKENDS = [
+""" AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.AllowAllUsersModelBackend',
     'account.backend.AccountBackend'
-]
+] """
 
 JWT_SECRET_KEY = 'adf2fa0b-5243-483a-b062-67f51609db60'
 
@@ -126,7 +126,6 @@ SIMPLE_JWT = {
     'VERIFYING_KEY': None,
     'AUDIENCE': None,
     'ISSUER': None,
-
     'AUTH_HEADER_TYPES': ('Bearer',),
     'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
     'USER_ID_FIELD': 'email',

@@ -2,12 +2,6 @@
 from djongo import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager
-import uuid
-
-""" def jwt_get_secret_key(user_model):
-    print("hello jwt_get............................................................")
-    print(ser_model.jwt_secret)
-    return user_model.jwt_secret """
 
 #Create your models here.
 class MyAccountManager(BaseUserManager):
@@ -53,7 +47,7 @@ class Account(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    #jwt_secret = models.UUIDField(default=uuid.uuid4)
+
     # set it to the field you want to use for login
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
