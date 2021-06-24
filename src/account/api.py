@@ -71,7 +71,7 @@ def login_view(request):
         }
     
     
-    """ email = request.POST['email']
+    """ =email = request.POST['email']
     password = request.POST['password']
 """    
     # print("print body")
@@ -101,3 +101,12 @@ def login_view(request):
         return res
     return Response(status=status.HTTP_404_NOT_FOUND)
 
+@api_view(['GET', ])
+@permission_classes([AllowAny, ])
+def verify_view(request):
+    # This is possible because JWT authentication backend check whether user's token is valid or not
+    # possible return codes
+    # 200, 401, 404
+    if request.method == 'GET':
+        return Response(status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_404_NOT_FOUND)

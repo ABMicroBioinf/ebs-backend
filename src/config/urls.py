@@ -28,18 +28,6 @@ from rest_framework_simplejwt.views import (
 )
 
 urlpatterns = [
-    path('docs/', 
-    include_docs_urls(title='ebsAPI', 
-    #permission_classes = [AllowAny], 
-    public=False)
-    ),
-    path('schema', get_schema_view(
-        title="ebs API",
-        description="API for the ebs",
-        version="1.0.0",
-        #permission_classes = [AllowAny],
-    ), name='openapi-schema'),
-
     # Django Default Settings
     path('admin/', admin.site.urls),
 
@@ -50,7 +38,13 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    
+    path('docs/', include_docs_urls(title='ebsAPI', permission_classes = [AllowAny], public=True)),
+    path('schema', get_schema_view(
+        title="ebs-backend API",
+        description="API for the ebs",
+        version="1.0.0",
+        permission_classes = [AllowAny],
+    ), name='openapi-schema'),
 ]
 
 if settings.DEBUG:

@@ -12,9 +12,7 @@ class StudySerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     class Meta:
         model = Study
-        fields = (
-            'id', 'title', 'data_type', 'abstract', 'description', 'date_created', 'last_update', 'slug', 'owner'
-        )
+        fields = '__all__'
         read_only_fields = ('owner', 'slug')
 
 
@@ -42,4 +40,3 @@ class MetadataFileSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'metadata_file', 'run'
         )
-
