@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.conf import settings
-
+from rest_framework.parsers import JSONParser,FormParser, MultiPartParser
 from .models import Account
 from .serializers import AccountSerializer
 
@@ -61,6 +61,7 @@ def delete_view(request):
 
 @api_view(['POST', ])
 @permission_classes([AllowAny, ])
+#@parser_classes(JSONParser,FormParser, MultiPartParser)
 def login_view(request):
     import ast
     def get_tokens_for_user(user):

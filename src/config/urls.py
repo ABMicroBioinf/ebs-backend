@@ -41,7 +41,7 @@ urlpatterns = [
     path('docs/', include_docs_urls(title='ebsAPI', permission_classes = [AllowAny], public=True)),
     path('schema', get_schema_view(
         title="ebs-backend API",
-        description="API for the ebs",
+        description="API for the ebsAPI",
         version="1.0.0",
         permission_classes = [AllowAny],
     ), name='openapi-schema'),
