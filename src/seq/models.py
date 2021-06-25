@@ -24,19 +24,18 @@ class Study(models.Model):
         return str(self.title)
 
 class Sample(models.Model):
-    sampleName = models.CharField(max_length=100, unique=True)
+    sampleName = models.CharField(max_length=100)
     organism = models.CharField(max_length=100, null=True, blank=True)
     strain = models.CharField(max_length=100, null=True, blank=True)
     description = models.CharField(max_length=100, null=True, blank=True)
     class Meta:
-        abstract = False
-
+        abstract = True
     def __str__(self):
         return str(self.sampleName)
 
 
 class Experiment(models.Model):
-    libraryName = models.CharField(max_length=100, unique=True)
+    libraryName = models.CharField(max_length=100)
     platform = models.CharField(max_length=100, choices=common.seq_exp_platforms, null=True, blank=True) #illumina MiSeq
     instrument = models.CharField(max_length=100, null=True, blank=True)
     library_strategy = models.CharField(max_length=100, choices=common.seq_exp_strategies, null=True, blank=True) # WGS
@@ -46,7 +45,7 @@ class Experiment(models.Model):
     description = models.CharField(max_length=100, null=True, blank=True)
     
     class Meta:
-        abstract = False
+        abstract = True
     def __str__(self):
         return str(self.libraryName)
 
@@ -77,12 +76,13 @@ class Run(models.Model):
     )
     
     stats_raw = models.EmbeddedField(
-        model_container=SeqStat
+        model_container=SeqStat,
+        null=True
         
     )
     stats_qc = models.EmbeddedField(
         model_container=SeqStat,
-         null=True
+        null=True
     )
 
     date_created = models.DateTimeField(
