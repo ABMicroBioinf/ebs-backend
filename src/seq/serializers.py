@@ -21,10 +21,8 @@ class RunSerializer(DjongoModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     class Meta:
         model = Run
-        fields = [
-            'id', 'run_name', 'study', 'sample', 'experiment', 'stats_raw', 'stats_qc', 'date_created', 'last_update', 'owner' 
-        ]
-        #fields = '__all__'
+        
+        fields = '__all__'
         read_only_fields = ['owner']
 
 class SeqFileSerializer(serializers.ModelSerializer):

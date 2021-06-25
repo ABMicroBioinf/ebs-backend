@@ -39,11 +39,11 @@ class RunViewSet(GenericViewSet,  # generic view functionality
       
       # This method should be overriden
       # if we dont want to modify query set based on current instance attributes
-      def get_queryset(self):
-        return self.queryset.filter(owner=self.request.user)
+      # def get_queryset(self):
+      #   return self.queryset.filter(owner=self.request.user)
 
-      def perform_create(self, serializer):
-            serializer.save(owner=self.request.user)
+      """ def perform_create(self, serializer):
+        serializer.save(owner=self.request.user) """
 
 
 class SeqFileViewSet(GenericViewSet,  # generic view functionality

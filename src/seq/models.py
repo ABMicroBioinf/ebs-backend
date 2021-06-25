@@ -21,7 +21,7 @@ class Study(models.Model):
         Account, related_name="studies", on_delete=models.CASCADE, null=True)
   
     def __str__(self):
-        return self.title
+        return str(self.title)
 
 class Sample(models.Model):
     sampleName = models.CharField(max_length=100, unique=True)
@@ -32,7 +32,7 @@ class Sample(models.Model):
         abstract = False
 
     def __str__(self):
-        return self.sampleName
+        return str(self.sampleName)
 
 
 class Experiment(models.Model):
@@ -48,7 +48,7 @@ class Experiment(models.Model):
     class Meta:
         abstract = False
     def __str__(self):
-        return self.libraryName
+        return str(self.libraryName)
 
 class SeqStat(models.Model):
     reads = models.IntegerField(null=True, blank=True)
@@ -65,7 +65,7 @@ class SeqStat(models.Model):
 
 class Run(models.Model):
     id = models.BigAutoField(primary_key=True)
-    run_name = models.CharField(max_length=100, unique=True)
+    run_name = models.CharField(max_length=100, unique=True, null=False, blank=False)
     study = models.ForeignKey(
         Study, related_name="runs", on_delete=models.CASCADE)
     sample = models.EmbeddedField(
@@ -94,9 +94,7 @@ class Run(models.Model):
     objects = models.DjongoManager()
     
     def __str__(self):
-        return self.run_name
-
-
+        return str(self.run_name)
 
 import os
 
