@@ -25,9 +25,7 @@ class StudyViewSet(GenericViewSet,  # generic view functionality
       def perform_create(self, serializer):
             serializer.save(owner=self.request.user)
 
-      """ def list(self, request, *args, **kwargs):
-        make_my_checks()  # your custom checks
-        return super().list(request, *args, **kwargs)  # you should return them """
+      
 
 class RunViewSet(GenericViewSet,  # generic view functionality
                      CreateModelMixin,  # handles POSTs
@@ -39,6 +37,14 @@ class RunViewSet(GenericViewSet,  # generic view functionality
       serializer_class = RunSerializer
       queryset = Run.objects.all()
       
+      # This method should be overriden
+      # if we dont want to modify query set based on current instance attributes
+      def get_queryset(self):
+        return self.queryset.filter(owner=self.request.user)
+
+      def perform_create(self, serializer):
+            serializer.save(owner=self.request.user)
+
 
 class SeqFileViewSet(GenericViewSet,  # generic view functionality
                      CreateModelMixin,  # handles POSTs

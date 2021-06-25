@@ -43,8 +43,8 @@ def update_view(request):
         account = request.user
     except Account.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    print("hello user:")
-    print(request.user)
+    # print("hello user:")
+    # print(request.user)
     serializer = AccountSerializer(account, data=request.data, partial=True)
     serializer.is_valid(raise_exception=True)
     serializer.save()

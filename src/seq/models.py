@@ -88,7 +88,9 @@ class Run(models.Model):
     date_created = models.DateTimeField(
         verbose_name='date created', auto_now_add=True)
     last_update = models.DateTimeField(verbose_name='last update', auto_now=True)
-    
+    owner = models.ForeignKey(
+        Account, related_name="runs", on_delete=models.CASCADE, null=True)
+
     objects = models.DjongoManager()
     
     def __str__(self):

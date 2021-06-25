@@ -4,7 +4,7 @@ from rest_framework.fields import FileField, ReadOnlyField
 from rest_framework.relations import PrimaryKeyRelatedField
 from account.models import Account
 from .models import Study, Sample, Run, SeqFile, MetadataFile
-
+from rest_meets_djongo.serializers import DjongoModelSerializer
 from account.serializers import AccountSerializer
 
 class StudySerializer(serializers.ModelSerializer):
@@ -12,19 +12,20 @@ class StudySerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     class Meta:
         model = Study
+
         fields = '__all__'
-        read_only_fields = ('owner', 'slug')
+        read_only_fields = ['owner']
 
-
-from rest_meets_djongo.serializers import DjongoModelSerializer
-class RunSerializer(DjongoModelSerializer):   
+class RunSerializer(DjongoModelSerializer):
     study = PrimaryKeyRelatedField(queryset=Study.objects.all())
+    owner = serializers.ReadOnlyField(source='owner.username')
     class Meta:
         model = Run
-        fields = (
-            'id', 'run_name', 'study', 'sample', 'experiment', 'stats_raw', 'stats_qc'
-        )
-        
+        """ fields = [
+            'id', 'run_name', 'study', 'sample', 'experiment', 'stats_raw', 'stats_qc', 'date_created', 'last_update', 'owner' 
+        ] """
+        fields = '__all__'
+        read_only_fields = ['owner']
 
 class SeqFileSerializer(serializers.ModelSerializer):
     class Meta:

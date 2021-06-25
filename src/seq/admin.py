@@ -14,8 +14,20 @@ class StudyAdmin(admin.ModelAdmin):
         "owner",
     )
 
+class RunAdmin(admin.ModelAdmin):
+	list_display = [
+        "id",
+        "run_name",
+        "date_created",
+        "last_update",
+        "study",
+        "sample",
+        "experiment",
+        "owner",
+    ]
+
 admin.site.register(Study, StudyAdmin)
-admin.site.register(Run)
+admin.site.register(Run, RunAdmin)
 admin.site.register(SeqFile)
 admin.site.register(MetadataFile)
 
