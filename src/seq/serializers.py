@@ -39,3 +39,6 @@ class MetadataFileSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'metadata_file', 'run'
         )
+
+class MyFileSerializer(serializers.Serializer):
+    file = serializers.FileField(max_length=None, allow_empty_file=False)

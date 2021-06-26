@@ -118,4 +118,3 @@ class MetadataFile(models.Model):
     id = models.AutoField(primary_key=True)
     metadata_file = models.FileField(upload_to=metadata_dir, blank=False)
     run = models.ForeignKey(Run, on_delete=models.CASCADE)
-    
