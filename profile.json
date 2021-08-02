@@ -1,0 +1,346 @@
+{
+  "pct_reads_mapped": 98.42,
+  "num_reads_mapped": 516196,
+  "lineage": [
+    {
+      "lin": "lineage2",
+      "family": "East-Asian",
+      "spoligotype": "Beijing",
+      "rd": "RD105",
+      "frac": 1.0
+    },
+    {
+      "lin": "lineage2.2",
+      "family": "East-Asian (Beijing)",
+      "spoligotype": "Beijing-RD207",
+      "rd": "RD105;RD207",
+      "frac": 1.0
+    },
+    {
+      "lin": "lineage4.9",
+      "family": "Euro-American (H37Rv-like)",
+      "spoligotype": "T1",
+      "rd": "None",
+      "frac": 0.15151515151515152
+    },
+    {
+      "lin": "lineage2.2.1",
+      "family": "East-Asian (Beijing)",
+      "spoligotype": "Beijing-RD181",
+      "rd": "RD105;RD207;RD181",
+      "frac": 1.0
+    }
+  ],
+  "main_lin": "lineage2;lineage4",
+  "sublin": "lineage4.9;lineage2.2.1",
+  "dr_variants": [
+    {
+      "chr": "Chromosome",
+      "genome_pos": 7582,
+      "type": "missense",
+      "change": "p.Asp94Ala",
+      "freq": 1.0,
+      "nucleotide_change": "7582A>C",
+      "variant_annotations": {},
+      "locus_tag": "Rv0006",
+      "gene": "gyrA",
+      "_internal_change": "94D>94A",
+      "drugs": [
+        {
+          "type": "drug",
+          "drug": "ciprofloxacin",
+          "confidence": "indeterminate"
+        },
+        {
+          "type": "drug",
+          "drug": "fluoroquinolones",
+          "confidence": "indeterminate"
+        },
+        {
+          "type": "drug",
+          "drug": "levofloxacin",
+          "confidence": "indeterminate"
+        },
+        {
+          "type": "drug",
+          "drug": "moxifloxacin",
+          "confidence": "moderate"
+        },
+        {
+          "type": "drug",
+          "drug": "ofloxacin",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "chr": "Chromosome",
+      "genome_pos": 761155,
+      "type": "missense",
+      "change": "p.Ser450Leu",
+      "freq": 1.0,
+      "nucleotide_change": "761155C>T",
+      "variant_annotations": {},
+      "locus_tag": "Rv0667",
+      "gene": "rpoB",
+      "_internal_change": "450S>450L",
+      "drugs": [
+        {
+          "type": "drug",
+          "drug": "rifampicin",
+          "confidence": "high",
+          "literature": "10.1128/AAC.01093-18"
+        }
+      ]
+    },
+    {
+      "chr": "Chromosome",
+      "genome_pos": 781687,
+      "type": "missense",
+      "change": "p.Lys43Arg",
+      "freq": 1.0,
+      "nucleotide_change": "781687A>G",
+      "variant_annotations": {},
+      "locus_tag": "Rv0682",
+      "gene": "rpsL",
+      "_internal_change": "43K>43R",
+      "drugs": [
+        {
+          "type": "drug",
+          "drug": "streptomycin",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "chr": "Chromosome",
+      "genome_pos": 1673432,
+      "type": "non_coding",
+      "change": "c.-8T>C",
+      "nucleotide_change": "1673432T>C",
+      "freq": 1.0,
+      "variant_annotations": {},
+      "locus_tag": "Rv1483",
+      "gene": "fabG1",
+      "_internal_change": "-8T>C",
+      "drugs": [
+        {
+          "type": "drug",
+          "drug": "ethionamide",
+          "confidence": "indeterminate"
+        },
+        {
+          "type": "drug",
+          "drug": "isoniazid",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "chr": "Chromosome",
+      "genome_pos": 2155168,
+      "type": "missense",
+      "change": "p.Ser315Thr",
+      "freq": 1.0,
+      "nucleotide_change": "2155168C>G",
+      "variant_annotations": {},
+      "locus_tag": "Rv1908c",
+      "gene": "katG",
+      "_internal_change": "315S>315T",
+      "drugs": [
+        {
+          "type": "drug",
+          "drug": "isoniazid",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "chr": "Chromosome",
+      "genome_pos": 2289040,
+      "type": "missense",
+      "change": "p.Trp68Gly",
+      "freq": 1.0,
+      "nucleotide_change": "2289040A>C",
+      "variant_annotations": {},
+      "locus_tag": "Rv2043c",
+      "gene": "pncA",
+      "_internal_change": "68W>68G",
+      "drugs": [
+        {
+          "type": "drug",
+          "drug": "pyrazinamide",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "chr": "Chromosome",
+      "genome_pos": 4247431,
+      "type": "missense",
+      "change": "p.Met306Ile",
+      "freq": 1.0,
+      "nucleotide_change": "4247431G>A",
+      "variant_annotations": {},
+      "locus_tag": "Rv3795",
+      "gene": "embB",
+      "_internal_change": "306M>306I",
+      "drugs": [
+        {
+          "type": "drug",
+          "drug": "ethambutol",
+          "confidence": "high"
+        }
+      ]
+    }
+  ],
+  "other_variants": [
+    {
+      "chr": "Chromosome",
+      "genome_pos": 7585,
+      "type": "missense",
+      "change": "p.Ser95Thr",
+      "freq": 1.0,
+      "nucleotide_change": "7585G>C",
+      "variant_annotations": {},
+      "locus_tag": "Rv0006",
+      "gene": "gyrA",
+      "_internal_change": "95S>95T"
+    },
+    {
+      "chr": "Chromosome",
+      "genome_pos": 9304,
+      "type": "missense",
+      "change": "p.Gly668Asp",
+      "freq": 1.0,
+      "nucleotide_change": "9304G>A",
+      "variant_annotations": {},
+      "locus_tag": "Rv0006",
+      "gene": "gyrA",
+      "_internal_change": "668G>668D"
+    },
+    {
+      "chr": "Chromosome",
+      "genome_pos": 575907,
+      "type": "missense",
+      "change": "p.Ala187Val",
+      "freq": 1.0,
+      "nucleotide_change": "575907C>T",
+      "variant_annotations": {},
+      "locus_tag": "Rv0486",
+      "gene": "mshA",
+      "_internal_change": "187A>187V"
+    },
+    {
+      "chr": "Chromosome",
+      "genome_pos": 781395,
+      "type": "non_coding",
+      "change": "c.-165T>C",
+      "nucleotide_change": "781395T>C",
+      "freq": 1.0,
+      "variant_annotations": {},
+      "locus_tag": "Rv0682",
+      "gene": "rpsL",
+      "_internal_change": "-165T>C"
+    },
+    {
+      "chr": "Chromosome",
+      "genome_pos": 1834177,
+      "type": "synonymous",
+      "change": "c.636A>C",
+      "freq": 1.0,
+      "nucleotide_change": "1834177A>C",
+      "variant_annotations": {},
+      "locus_tag": "Rv1630",
+      "gene": "rpsA",
+      "_internal_change": "636A>C"
+    },
+    {
+      "chr": "Chromosome",
+      "genome_pos": 3086788,
+      "type": "non_coding",
+      "change": "c.-32T>C",
+      "nucleotide_change": "3086788T>C",
+      "freq": 1.0,
+      "variant_annotations": {},
+      "locus_tag": "Rv2780",
+      "gene": "ald",
+      "_internal_change": "-32T>C"
+    },
+    {
+      "chr": "Chromosome",
+      "genome_pos": 3841652,
+      "type": "non_coding",
+      "change": "c.-232A>T",
+      "nucleotide_change": "3841652T>A",
+      "freq": 0.26666666666666666,
+      "variant_annotations": {},
+      "locus_tag": "Rv3423c",
+      "gene": "alr",
+      "_internal_change": "-232T>A"
+    },
+    {
+      "chr": "Chromosome",
+      "genome_pos": 3841654,
+      "type": "non_coding",
+      "change": "c.-234A>C",
+      "nucleotide_change": "3841654T>G",
+      "freq": 0.26666666666666666,
+      "variant_annotations": {},
+      "locus_tag": "Rv3423c",
+      "gene": "alr",
+      "_internal_change": "-234T>G"
+    },
+    {
+      "chr": "Chromosome",
+      "genome_pos": 3841662,
+      "type": "non_coding",
+      "change": "c.-242A>G",
+      "nucleotide_change": "3841662T>C",
+      "freq": 0.4666666666666667,
+      "variant_annotations": {},
+      "locus_tag": "Rv3423c",
+      "gene": "alr",
+      "_internal_change": "-242T>C"
+    },
+    {
+      "chr": "Chromosome",
+      "genome_pos": 3841663,
+      "type": "non_coding",
+      "change": "c.-243G>A",
+      "nucleotide_change": "3841663C>T",
+      "freq": 0.26666666666666666,
+      "variant_annotations": {},
+      "locus_tag": "Rv3423c",
+      "gene": "alr",
+      "_internal_change": "-243C>T"
+    },
+    {
+      "chr": "Chromosome",
+      "genome_pos": 4243346,
+      "type": "synonymous",
+      "change": "c.114A>G",
+      "freq": 1.0,
+      "nucleotide_change": "4243346A>G",
+      "variant_annotations": {},
+      "locus_tag": "Rv3794",
+      "gene": "embA",
+      "_internal_change": "114A>G"
+    }
+  ],
+  "drtype": "Pre-XDR",
+  "db_version": {
+    "name": "tbdb",
+    "commit": "b2af444",
+    "Merge": "b9d0404 9818e09",
+    "Author": "Jody Phelan <jody.phelan@lshtm.ac.uk>",
+    "Date": "Mon Dec 21 06:39:13 2020 +0000"
+  },
+  "id": "SRR1162491",
+  "tbprofiler_version": "3.0.4",
+  "pipeline": {
+    "mapper": "bwa",
+    "variant_caller": "bcftools"
+  },
+  "timestamp": "06-07-2021 01:23:05"
+}

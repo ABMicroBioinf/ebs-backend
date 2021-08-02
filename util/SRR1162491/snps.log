@@ -1,0 +1,103 @@
+### echo snippy 4.6.0
+### cd /data/ebs_data/TB/tbprofiler_example_data/nullarbor/outdir
+
+### /data/software/miniconda3/envs/nullarbor/bin/snippy --force --tmpdir ./tmp --cpus 4 --outdir SRR1162491/snippy --ref /data/ebs_data/TB/tbprofiler_example_data/nullarbor/nc_000962.gb --R1 SRR1162491/R1.fq.gz --R2 SRR1162491/R2.fq.gz
+
+### samtools faidx reference/ref.fa
+
+
+### bwa index reference/ref.fa
+
+[bwa_index] Pack FASTA... 0.03 sec
+[bwa_index] Construct BWT for the packed sequence...
+[bwa_index] 1.35 seconds elapse.
+[bwa_index] Update BWT... 0.02 sec
+[bwa_index] Pack forward-only FASTA... 0.02 sec
+[bwa_index] Construct SA from BWT and Occ... 0.54 sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa index reference/ref.fa
+[main] Real time: 2.014 sec; CPU: 1.965 sec
+
+### mkdir -p reference/genomes && cp -f reference/ref.fa reference/genomes/ref.fa
+
+
+### ln -sf reference/ref.fa .
+
+
+### ln -sf reference/ref.fa.fai .
+
+
+### mkdir -p reference/ref && gzip -c reference/ref.gff > reference/ref/genes.gff.gz
+
+
+### snpEff build -c reference/snpeff.config -dataDir . -gff3 ref
+
+WARNING: All frames are zero! This seems rather odd, please check that 'frame' information in your 'genes' file is accurate.
+
+### bwa mem  -Y -M -R '@RG\tID:snippy\tSM:snippy' -t 4 reference/ref.fa /data/ebs_data/TB/tbprofiler_example_data/nf-qc/outdir/qc/seqs/SRR1162491_R1.qc.fastq.gz /data/ebs_data/TB/tbprofiler_example_data/nf-qc/outdir/qc/seqs/SRR1162491_R2.qc.fastq.gz | samclip --max 10 --ref reference/ref.fa.fai | samtools sort -n -l 0 -T /data/ebs_data/TB/tbprofiler_example_data/nullarbor/outdir/tmp --threads 1 -m 4000M | samtools fixmate -m --threads 1 - - | samtools sort -l 0 -T /data/ebs_data/TB/tbprofiler_example_data/nullarbor/outdir/tmp --threads 1 -m 4000M | samtools markdup -T /data/ebs_data/TB/tbprofiler_example_data/nullarbor/outdir/tmp --threads 1 -r -s - - > snps.bam
+
+COMMAND: samtools markdup -T /data/ebs_data/TB/tbprofiler_example_data/nullarbor/outdir/tmp --threads 1 -r -s - -
+READ: 4446108
+WRITTEN: 3674574
+EXCLUDED: 34160
+EXAMINED: 4411948
+PAIRED: 4201568
+SINGLE: 210380
+DUPLICATE PAIR: 656608
+DUPLICATE SINGLE: 114926
+DUPLICATE PAIR OPTICAL: 0
+DUPLICATE SINGLE OPTICAL: 0
+DUPLICATE NON PRIMARY: 0
+DUPLICATE NON PRIMARY OPTICAL: 0
+DUPLICATE PRIMARY TOTAL: 771534
+DUPLICATE TOTAL: 771534
+ESTIMATED_LIBRARY_SIZE: 6001152
+
+### samtools index snps.bam
+
+
+### fasta_generate_regions.py reference/ref.fa.fai 640731 > reference/ref.txt
+
+
+### freebayes-parallel reference/ref.txt 4 -p 2 -P 0 -C 2 -F 0.05 --min-coverage 10 --min-repeat-entropy 1.0 -q 13 -m 60 --strict-vcf   -f reference/ref.fa snps.bam > snps.raw.vcf
+
+
+### bcftools view --include 'FMT/GT="1/1" && QUAL>=100 && FMT/DP>=10 && (FMT/AO)/(FMT/DP)>=0' snps.raw.vcf  | vt normalize -r reference/ref.fa - | bcftools annotate --remove '^INFO/TYPE,^INFO/DP,^INFO/RO,^INFO/AO,^INFO/AB,^FORMAT/GT,^FORMAT/DP,^FORMAT/RO,^FORMAT/AO,^FORMAT/QR,^FORMAT/QA,^FORMAT/GL' > snps.filt.vcf
+
+
+### snpEff ann -noLog -noStats -no-downstream -no-upstream -no-utr -c reference/snpeff.config -dataDir . ref snps.filt.vcf > snps.vcf
+
+
+### /data/software/miniconda3/envs/nullarbor/bin/snippy-vcf_to_tab --gff reference/ref.gff --ref reference/ref.fa --vcf snps.vcf > snps.tab
+
+Loading reference: reference/ref.fa
+Loaded 1 sequences.
+Loading features: reference/ref.gff
+Parsing variants: snps.vcf
+Converted 1381 SNPs to TAB format.
+
+### /data/software/miniconda3/envs/nullarbor/bin/snippy-vcf_extract_subs snps.filt.vcf > snps.subs.vcf
+
+
+### bcftools convert -Oz -o snps.vcf.gz snps.vcf
+
+
+### bcftools index -f snps.vcf.gz
+
+
+### bcftools consensus --sample snippy -f reference/ref.fa -o snps.consensus.fa snps.vcf.gz
+
+Applied 1381 variants
+
+### bcftools convert -Oz -o snps.subs.vcf.gz snps.subs.vcf
+
+
+### bcftools index -f snps.subs.vcf.gz
+
+
+### bcftools consensus --sample snippy -f reference/ref.fa -o snps.consensus.subs.fa snps.subs.vcf.gz
+
+Applied 1307 variants
+
+### rm -f snps.subs.vcf.gz snps.subs.vcf.gz.csi snps.subs.vcf.gz.tbi
+

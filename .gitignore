@@ -3,6 +3,7 @@ src/*/__pycache__
 src/*/migrations
 src/*/api/__pycache__
 src/*/api/migrations
+src/config/settings/local.py
 sradb*
 src/.vscode
 src/.venv
