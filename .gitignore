@@ -15,4 +15,4 @@ src/*/migratons/*
 src/*/*/__pycache__
 test_data
 examples/*
-
+src/config/settings/local.py
