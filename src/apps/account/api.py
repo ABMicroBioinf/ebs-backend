@@ -120,3 +120,11 @@ def verify_view(request):
     if request.method == 'GET':
         return Response(status=status.HTTP_200_OK)
     return Response(status=status.HTTP_404_NOT_FOUND)
+    
+@api_view(["GET", ])
+@permission_classes([AllowAny, ])
+@parser_classes([JSONParser, FormParser, MultiPartParser])
+def logout_view(request):
+    res = Response(status=status.HTTP_200_OK)
+    res.delete_cookie("auth_token")
+    return res

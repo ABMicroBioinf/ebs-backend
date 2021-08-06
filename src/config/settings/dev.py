@@ -60,7 +60,8 @@ SIMPLE_JWT = {
     'AUTH_COOKIE_PATH': '/',
     'AUTH_COOKIE_SECURE': not DEBUG,
     'AUTH_COOKIE_DOMAIN': None,
-    'AUTH_COOKIE': 'access_token',
+    #'AUTH_COOKIE': 'access_token',
+    'AUTH_COOKIE': 'auth_token',
 }
 
 # Internationalization
