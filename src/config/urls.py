@@ -22,23 +22,20 @@ from rest_framework.permissions import AllowAny
 from django.conf.urls.static import static
 from django.conf import settings
 
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
-
 urlpatterns = [
     # Django Default Settings
     path('admin/', admin.site.urls),
 
     # API Settings
     path('api/account/', include('apps.account.urls', 'account_api')),
+    #path('api/account/token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    #path('api/account/token/refresh/', TokenRefreshView.as_view(), name='my_token_refresh'),
     path('api/sandbox/', include('sandbox.urls', 'sandbox_api')),
     path('api/seq/', include('apps.seq.urls', 'seq_api')),
     path('api/isolate/', include('apps.isolate.genome.urls', 'isolate_genome_api')),
     path('api/isolate/tb/', include('apps.isolate.tb.urls', 'isolate_tb_api')),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    #path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    #path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('docs/', include_docs_urls(title='ebsAPI', permission_classes = [AllowAny], public=True)),
     path('schema', get_schema_view(

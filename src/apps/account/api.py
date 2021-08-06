@@ -9,8 +9,8 @@ from rest_framework.decorators import parser_classes
 from rest_framework.parsers import JSONParser,FormParser, MultiPartParser
 
 from .models import Account
-from .serializers import AccountSerializer
-
+from .serializers import AccountSerializer, MyTokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 @api_view(['POST', ])
 @permission_classes([AllowAny, ])
@@ -120,7 +120,7 @@ def verify_view(request):
     if request.method == 'GET':
         return Response(status=status.HTTP_200_OK)
     return Response(status=status.HTTP_404_NOT_FOUND)
-    
+
 @api_view(["GET", ])
 @permission_classes([AllowAny, ])
 @parser_classes([JSONParser, FormParser, MultiPartParser])
@@ -128,3 +128,6 @@ def logout_view(request):
     res = Response(status=status.HTTP_200_OK)
     res.delete_cookie("auth_token")
     return res
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
