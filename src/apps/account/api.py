@@ -72,21 +72,27 @@ from rest_framework.parsers import JSONParser
 @parser_classes([JSONParser, FormParser, MultiPartParser])
 def login_view(request):
     import ast
-    def get_tokens_for_user(user):
+
+    """ def get_tokens_for_user(user):
         refresh = RefreshToken.for_user(user)
+        RefreshToken.access_token
+
+        print('**************************')
+        print(type(refresh))
+        print(refresh)
+        #refresh.access
         return {
             'refresh': str(refresh),
             'access': str(refresh.access_token),
         }
-    
-    
-    """ =email = request.POST['email']
-    password = request.POST['password']
-"""    
-    # print("print body")
-    
-    # print("print post")
-    # print(request.POST)
+
+     """
+    def get_tokens_for_user(user):
+        refresh = MyTokenObtainPairSerializer().get_token(user)
+        return {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }
 
     dict = ast.literal_eval(request.body.decode("UTF-8"))
     email = dict['email']
@@ -101,6 +107,7 @@ def login_view(request):
         res = Response(data, status=status.HTTP_200_OK)
         res.set_cookie(
             value=data['access'],
+            
             key=settings.SIMPLE_JWT['AUTH_COOKIE'],
             expires=settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
             secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],

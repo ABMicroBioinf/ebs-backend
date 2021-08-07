@@ -44,6 +44,7 @@ SIMPLE_JWT = {
     # 'USER_ID_CLAIM': 'email',
     'USER_ID_FIELD': '_id',
     'USER_ID_CLAIM': '_id',
+    
     'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
 
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
