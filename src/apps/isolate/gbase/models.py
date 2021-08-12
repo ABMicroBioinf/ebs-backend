@@ -5,6 +5,10 @@ from django.db.models.signals import pre_save
 from django.utils.text import slugify
 from apps.account.models import Account
 
+
+isMigrate = True       #added this line
+
+
 # Create your models here.
 #from django import forms
 class Pipeline(models.Model):
@@ -12,13 +16,13 @@ class Pipeline(models.Model):
     variant_caller = models.CharField(max_length=100)
 
     class Meta:
-        abstract = True
+        abstract = isMigrate
 
 class GeneCoverage(models.Model):
     gene = models.CharField(max_length=100)
     pct_coverage = models.FloatField()
     class Meta:
-        abstract = True
+        abstract = isMigrate
 
 class Virulome(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
@@ -39,6 +43,10 @@ class Virulome(models.Model):
     Description = models.TextField()
 
     objects = models.DjongoManager()
+
+    class Meta:
+        pass
+        # ordering = ['id', 'seqtype', 'num_found', 'gene', 'owner__uername', 'DateCreated', 'LastUpdate']
     
     def __str__(self):
         return str(self.id)
@@ -68,7 +76,7 @@ class Allele(models.Model):
     allele = models.CharField(max_length=100)
     num = models.CharField(max_length=10)
     class Meta:
-        abstract = True
+        abstract = isMigrate
     
 class Mlst(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
@@ -126,7 +134,7 @@ class GffAttr(models.Model):
     tag = models.CharField(max_length=100)
     value = models.CharField(max_length=100)
     class Meta:
-        abstract = True
+        abstract = isMigrate
 class Gff(models.Model):
     seqName = models.CharField(max_length=100)
     source = models.CharField(max_length=100)
@@ -141,7 +149,7 @@ class Gff(models.Model):
     )
 
     class Meta:
-        abstract = True
+        abstract = isMigrate
 
 class Annotation(models.Model):
     id = models.CharField(max_length=100, primary_key=True)

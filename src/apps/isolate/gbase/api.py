@@ -29,7 +29,7 @@ class GenomeViewSet(GenericViewSet,  # generic view functionality
       queryset = Genome.objects.all()
       pagination_class = CustomPagination
       filter_backends = (SearchFilter, OrderingFilter)
-      search_fields = "__all__"
+      search_fields = ["id", "DateCreated", "LastUpdate", "seqtype","owner__username"]
       ordering_fields = "__all__"
       
       # This method should be overriden
@@ -51,9 +51,11 @@ class VirulomeViewSet(GenericViewSet,  # generic view functionality
       queryset = Virulome.objects.all()
       pagination_class = CustomPagination
       filter_backends = (SearchFilter, OrderingFilter)
-      search_fields = "__all__"
-      ordering_fields = "__all__"
+      # search_fields = "__all__"
+      # ordering_fields = "__all__"
       
+      search_fields = ["id", "DateCreated", "LastUpdate", "seqtype","owner__username"]
+      ordering_fields = ["id", "DateCreated", "LastUpdate", "seqtype","owner__username"]
       
       # This method should be overriden
       # if we dont want to modify query set based on current instance attributes
@@ -120,7 +122,7 @@ class AnnotationViewSet(GenericViewSet,  # generic view functionality
       queryset = Annotation.objects.all()
       
       pagination_class = CustomPagination
-      pagination_class.page_size = 1
+      #pagination_class.page_size = 1
       filter_backends = (SearchFilter, OrderingFilter)
       search_fields = "__all__"
       ordering_fields = "__all__"

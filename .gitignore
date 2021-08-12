@@ -16,5 +16,5 @@ src/*/migratons/*
 src/*/*/__pycache__
 test_data
 examples/*
-src/config/settings/local.py
+#src/config/settings/local.py
 util/*
