@@ -72,6 +72,11 @@ from rest_framework.parsers import JSONParser
 @parser_classes([JSONParser, FormParser, MultiPartParser])
 def login_view(request):
     import ast
+  
+    """   {
+    "email": "admin@gmail.com",
+    "password": "123"
+    } """
 
     """ def get_tokens_for_user(user):
         refresh = RefreshToken.for_user(user)

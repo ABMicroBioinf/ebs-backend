@@ -32,7 +32,7 @@ urlpatterns = [
     #path('api/account/token/refresh/', TokenRefreshView.as_view(), name='my_token_refresh'),
     path('api/sandbox/', include('sandbox.urls', 'sandbox_api')),
     path('api/seq/', include('apps.seq.urls', 'seq_api')),
-    path('api/isolate/', include('apps.isolate.genome.urls', 'isolate_genome_api')),
+    path('api/isolate/gbase/', include('apps.isolate.gbase.urls', 'isolate_gbase_api')),
     path('api/isolate/tb/', include('apps.isolate.tb.urls', 'isolate_tb_api')),
     #path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     #path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),

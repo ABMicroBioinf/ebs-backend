@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     'apps.account',
     'apps.seq',
     'sandbox',
-    'apps.isolate.genome',
+    'apps.isolate.gbase',
     'apps.isolate.tb',
     #
     'djongo',
@@ -68,6 +68,7 @@ REST_FRAMEWORK = {
     #    'rest_framework.renderers.BrowsableAPIRenderer',
     #  ],
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    "DEFAULT_PAGINATION_CLASS": "gizmos.pagination.CustomPagination",
 }
 
 MIDDLEWARE = [

@@ -1,33 +1,20 @@
 from django.contrib import admin
-from .models import Study, Run, SeqFile, MetadataFile
+from .models import Sequence, SeqFile, MetadataFile
 # Register your models here.
 
 
 #custome admin interface
-class StudyAdmin(admin.ModelAdmin):
-	list_display = (
-        "id",
-        "title",
-        "data_type",
-        "date_created",
-        "last_update",
-        "owner",
-    )
-
-class RunAdmin(admin.ModelAdmin):
+class SequenceAdmin(admin.ModelAdmin):
 	list_display = [
         "id",
-        "run_name",
-        "date_created",
-        "last_update",
-        "study",
-        "sample",
-        "experiment",
+        "Experiment",
+        "SampleName",
+        "Projectid",
         "owner",
+        "DateCreated"
     ]
 
-admin.site.register(Study, StudyAdmin)
-admin.site.register(Run, RunAdmin)
+admin.site.register(Sequence, SequenceAdmin)
 admin.site.register(SeqFile)
 admin.site.register(MetadataFile)
 

@@ -1,0 +1,53 @@
+name	taxonomy_id	taxonomy_lvl	kraken_assigned_reads	added_reads	new_est_reads	fraction_total_reads
+Mycobacterium tuberculosis	1773	S	158625	4273656	4432281	0.99320
+Mycobacterium canettii	78331	S	11727	6989	18716	0.00419
+Mycobacterium heidelbergense	53376	S	298	20	318	0.00007
+Mycobacterium saskatchewanense	220927	S	193	6	199	0.00004
+Mycobacterium shigaense	722731	S	170	11	181	0.00004
+Mycobacterium florentinum	292462	S	143	27	170	0.00004
+Mycobacterium parmense	185642	S	142	7	149	0.00003
+Mycobacterium simiae	1784	S	141	5	146	0.00003
+Mycobacterium stomatepiae	470076	S	133	26	159	0.00004
+Mycobacterium shinjukuense	398694	S	1108	8	1116	0.00025
+Mycobacterium lacus	169765	S	956	4	960	0.00022
+Mycobacterium mantenii	560555	S	257	5	262	0.00006
+Mycobacterium avium	1764	S	131	149	280	0.00006
+Mycobacterium colombiense	339268	S	116	2	118	0.00003
+Mycobacterium marseillense	701042	S	88	5	93	0.00002
+Mycobacterium chimaera	222805	S	42	29	71	0.00002
+Mycobacterium lepraemurium	64667	S	40	10	50	0.00001
+Mycobacterium intracellulare	1767	S	31	60	91	0.00002
+Mycobacterium basiliense	2094119	S	551	1	552	0.00012
+Mycobacterium kansasii	1768	S	362	4	366	0.00008
+Mycobacterium sp. JS623	212767	S	142	2	144	0.00003
+Mycobacterium sp. DL90	2487344	S	37	1	38	0.00001
+Mycobacterium sp. EPa45	1545728	S	31	19	50	0.00001
+Mycobacterium sp. ELW1	1547487	S	27	13	40	0.00001
+Mycobacterium sp. MS1601	1936029	S	26	3	29	0.00001
+Mycobacterium sp. YC-RL4	1682113	S	18	0	18	0.00000
+Mycobacterium sp. 3/86Rv	2041046	S	16	3740	3756	0.00084
+Mycobacterium haemophilum	29311	S	311	1	312	0.00007
+Mycobacterium conspicuum	44010	S	216	3	219	0.00005
+Mycobacterium paragordonae	1389713	S	199	0	199	0.00004
+Mycobacterium branderi	43348	S	158	0	158	0.00004
+Mycobacterium xenopi	1789	S	140	0	140	0.00003
+Mycobacterium noviomagense	459858	S	129	0	129	0.00003
+Mycobacterium leprae	1769	S	109	0	109	0.00002
+Mycobacterium cookii	1775	S	105	0	105	0.00002
+Mycobacterium paraseoulense	590652	S	89	2	91	0.00002
+Mycobacterium seoulense	386911	S	77	2	79	0.00002
+Mycobacterium marinum	1781	S	77	22	99	0.00002
+Mycobacterium dioxanotrophicus	482462	S	44	0	44	0.00001
+Mycobacterium gallinarum	39689	S	33	0	33	0.00001
+Mycobacterium ulcerans	1809	S	28	21	49	0.00001
+Mycobacterium grossiae	1552759	S	22	1	23	0.00001
+Mycobacterium pseudoshottsii	265949	S	13	21	34	0.00001
+Mycolicibacterium chubuense	1800	S	37	10	47	0.00001
+Mycolicibacterium aurum	1791	S	17	3	20	0.00000
+Mycolicibacter terrae	1788	S	10	2	12	0.00000
+Mycolicibacter sinensis	875328	S	10	2	12	0.00000
+Streptomyces spongiicola	1690221	S	16	16	32	0.00001
+Schaalia odontolytica	1660	S	17	3	20	0.00000
+Roseomonas mucosa	207340	S	10	15	25	0.00001
+Ralstonia pickettii	329	S	13	8	21	0.00000
+Homo sapiens	9606	S	242	0	242	0.00005

@@ -9,10 +9,12 @@ src/.vscode
 src/.venv
 src/media_cdn/*
 src/media_cdn/*/*
-src/tmp
+src/tmp/
+srt/scripts/data/*
 src/*/__pycache__/*
 src/*/migratons/*
 src/*/*/__pycache__
 test_data
 examples/*
 src/config/settings/local.py
+util/*
