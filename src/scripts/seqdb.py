@@ -21,8 +21,20 @@ class Sequence(Dataset):
                 seqid = row['Seqfile']
                 del row['seqtype']
                 del row['Seqfile']
+                print("******************************")
+                print(type(row))
+                newrow = {}
+                for key, value in row.items():
+                    print("(((((((((((((((((((((((((((((((((((((((((((((((((((((")
+                    print(key)
+                    print(value)
+                    try:
+                        newrow[key] = int(value)
+                    except ValueError:
+                        newrow[key] = float(value)
+
                 try:
-                    self._mongo_db_collection.update_one({"id": seqid}, {"$set": {newkey: row }})
+                    self._mongo_db_collection.update_one({"id": seqid}, {"$set": {newkey: newrow }})
                     #return "updated sequence collection True"
                 except Exception as e:
                     print("An exception occurred ::", e)
@@ -47,8 +59,8 @@ class Sequence(Dataset):
             "Experiment", 
             "Platform", 
             "LibraryName",
-            "InsertSize", 
-            "InsertDev", 
+            #"InsertSize", 
+            #"InsertDev", 
             "LibrarySelection", 
             "Model", 
             "LibraryStrategy", 
@@ -75,9 +87,9 @@ class Sequence(Dataset):
                 row['seqtype'] = type
                 row['LastUpdate'] = datetime.now()
                 row['Description'] = ""
+                row['TaxID'] = int(row['TaxID'])
 
-
-            print(list_runinfo)
+            #print(list_runinfo)
         
         try: 
             self._mongo_db_collection.create_index([("id", pymongo.ASCENDING)], unique=True)
@@ -107,10 +119,10 @@ class Sequence(Dataset):
                     for line in f:
                         row = line.rstrip()
                         segment = re.split('\t', row)
-                        print(line)
+                        #print(line)
                         i += 1
                         data["taxName_" + str(i)] = segment[0]
-                        data["taxFrac_" + str(i)] = segment[-1]
+                        data["taxFrac_" + str(i)] = float(segment[-1])
 
                         if i >= 4:
                             break

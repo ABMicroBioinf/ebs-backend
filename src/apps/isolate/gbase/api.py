@@ -29,7 +29,7 @@ class GenomeViewSet(GenericViewSet,  # generic view functionality
       queryset = Genome.objects.all()
       pagination_class = CustomPagination
       filter_backends = (SearchFilter, OrderingFilter)
-      search_fields = ["id", "DateCreated", "LastUpdate", "seqtype","owner__username"]
+      search_fields = "__all__"
       ordering_fields = "__all__"
       
       # This method should be overriden
@@ -51,11 +51,11 @@ class VirulomeViewSet(GenericViewSet,  # generic view functionality
       queryset = Virulome.objects.all()
       pagination_class = CustomPagination
       filter_backends = (SearchFilter, OrderingFilter)
-      # search_fields = "__all__"
-      # ordering_fields = "__all__"
+      search_fields = "__all__"
+      ordering_fields = "__all__"
       
-      search_fields = ["id", "DateCreated", "LastUpdate", "seqtype","owner__username"]
-      ordering_fields = ["id", "DateCreated", "LastUpdate", "seqtype","owner__username"]
+      # search_fields = ["id", "DateCreated", "LastUpdate", "seqtype","owner__username"]
+      # ordering_fields = ["id", "DateCreated", "LastUpdate", "seqtype","owner__username"]
       
       # This method should be overriden
       # if we dont want to modify query set based on current instance attributes
@@ -99,8 +99,10 @@ class MlstViewSet(GenericViewSet,  # generic view functionality
       queryset = Mlst.objects.all()
       pagination_class = CustomPagination
       filter_backends = (SearchFilter, OrderingFilter)
-      search_fields = "__all__"
-      ordering_fields = "__all__"
+      # search_fields = "__all__"
+      # ordering_fields = "__all__"
+      search_fields = ["id", "DateCreated", "LastUpdate", "seqtype","scheme", "owner__username"]
+      ordering_fields = ["id", "DateCreated", "LastUpdate", "seqtype","scheme","owner__username"]
       
       # This method should be overriden
       # if we dont want to modify query set based on current instance attributes

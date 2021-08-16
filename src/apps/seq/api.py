@@ -12,7 +12,7 @@ from rest_framework.mixins import (
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
-from apps.seq.models import MetadataFile, SeqFile, Sequence
+from apps.seq.models import MetadataFile, SeqFile, Sequence, SeqStat
 
 from .serializers import (
     MetadataFileSerializer,
@@ -22,8 +22,6 @@ from .serializers import (
     SequenceSerializer,
 )
 
-
-# jongil
 class SequenceViewSet(
     GenericViewSet,  # generic view functionality
     CreateModelMixin,  # handles POSTs
@@ -35,15 +33,114 @@ class SequenceViewSet(
 
     serializer_class = SequenceSerializer
     queryset = Sequence.objects.all()
+    
     pagination_class = CustomPagination
     filter_backends = (SearchFilter, OrderingFilter)
-    search_fields = "__all__"
-    ordering_fields = "__all__"
+   
+    search_fields = [
+        "DateCreated",
+        "Experiment",
+        "LastUpdate",
+        "LibraryLayout",
+        "LibrarySelection",
+        "LibrarySource",
+        "LibraryStrategy",
+        "Platform", 
+        "Projectid",
+        "ScientificName",
+        "SequencerModel",
+        "TaxID",
+        "id",
+        "seqtype",
+        "taxName_1", 
+        "taxName_2", 
+        "taxName_3", 
+        "taxName_4",
+        "owner__username",
+        
+        
+        ] 
+
+    ordering_fields = [
+        "DateCreated",
+        "Experiment",
+        "LastUpdate",
+        "LibraryLayout",
+        "LibrarySelection",
+        "LibrarySource",
+        "LibraryStrategy",
+        "Platform", 
+        "Projectid",
+        "ScientificName",
+        "SequencerModel",
+        "TaxID",
+        
+        "id",
+        "seqtype",
+        "taxName_1", 
+        "taxName_2", 
+        "taxName_3", 
+        "taxName_4",
+        "owner__username",
+       
+        ] 
+ 
+ 
+    def get_queryset_0(self):
+
+        params_dict = self.request.query_params.dict()
+        params_dict.pop('page', None)
+
+        for key, value in params_dict.items():
+            print(key)
+            print(value)
     
-    # This method should be overriden
-    # if we dont want to modify query set based on current instance attributes
+        return self.queryset.filter(owner=self.request.user).filter(**params_dict)
+    
+    def get_queryset_1(self):
+
+        params_dict = self.request.query_params.dict()
+        params_dict.pop('page', None)
+        params_dict.pop('ordering', None)
+        params_dict.pop('search', None)
+        for key, value in params_dict.items():
+            print(key)
+            print(value)
+        
+        return self.queryset.filter(owner=self.request.user).filter(**params_dict)#.filter(RawStats__startswith={'Reads': 'SRR'})
+
     def get_queryset(self):
-        return self.queryset.filter(owner=self.request.user)
+
+        params_dict = self.request.query_params.dict()
+        params_dict.pop('page', None)
+        params_dict.pop('ordering', None)
+        params_dict.pop('search', None)
+        rstats_dict = {}
+        qstats_dict = {}
+        other_dict = {}
+        for key, value in params_dict.items():
+            print(key)
+            print(value)
+            if key.startswith('RawStats'):
+                newkey = key[9:]
+                rstats_dict[newkey] = value
+            elif key.startswith('QcStats'):
+                newkey = key[8:]
+                qstats_dict[newkey] = value
+            else:
+                other_dict[key] = value          
+        #return self.queryset.filter(owner=self.request.user).filter(**params_dict)
+        q = None
+        q = self.queryset.filter(owner=self.request.user)
+        if other_dict:
+            q = q.filter(**other_dict)
+        if rstats_dict:
+            q = q.filter(RawStats=SeqStat(**rstats_dict))
+        if qstats_dict:
+            q = q.filter(QcStats=SeqStat(**qstats_dict))
+        return q
+        #return self.queryset.filter(owner=self.request.user)
+ 
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -99,6 +196,7 @@ def handle_uploaded_file(f):
 
 # jongil
 class SequenceMetadataViewSet(viewsets.ModelViewSet):
+    serializer_class = SequenceMetadataSerializer
     @action(detail=False)
     def count(self, request):
         seq = Sequence.objects.all()

@@ -11,7 +11,7 @@ class CustomPagination(PageNumberPagination):
     page_size_query_param = "page_size"
 
     def get_paginated_response(self, data):
-        print(data)
+        #print(data)
         return Response(
             {
                 "links": {
