@@ -35,6 +35,7 @@ class Sequence(Dataset):
 
                 try:
                     self._mongo_db_collection.update_one({"id": seqid}, {"$set": {newkey: newrow }})
+                    
                     #return "updated sequence collection True"
                 except Exception as e:
                     print("An exception occurred ::", e)

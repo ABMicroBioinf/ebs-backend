@@ -21,7 +21,6 @@ class SeqStat(models.Model):
 class Sequence(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
     TaxID = models.IntegerField()
-    
     ScientificName = models.CharField(max_length=100)
     seqtype = models.CharField(max_length=100, choices=seqtypes, null=True, blank=True) # WGS
     Experiment = models.CharField(max_length=100)
@@ -30,22 +29,22 @@ class Sequence(models.Model):
     LibrarySelection = models.CharField(max_length=100, choices=seq_exp_selections, null=True, blank=True) #random
     LibrarySource = models.CharField(max_length=100, choices=seq_exp_sources, null=True, blank=True) # metagenomics
     LibraryLayout = models.CharField(max_length=100, choices=seq_exp_layouts, null=True, blank=True) # paired
-    #InsertSize = models.IntegerField()
-    #InsertDev = models.FloatField()
+    # InsertSize = models.IntegerField()
+    # InsertDev = models.FloatField()
     Platform = models.CharField(max_length=100, choices=seq_exp_platforms, null=True, blank=True) #illumina MiSeq
     SequencerModel = models.CharField(max_length=100, null=True, blank=True)
     Projectid = models.CharField(max_length=100)
     SampleName = models.CharField(max_length=100)
     CenterName = models.CharField(max_length=100)
     
-    taxName_1 = models.CharField(max_length=100)
-    taxFrac_1 = models.FloatField()
-    taxName_2 = models.CharField(max_length=100)
-    taxFrac_2 = models.FloatField()
-    taxName_3 = models.CharField(max_length=100)
-    taxFrac_3 = models.FloatField()
-    taxName_4 = models.CharField(max_length=100)
-    taxFrac_4 = models.FloatField()
+    taxName_1 = models.CharField(max_length=100, null=True, blank=True)
+    taxFrac_1 = models.FloatField(null=True, blank=True)
+    taxName_2 = models.CharField(max_length=100, null=True, blank=True)
+    taxFrac_2 = models.FloatField(null=True, blank=True)
+    taxName_3 = models.CharField(max_length=100, null=True, blank=True)
+    taxFrac_3 = models.FloatField(null=True, blank=True)
+    taxName_4 = models.CharField(max_length=100, null=True, blank=True)
+    taxFrac_4 = models.FloatField(null=True, blank=True)
     
 
     owner = models.ForeignKey(
@@ -53,17 +52,19 @@ class Sequence(models.Model):
 
     RawStats = models.EmbeddedField(
         model_container=SeqStat,
-        null=True        
+        null=True,
+        blank= True     
     )
     QcStats = models.EmbeddedField(
         model_container=SeqStat,    
-        null=True
+        null=True,
+        blank= True
     )
     DateCreated = models.DateTimeField(
         verbose_name='date created', auto_now=True)
     LastUpdate = models.DateTimeField(verbose_name='last update', auto_now=True)
 
-    Description = models.CharField(max_length=1000)
+    Description = models.TextField(null=True, blank=True)
 
     objects = models.DjongoManager()
     

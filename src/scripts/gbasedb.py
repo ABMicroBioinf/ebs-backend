@@ -9,6 +9,7 @@ import ntpath
 import os
 import re
 import urllib
+
 class GbaseDataset(Dataset):
     
 
@@ -21,11 +22,13 @@ class GbaseDataset(Dataset):
             list_contig_stats = list(reader)
             #ERR036228/contigs.fa    177     4254254 4252920 1334    0       213     24035       180126  80234
             for rowindex, row in enumerate(list_contig_stats):
-                mylist = row['Name'].split("/")
-                id = mylist[0]
+                id = row['Name'].split("/")[0]
                 del row['Name']
                 row['count'] = row.pop('no')
                 del row['ok']
+                for x in row:
+                    row[x] = int(row[x])
+
                 row['id'] = id
                 row['seqtype'] = seqtype
                 row['owner_id'] = ObjectId(self._owner_id)
@@ -167,18 +170,18 @@ class GbaseDataset(Dataset):
                     mydict = dict(zip(header, row))
                 
                     id = mydict.pop('#FILE').split("/")[0]
-                    num_found = mydict.pop('NUM_FOUND')
+                    num_found = int(mydict.pop('NUM_FOUND'))
                     virulome_list = []
                     
                     for key, value in mydict.items():
                         if value == '.':
                             value = -1
-                        virulome_list.append({'gene': key, 'pct_coverage': value})
+                        virulome_list.append({'geneName': key, 'pct_coverage': float(value)})
                     results.append({
                         "id": id, 
                         "seqtype": seqtype,
                         "num_found": num_found, 
-                        "virulome": virulome_list, 
+                        "profile": virulome_list, 
                         "Description": "", 
                         "DateCreated": datetime.now(), 
                         "LastUpdate": datetime.now(),
@@ -217,13 +220,13 @@ class GbaseDataset(Dataset):
                     for key, value in mydict.items():
                         if value == '.':
                             value = -1
-                        resistome_list.append({'gene': key, 'pct_coverage': value})
+                        resistome_list.append({'geneName': key, 'pct_coverage': float(value)})
                         
                     results.append({
                         "id": id,
                         "seqtype": seqtype,
-                        "num_found": num_found, 
-                        "resistome": resistome_list, 
+                        "num_found": int(num_found), 
+                        "profile": resistome_list, 
                         "Description": "", 
                         "DateCreated": datetime.now(), 
                         "LastUpdate": datetime.now(), 
@@ -259,16 +262,16 @@ class GbaseDataset(Dataset):
                 for item in row:
                     index_1 = item.index('(')
                     index_2 = item.index(')') 
-                    allele = item[0:index_1]
-                    num = item[index_1+1:index_2]
-                    mlst_list.append({'allele': allele, 'num': num})
+                    locus = item[0:index_1]
+                    allele = item[index_1+1:index_2]
+                    mlst_list.append({'locus': locus, 'allele': locus + '_' + allele})
                     
                 results.append({
                     "id": id,
                     "seqtype": seqtype, 
                     "scheme": scheme, 
-                    "st": st, 
-                    "alleles": mlst_list, 
+                    "st": int(st), 
+                    "profile": mlst_list, 
                     "Description": "", 
                     "DateCreated": datetime.now(), 
                     "LastUpdate": datetime.now(),

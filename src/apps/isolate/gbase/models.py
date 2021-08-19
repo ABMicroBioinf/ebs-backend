@@ -18,45 +18,61 @@ class Pipeline(models.Model):
     class Meta:
         abstract = isMigrate
 
-class GeneCoverage(models.Model):
-    gene = models.CharField(max_length=100)
-    pct_coverage = models.FloatField()
+class Allele(models.Model):
+    locus = models.CharField(max_length=50)
+    allele = models.CharField(max_length=10)
     class Meta:
         abstract = isMigrate
-
-class Virulome(models.Model):
+    
+class Mlst(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
     seqtype = models.CharField(max_length=100)
-    num_found = models.IntegerField()
-    virulome = models.ArrayField(
-        model_container = GeneCoverage
+    scheme = models.CharField(max_length=100)
+    st = models.IntegerField(null=True, blank=True)
+    profile = models.ArrayField(
+        model_container = Allele,       
     )
-    
     owner = models.ForeignKey(
-        Account, related_name="virulomes", on_delete=models.CASCADE)
+        Account, related_name="mlsts", on_delete=models.CASCADE)
+    
     DateCreated = models.DateTimeField(
         verbose_name='date created', auto_now=True)
-
     LastUpdate = models.DateTimeField(
         verbose_name='last update', auto_now=True)
-
+    
     Description = models.TextField()
-
     objects = models.DjongoManager()
-
-    class Meta:
-        pass
-        # ordering = ['id', 'seqtype', 'num_found', 'gene', 'owner__uername', 'DateCreated', 'LastUpdate']
     
     def __str__(self):
         return str(self.id)
+
+
+
+class Gene(models.Model):
+    geneName = models.CharField(max_length=100)
+    pct_coverage = models.FloatField()
+
+    class Meta:
+        abstract = isMigrate
+
+class Resistance(Gene):
+    pass
+
+    class Meta:
+        abstract = isMigrate
+
+class Virulence(Gene):
+    pass
+
+    class Meta:
+        abstract = isMigrate
 
 class Resistome(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
     seqtype = models.CharField(max_length=100)
     num_found = models.IntegerField()
-    resistome = models.ArrayField(
-        model_container = GeneCoverage
+    profile = models.ArrayField(
+        model_container = Resistance
     )
     owner = models.ForeignKey(
         Account, related_name="resistomes", on_delete=models.CASCADE)
@@ -72,28 +88,19 @@ class Resistome(models.Model):
         return str(self.id)
 
 
-class Allele(models.Model):
-    allele = models.CharField(max_length=100)
-    num = models.CharField(max_length=10)
-    class Meta:
-        abstract = isMigrate
-    
-class Mlst(models.Model):
+class Virulome(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
     seqtype = models.CharField(max_length=100)
-    scheme = models.CharField(max_length=100)
-    st = models.IntegerField()
-    alleles = models.ArrayField(
-        model_container = Allele
+    num_found = models.IntegerField()
+    profile = models.ArrayField(
+        model_container = Virulence
     )
     owner = models.ForeignKey(
-        Account, related_name="mlsts", on_delete=models.CASCADE)
-    
+        Account, related_name="virulomes", on_delete=models.CASCADE)
     DateCreated = models.DateTimeField(
         verbose_name='date created', auto_now=True)
     LastUpdate = models.DateTimeField(
         verbose_name='last update', auto_now=True)
-    
     Description = models.TextField()
 
     objects = models.DjongoManager()
@@ -101,18 +108,17 @@ class Mlst(models.Model):
     def __str__(self):
         return str(self.id)
 
-
 class Genome(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
     seqtype = models.CharField(max_length=100, null=True, blank=True)
-    count = models.IntegerField()
-    bp = models.IntegerField()
-    Ns = models.IntegerField()
-    gaps = models.IntegerField()
-    min = models.IntegerField()
-    max = models.IntegerField()
-    avg = models.IntegerField()
-    N50 = models.IntegerField()
+    count = models.IntegerField(null=True, blank=True)
+    bp = models.IntegerField(null=True, blank=True)
+    Ns = models.IntegerField(null=True, blank=True)
+    gaps = models.IntegerField(null=True, blank=True)
+    min = models.IntegerField(null=True, blank=True)
+    max = models.IntegerField(null=True, blank=True)
+    avg = models.IntegerField(null=True, blank=True)
+    N50 = models.IntegerField(null=True, blank=True)
 
     owner = models.ForeignKey(
         Account, related_name="genomes", on_delete=models.CASCADE)
