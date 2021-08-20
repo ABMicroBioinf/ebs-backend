@@ -359,7 +359,64 @@ class GbaseDataset(Dataset):
     
         #return records
 
+
+ # gff file name is: samplename.gff, samplename will be id
+    def add2collection_parse_gff_1(self, dir, seqtype):
+        
+        
+        results = []
+        for filename in os.listdir(dir):
+            records = []
+            data = {}
+            if filename.endswith(".gff"): 
+                print(filename)
+                #fname = ntpath.basename(filename)
+                sampleid = os.path.splitext(filename)[0]
+                data['sampleid'] = sampleid
+                print("***********************=" + sampleid)
+                with open(os.path.join(dir, filename)) as file:
+                    for line in file.readlines():
+                        if line[0] == '#':
+                            continue
+                        elif line[0] == '##FASTA' or re.findall("^>", line[0]):
+                            break
+                        segment = re.split('\t| ', line)
+                        #print(len(segment))
+                        if(len(segment) == 1):
+                            print(segment)
+
+                        #print(segment)
+                        attributesString = re.split('\n|;', segment[8])
+                        attributes = {}
+                        
+                
+                        for s in attributesString:
+                            e = s.split('=')
+                            if len(e) >= 2:
+                                attributes[e[0]] =urllib.parse.unquote(e[1])
+                                if e[0] == 'ID':
+                                    data['id'] = e[1]
+                        
+                        data['seqName'] = segment[0]
+                        data['source'] = segment[1]
+                        data['feature'] = segment[2],
+                        data['start'] =  int(segment[3])-1
+                        data['end'] =  int(segment[4])
+                        data['score'] = segment[5]
+                        data['frame'] =  segment[7]
+                        data['attribute'] =  attributes
+                        try:
+                            self._mongo_db_collection.create_index([("id", pymongo.ASCENDING)], unique=True)
+                            self._mongo_db_collection.insert_one(data)
+                        except Exception as e:
+                            print("load gff An exception occurred ::", e)
+                            return "loading gff False"
+
+                
+        
     
+        #return records
+
             
 def main():
     #add entries to genome collection
@@ -377,6 +434,9 @@ def main():
 
     annotation = GbaseDataset("ebsdb", "gbase_annotation", "60d4dfba7109403cf2d20636")
     annotation.add2collection_parse_gff("data/gbase/gff", "TB")
+
+    annotation = GbaseDataset("ebsdb", "gbase_gff", "60d4dfba7109403cf2d20636")
+    annotation.add2collection_parse_gff_1("data/gbase/gff", "TB")
     
 if __name__ == '__main__':
   main()

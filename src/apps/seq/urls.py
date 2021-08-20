@@ -2,6 +2,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .api import (
     SequenceViewSet,
+    ProjectViewSet,
     SeqFileViewSet,
     MetadataFileViewSet,
     MyFileUploadViewSet,
@@ -10,6 +11,7 @@ from .api import (
 app_name = "seq"
 router = DefaultRouter()
 router.register(r'sequence', SequenceViewSet, basename='sequence')
+router.register(r'project', ProjectViewSet, basename='project')
 router.register(r'seqfile', SeqFileViewSet, basename='seqfile')
 router.register(r'metadatafile', MetadataFileViewSet, basename='metadatafile')
 router.register(r'myfiles', MyFileUploadViewSet, basename='files')

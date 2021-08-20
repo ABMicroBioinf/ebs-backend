@@ -2,6 +2,11 @@ from .models import Sequence
 from gizmos.util import *
 from django_filters import rest_framework as filters
 from django_filters.constants import EMPTY_VALUES
+from djongo import models
+from rest_framework.compat import distinct
+from rest_framework.filters import SearchFilter
+import operator
+from functools import reduce
 
 from django_filters.filters import (
     CharFilter,
@@ -141,5 +146,101 @@ class SequenceFilter(filters.FilterSet):
             "RawStats",
             "QcStats",
         )  # Temporary
-        
+
+
+class CustomSearchFilter(SearchFilter):
+    def filter_queryset(self, request, queryset, view):
+        nested_fields = [
+            "RawStats__Reads",
+            "RawStats__Yield",
+            "RawStats__GeeCee",
+            "RawStats__MinLen",
+            "RawStats__AvgLen",
+            "RawStats__MaxLen",
+            "RawStats__AvgQual",
+            "RawStats__ErrQual",
+            "RawStats__Ambiguous",
+            "QcStats__Reads",
+            "QcStats__Yield",
+            "QcStats__GeeCee",
+            "QcStats__MinLen",
+            "QcStats__AvgLen",
+            "QcStats__MaxLen",
+            "QcStats__AvgQual",
+            "QcStats__ErrQual",
+            "QcStats__Ambiguous",
+        ]
+
+        search_fields = self.get_search_fields(view, request)
+        search_terms = self.get_search_terms(request)
+        print("*********************************")
+        print(type(search_fields))
+        print(search_fields)
+        if not search_fields or not search_terms:
+            return queryset
+
+        nested_target = list(set(search_fields) & set(nested_fields))
+        regular_target = list(set(search_fields) - set(nested_fields))
+
+        orm_lookups = [
+            self.construct_search(str(search_field))
+            for search_field in regular_target
+        ]
+
+        nested_lookups = [
+            self.construct_search(str(search_field))
+            for search_field in nested_target
+        ]
+
+        base = queryset
+
+        conditions = []
+        for search_term in search_terms:
+            queries = [
+                models.Q(**{orm_lookup: search_term})
+                for orm_lookup in orm_lookups
+            ]
+            conditions.append(reduce(operator.or_, queries))
+        regular_queryset = queryset.filter(reduce(operator.and_, conditions))
+
+        nested_conditions = []
+        for search_term in search_terms:
+            queries = [
+                models.Q(
+                    RawStats={
+                        **{
+                            # "__".join(
+                            #     nested_lookup.split("__")[1:]
+                            # ): search_term
+                            nested_lookup.split("__")[1]: search_term
+                        }
+                    }
+                )
+                if nested_lookup.split("__")[0] == "RawStats"
+                else models.Q(
+                    QcStats={
+                        **{
+                            # "__".join(
+                            #     nested_lookup.split("__")[1:]
+                            # ): search_term
+                            nested_lookup.split("__")[1]: search_term
+                        }
+                    }
+                )
+                for nested_lookup in nested_lookups
+            ]
+            nested_conditions.append(reduce(operator.or_, queries))
+        nested_queryset = queryset.filter(
+            reduce(operator.and_, nested_conditions)
+        )
+
+        queryset = regular_queryset | nested_queryset
+
+        if self.must_call_distinct(queryset, search_fields):
+            # Filtering against a many-to-many field requires us to
+            # call queryset.distinct() in order to avoid duplicate items
+            # in the resulting queryset.
+            # We try to avoid this if possible, for performance reasons.
+            queryset = distinct(queryset, base)
+        return queryset
         

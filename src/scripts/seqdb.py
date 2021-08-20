@@ -7,6 +7,7 @@ import dateutil.parser
 from datetime import datetime
 import os
 import re
+import xml.etree.ElementTree as ET
 
 class Sequence(Dataset):
 
@@ -25,9 +26,9 @@ class Sequence(Dataset):
                 print(type(row))
                 newrow = {}
                 for key, value in row.items():
-                    print("(((((((((((((((((((((((((((((((((((((((((((((((((((((")
-                    print(key)
-                    print(value)
+                    # print("(((((((((((((((((((((((((((((((((((((((((((((((((((((")
+                    # print(key)
+                    # print(value)
                     try:
                         newrow[key] = int(value)
                     except ValueError:
@@ -137,6 +138,7 @@ class Sequence(Dataset):
                     return "parse_braken " + dir + " failed"
 
         return "success"
+
 def main():
   
     data = Sequence("ebsdb", "seq_sequence", "60d4dfba7109403cf2d20636")

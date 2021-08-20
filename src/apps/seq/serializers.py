@@ -4,15 +4,23 @@ from rest_framework import serializers
 from rest_framework.compat import distinct
 from rest_meets_djongo.serializers import DjongoModelSerializer
 
-from .models import Sequence, SeqFile, MetadataFile
+from .models import Sequence, SeqFile, MetadataFile, Project
+
+class ProjectSerializer(DjongoModelSerializer):
+    owner = serializers.ReadOnlyField(source="owner.username")
+    
+    class Meta:
+        model = Project
+        fields = "__all__"
 
 class SequenceSerializer(FlattenMixin, DjongoModelSerializer):
     owner = serializers.ReadOnlyField(source="owner.username")
-
+   
     class Meta:
         model = Sequence
         fields = "__all__"
         read_only_fields = ["owner"]
+
         flatten = [
             "RawStats",
             "QcStats",
@@ -63,7 +71,7 @@ class SequenceMetadataSerializer(serializers.Serializer):
         "get_distinct_count_for_sequencer_model"
     )
     Projectid = serializers.SerializerMethodField(
-        "get_distinct_count_for_projectid"
+        "get_distinct_count_for_Projectid"
     )
 
     class Meta:
@@ -102,7 +110,7 @@ class SequenceMetadataSerializer(serializers.Serializer):
 
     def get_distinct_count_for_sequencer_model(self, seq):
         return seq.values("SequencerModel").annotate(total=Count("SequencerModel")).order_by('total')
-    def get_distinct_count_for_projectid(self, seq):
+    def get_distinct_count_for_Projectid(self, seq):
         return seq.values("Projectid").annotate(total=Count("Projectid")).order_by('total')
 
     # Example of distinct count for nested field when 'JOIN' issue occurs

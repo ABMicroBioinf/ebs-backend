@@ -18,8 +18,23 @@ class SeqStat(models.Model):
     class Meta:
         abstract = True
 
+class Project(models.Model):
+    id = models.CharField(primary_key=True, max_length=100)
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    owner = models.ForeignKey(
+        Account, related_name="projects", on_delete=models.CASCADE, null=True)
+    DateCreated = models.DateTimeField(
+        verbose_name='date created', auto_now=True)
+    LastUpdate = models.DateTimeField(verbose_name='last update', auto_now=True)
+
+    def __str__(self):
+        return str(self.id)
+
 class Sequence(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
+    
+    Projectid = models.CharField(max_length=100)
     TaxID = models.IntegerField()
     ScientificName = models.CharField(max_length=100)
     seqtype = models.CharField(max_length=100, choices=seqtypes, null=True, blank=True) # WGS
@@ -33,7 +48,7 @@ class Sequence(models.Model):
     # InsertDev = models.FloatField()
     Platform = models.CharField(max_length=100, choices=seq_exp_platforms, null=True, blank=True) #illumina MiSeq
     SequencerModel = models.CharField(max_length=100, null=True, blank=True)
-    Projectid = models.CharField(max_length=100)
+    
     SampleName = models.CharField(max_length=100)
     CenterName = models.CharField(max_length=100)
     
