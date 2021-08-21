@@ -50,7 +50,7 @@ class MultipleCharValueFilter(Filter):
 
 class SequenceFilter(filters.FilterSet):
     
-    owner = CharFilter(lookup_expr="iexact")
+    owner__username = CharFilter(lookup_expr="iexact")
     seqtype = CharFilter(lookup_expr="iexact")
 
     id = CharFilter(lookup_expr="icontains")
