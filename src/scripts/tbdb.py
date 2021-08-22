@@ -49,8 +49,10 @@ class TBDataset(Dataset):
           with open(os.path.join(dir, filename)) as f:
             data = {}
             resist = {}
-            id = os.path.splitext(filename)[0]
+            root = os.path.splitext(filename)[0]
+            id = root.split('.')[0]
             data['id'] = id
+            data['sequence_id'] = id
             data['Description'] = ""
             data['owner_id'] = ObjectId(self._owner_id)
             data['DateCreated'] = datetime.now()
@@ -58,27 +60,46 @@ class TBDataset(Dataset):
           
             jsonData = json.load(f)
             for key, value in jsonData.items():
-              if key not in {"qc", "delly"}:
-                #print({key: value})
-                #print(type({key: value}))
-                #data[key] = value
+              if key not in {"qc", "delly", "dr_variants", "other_variants"}:
+                print({key: value})
+                print(type({key: value}))
                 data[key] = value
-                if key == "dr_variants":
-                  data["num_dr_variants"] = len(value)
-                  for x in value:
-                    l = x['drugs']
-                    gene = x["gene"]
-                    change = x["change"]
-                    
-                    freq = x["freq"]
-                    
-                    for y in l:
-                      drug = y["drug"]
-                      drug_no_hyphen = drug.replace("-", "_")
-                      #print(drug + "" + gene + " " + change + "(" + str(freq) + ")" + "\"")
-                      resist[drug_no_hyphen] = resist.get(drug_no_hyphen, "") + gene + " " + change + ";"
-                elif key == "other_variants":
-                  data["num_other_variants"] = len(value)
+              elif key == "dr_variants":
+                data["num_dr_variants"] = len(value)
+
+                #value is an array of dictionary
+                #newlist = []
+                
+                for x in value:
+                  newdict = x
+                  #del newdict['drugs']
+                  #del newdict['variant_annotations']
+                  #newlist.append(newdict)
+                  
+
+                  l = x['drugs']
+                  gene = x["gene"]
+                  change = x["change"]
+                  
+                  freq = x["freq"]
+                  
+                  for y in l:
+                    drug = y["drug"]
+                    drug_no_hyphen = drug.replace("-", "_")
+                    #print(drug + "" + gene + " " + change + "(" + str(freq) + ")" + "\"")
+                    resist[drug_no_hyphen] = resist.get(drug_no_hyphen, "") + gene + " " + change + ";"
+                  del x['drugs']
+                  del x['variant_annotations']
+
+                data[key] = value
+              elif key == "other_variants":
+                #value is an array of dictionary
+              
+                for x in value:
+                  del x['variant_annotations']
+                  
+                data[key] = value  
+                data["num_other_variants"] = len(value)
               elif key == "qc":
                 for qkey, qvalue in value.items():
                   if qkey in {"pct_reads_mapped", "num_reads_mapped"}:
@@ -90,7 +111,8 @@ class TBDataset(Dataset):
 
             resist_result = []
             for k, v in resist.items():
-              resist_result.append({'drug': k, 'mutations': v})
+              if v != '-':
+                resist_result.append({'drug': k, 'mutations': v})
             data["dr_resistances"] = resist_result
             result.append(data)
            
@@ -142,8 +164,10 @@ class TBDataset(Dataset):
           with open(os.path.join(dir, filename)) as f:
             data = {}
             resist = {}
-            id = os.path.splitext(filename)[0]
+            root = os.path.splitext(filename)[0]
+            id = root.split('.')[0]
             data['id'] = id
+            data['sequence_id'] = id
             data['Description'] = ""
             data['owner_id'] = ObjectId(self._owner_id)
             data['DateCreated'] = datetime.now()
@@ -153,7 +177,8 @@ class TBDataset(Dataset):
             for key, value in jsonData.items():
               if key not in {"qc", "delly", "lineage", "dr_variants","other_variants", "pipeline", "db_version",  "tbprofiler_version", "timestamp"}:
                 data[key] = value
-                
+                print(key)
+                print(value)
               elif key == "dr_variants":
                 data["num_dr_variants"] = len(value)
                 for x in value:
@@ -196,9 +221,9 @@ class TBDataset(Dataset):
         return "adding tbprofile json data failed"
 
 def main():
-  profile = TBDataset("ebsdb", "tb_profile_full", "60d4dfba7109403cf2d20636")
+  profile = TBDataset("ebsdb", "tb_profile", "60d4dfba7109403cf2d20636")
   profile.add2collection_profile_parse_json("data/tbprofiler/results")
-  summary = TBDataset("ebsdb", "tb_profile", "60d4dfba7109403cf2d20636")
+  summary = TBDataset("ebsdb", "tb_psummary", "60d4dfba7109403cf2d20636")
   summary.add2collection_sumary_parse_json("data/tbprofiler/results")
   
 

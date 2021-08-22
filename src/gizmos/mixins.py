@@ -7,9 +7,13 @@ class FlattenMixin(object):
         )
         rep = super(FlattenMixin, self).to_representation(obj)
         for field in self.Meta.flatten:
+            # print("********************************* field=" + field)
+            # print(rep)
+
             objrep = rep.pop(field)
-            #print(type(objrep))
-            #print(objrep)
+
+            # print(type(objrep))
+            # print(objrep)
             if objrep is None:
                 continue
             if isinstance(objrep, dict):

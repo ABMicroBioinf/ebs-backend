@@ -33,8 +33,9 @@ class Project(models.Model):
 
 class Sequence(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
-    
-    Projectid = models.CharField(max_length=100)
+    #Projectid = models.CharField(max_length=100)
+    project = models.ForeignKey(
+        Project, related_name="sequences", on_delete=models.CASCADE, null=True)
     TaxID = models.IntegerField()
     ScientificName = models.CharField(max_length=100)
     seqtype = models.CharField(max_length=100, choices=seqtypes, null=True, blank=True) # WGS

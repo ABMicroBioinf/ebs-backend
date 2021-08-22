@@ -2,7 +2,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
 from .api import (
-    GenomeViewSet,
+    AssemblyViewSet,
     MlstViewSet,
     ResistomeViewSet,
     VirulomeViewSet,
@@ -11,7 +11,7 @@ from .api import (
 
 app_name = "basic"
 router = DefaultRouter()
-router.register(r'genome', GenomeViewSet, basename='genome')
+router.register(r'assembly', AssemblyViewSet, basename='assembly')
 router.register(r'mlst', MlstViewSet, basename='mlst')
 router.register(r'resistome', ResistomeViewSet, basename='resistome')
 router.register(r'virulome', VirulomeViewSet, basename='virulome')

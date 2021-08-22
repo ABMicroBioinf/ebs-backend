@@ -30,6 +30,7 @@ class GbaseDataset(Dataset):
                     row[x] = int(row[x])
 
                 row['id'] = id
+                #row['genome_id'] = id,
                 row['sequence_id'] = id
                 row['seqtype'] = seqtype
                 row['owner_id'] = ObjectId(self._owner_id)
@@ -180,6 +181,7 @@ class GbaseDataset(Dataset):
                         virulome_list.append({'geneName': key, 'pctCoverage': float(value)})
                     results.append({
                         "id": id,
+                        'genome_id': id,
                         "sequence_id": id,
                         "seqtype": seqtype,
                         "num_found": num_found, 
@@ -226,6 +228,7 @@ class GbaseDataset(Dataset):
                         
                     results.append({
                         "id": id,
+                        'genome_id': id,
                         "sequence_id": id,
                         "seqtype": seqtype,
                         "num_found": int(num_found), 
@@ -271,6 +274,7 @@ class GbaseDataset(Dataset):
                     
                 results.append({
                     "id": id,
+                    'genome_id': id,
                     'sequence_id': id,
                     "seqtype": seqtype, 
                     "scheme": scheme, 
@@ -350,6 +354,7 @@ class GbaseDataset(Dataset):
                         data['attr'] = attributes
                          
                         data['sequence_id'] = sampleid
+                        data['genome_id'] = sampleid
                         data['seqtype'] = seqtype
                         data['Description'] = ""
                         data['owner_id'] = ObjectId(self._owner_id)
@@ -367,7 +372,7 @@ class GbaseDataset(Dataset):
             
 def main():
     #add entries to genome collection
-    genome = GbaseDataset("ebsdb", "gbase_genome", "60d4dfba7109403cf2d20636")
+    genome = GbaseDataset("ebsdb", "gbase_assembly", "60d4dfba7109403cf2d20636")
     genome.add2collection_denovo_tab("data/gbase/denovo.tab", "TB")
 
     virulome = GbaseDataset("ebsdb", "gbase_virulome", "60d4dfba7109403cf2d20636")

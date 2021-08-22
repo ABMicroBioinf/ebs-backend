@@ -1,10 +1,10 @@
 
 # Register your models here.
 from django.contrib import admin
-from .models import Genome, Annotation, Mlst
+from .models import Assembly, Annotation, Mlst
 
 # Register your models here.
-class GenomeAdmin(admin.ModelAdmin):
+class AssemblyAdmin(admin.ModelAdmin):
     """ list_display = (
         "name",
         "main_lin",
@@ -24,6 +24,6 @@ class MlstAdmin(admin.ModelAdmin):
         'owner'
         
     )
-admin.site.register(Genome, GenomeAdmin)
+admin.site.register(Assembly, AssemblyAdmin)
 admin.site.register(Annotation, AnnotationAdmin)
 admin.site.register(Mlst, MlstAdmin)

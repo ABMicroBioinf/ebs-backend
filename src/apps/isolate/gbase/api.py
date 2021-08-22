@@ -9,9 +9,10 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.filters import OrderingFilter, SearchFilter
 from django_filters import rest_framework as filters
 from gizmos.pagination import CustomPagination
-from .models import Genome, Annotation, Virulome, Mlst, Resistome
+from .models import Assembly, Annotation, Virulome, Mlst, Resistome
 from .filters import (
-  GenomeFilter, MlstFilter, 
+  AssemblyFilter,
+  MlstFilter, 
   ResistomeFilter, 
   VirulomeFilter, 
   CustomSearchFilter,
@@ -20,7 +21,7 @@ from .filters import (
 )
 
 from .serializers import (
-  GenomeSerializer, 
+  AssemblySerializer, 
   AnnotationSerializer, 
   VirulomeSerializer, 
   MlstSerializer, 
@@ -29,15 +30,15 @@ from .serializers import (
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
-class GenomeViewSet(GenericViewSet,  # generic view functionality
+class AssemblyViewSet(GenericViewSet,  # generic view functionality
                      CreateModelMixin,  # handles POSTs
                      RetrieveModelMixin,  # handles GETs for 1 Company
                      UpdateModelMixin,  # handles PUTs and PATCHes
                      ListModelMixin,  # handles GETs for many Companies
                      DestroyModelMixin,): #handle delete
-
-      serializer_class = GenomeSerializer
-      filterset_class = GenomeFilter
+      queryset = Assembly.objects.all()
+      serializer_class = AssemblySerializer
+      filterset_class = AssemblyFilter
       pagination_class = CustomPagination
       filter_backends = (
           SearchFilter,
@@ -82,7 +83,7 @@ class GenomeViewSet(GenericViewSet,  # generic view functionality
       # This method should be overriden
       # if we dont want to modify query set based on current instance attributes
       def get_queryset(self):
-        return Genome.objects.filter(owner=self.request.user)
+        return self.queryset.filter(owner=self.request.user)
 
       
       def perform_create(self, serializer):

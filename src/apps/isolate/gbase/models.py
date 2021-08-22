@@ -19,6 +19,35 @@ class Pipeline(models.Model):
     class Meta:
         abstract = isMigrate
 
+class Assembly(models.Model):
+    id = models.CharField(primary_key=True, max_length=100)
+    sequence = models.ForeignKey(
+        Sequence, related_name="genomes", on_delete=models.CASCADE, null=True)
+    seqtype = models.CharField(max_length=100, null=True, blank=True)
+    count = models.IntegerField(null=True, blank=True)
+    bp = models.IntegerField(null=True, blank=True)
+    Ns = models.IntegerField(null=True, blank=True)
+    gaps = models.IntegerField(null=True, blank=True)
+    min = models.IntegerField(null=True, blank=True)
+    max = models.IntegerField(null=True, blank=True)
+    avg = models.IntegerField(null=True, blank=True)
+    N50 = models.IntegerField(null=True, blank=True)
+
+    owner = models.ForeignKey(
+        Account, related_name="genomes", on_delete=models.CASCADE)
+    DateCreated = models.DateTimeField(
+        verbose_name='date created', auto_now=True)
+    LastUpdate = models.DateTimeField(
+        verbose_name='last update', auto_now=True)
+    
+    Description = models.TextField()
+     
+    objects = models.DjongoManager()
+    
+    def __str__(self):
+        return str(self.id)
+
+
 class Allele(models.Model):
     locus = models.CharField(max_length=50)
     allele = models.CharField(max_length=10)
@@ -27,7 +56,9 @@ class Allele(models.Model):
 
 class Mlst(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
-    sequence = models.OneToOneField(Sequence, on_delete=models.CASCADE)
+    assembly = models.ForeignKey(Assembly, related_name='mlsts', on_delete=models.CASCADE)
+    sequence = models.ForeignKey(
+        Sequence, related_name="mlsts", on_delete=models.CASCADE, null=True)
     #sequence = models.OneToOneField(Sequence, on_delete=models.CASCADE)
     seqtype = models.CharField(max_length=100)
     scheme = models.CharField(max_length=100)
@@ -74,7 +105,9 @@ class Virulence(Gene):
 
 class Resistome(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
-    sequence = models.OneToOneField(Sequence, on_delete=models.CASCADE)
+    assembly = models.ForeignKey(Assembly, related_name='resistomes', on_delete=models.CASCADE)
+    sequence = models.ForeignKey(
+        Sequence, related_name="resistomes", on_delete=models.CASCADE, null=True)
     seqtype = models.CharField(max_length=100)
     num_found = models.IntegerField()
     profile = models.ArrayField(
@@ -96,7 +129,9 @@ class Resistome(models.Model):
 
 class Virulome(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
-    sequence = models.OneToOneField(Sequence, on_delete=models.CASCADE)
+    assembly = models.ForeignKey(Assembly, related_name='virulomes', on_delete=models.CASCADE)
+    sequence = models.ForeignKey(
+        Sequence, related_name="virulomes", on_delete=models.CASCADE, null=True)
     seqtype = models.CharField(max_length=100)
     num_found = models.IntegerField()
     profile = models.ArrayField(
@@ -115,32 +150,6 @@ class Virulome(models.Model):
     def __str__(self):
         return str(self.id)
 
-class Genome(models.Model):
-    id = models.CharField(primary_key=True, max_length=100)
-    sequence = models.OneToOneField(Sequence, on_delete=models.CASCADE)
-    seqtype = models.CharField(max_length=100, null=True, blank=True)
-    count = models.IntegerField(null=True, blank=True)
-    bp = models.IntegerField(null=True, blank=True)
-    Ns = models.IntegerField(null=True, blank=True)
-    gaps = models.IntegerField(null=True, blank=True)
-    min = models.IntegerField(null=True, blank=True)
-    max = models.IntegerField(null=True, blank=True)
-    avg = models.IntegerField(null=True, blank=True)
-    N50 = models.IntegerField(null=True, blank=True)
-
-    owner = models.ForeignKey(
-        Account, related_name="genomes", on_delete=models.CASCADE)
-    DateCreated = models.DateTimeField(
-        verbose_name='date created', auto_now=True)
-    LastUpdate = models.DateTimeField(
-        verbose_name='last update', auto_now=True)
-    
-    Description = models.TextField()
-     
-    objects = models.DjongoManager()
-    
-    def __str__(self):
-        return str(self.id)
 
 class TagValue(models.Model):
     tag = models.CharField(max_length=100)
@@ -164,7 +173,10 @@ class Annotation(models.Model):
         model_container = TagValue
     )
     seqtype = models.CharField(max_length=100)
-    sequence = models.OneToOneField(Sequence, on_delete=models.CASCADE)
+    assembly = models.ForeignKey(Assembly, related_name='annotations', on_delete=models.CASCADE)
+    sequence = models.ForeignKey(
+        Sequence, related_name="annotations", on_delete=models.CASCADE, null=True)
+
     owner = models.ForeignKey(
         Account, related_name="annotations", on_delete=models.CASCADE, null=True)
     DateCreated = models.DateTimeField(

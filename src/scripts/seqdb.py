@@ -82,7 +82,7 @@ class Sequence(Dataset):
                         del row[key]
 
                 row['owner_id'] = ObjectId(self._owner_id)
-                row['Projectid'] = row.pop('BioProject')
+                row['project_id'] = row.pop('BioProject')
                 row['SequencerModel'] = row.pop('Model')
                 row['DateCreated'] = dateutil.parser.parse(row.pop('ReleaseDate'))
                 row['id'] = row.pop('Run')

@@ -51,6 +51,9 @@ class MultipleCharValueFilter(Filter):
 class SequenceFilter(filters.FilterSet):
     
     owner__username = CharFilter(lookup_expr="iexact")
+    project__id = MultipleCharValueFilter(lookup_expr="in")
+    project__title = MultipleCharValueFilter(lookup_expr="icontains")
+    
     seqtype = CharFilter(lookup_expr="iexact")
 
     id = CharFilter(lookup_expr="icontains")
@@ -66,7 +69,7 @@ class SequenceFilter(filters.FilterSet):
     LibraryLayout = MultipleCharValueFilter(lookup_expr="in")
     Platform = MultipleCharValueFilter(lookup_expr="in")
     SequencerModel = MultipleCharValueFilter(lookup_expr="in")
-    Projectid = MultipleCharValueFilter(lookup_expr="in")
+    
     SampleName = CharFilter(lookup_expr="icontains")
     CenterName = MultipleCharValueFilter(lookup_expr="in")
     DateCreated = DateFromToRangeFilter()

@@ -1,4 +1,4 @@
-from .models import Genome, Mlst, Resistome, Virulome, Annotation
+from .models import Assembly, Mlst, Resistome, Virulome, Annotation
 from gizmos.util import *
 from django_filters import rest_framework as filters
 from django_filters.constants import EMPTY_VALUES
@@ -50,7 +50,7 @@ class AttrFilter(Filter):
         return qs
 
 
-class GenomeFilter(filters.FilterSet):
+class AssemblyFilter(filters.FilterSet):
     
     owner__username = CharFilter(lookup_expr="iexact")
     sequence__Projectid = CharFilter(lookup_expr="iexact")

@@ -8,14 +8,25 @@ from .models import Sequence, SeqFile, MetadataFile, Project
 
 class ProjectSerializer(DjongoModelSerializer):
     owner = serializers.ReadOnlyField(source="owner.username")
-    
+    #sequences = serializers.StringRelatedField(many=True)
+    sequences = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='seq:sequence-detail'
+    )
+    #sequences = SequenceSerializer(many=True, read_only=True)
     class Meta:
         model = Project
-        fields = "__all__"
+        #fields = "__all__"
+        fields = ['id', 'owner', 'title', 'DateCreated', 'LastUpdate', 'sequences']
+       
 
 class SequenceSerializer(FlattenMixin, DjongoModelSerializer):
     owner = serializers.ReadOnlyField(source="owner.username")
-   
+    #serialized as nested relation
+    #project = ProjectSerializer()
+    project_id = serializers.CharField(source='project.id')
+    project_title = serializers.CharField(source='project.title')
     class Meta:
         model = Sequence
         fields = "__all__"
@@ -25,6 +36,8 @@ class SequenceSerializer(FlattenMixin, DjongoModelSerializer):
             "RawStats",
             "QcStats",
         ]
+   
+
 
 class SeqFileSerializer(serializers.ModelSerializer):
     class Meta:

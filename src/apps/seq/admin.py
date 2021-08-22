@@ -9,7 +9,7 @@ class SequenceAdmin(admin.ModelAdmin):
         "id",
         "Experiment",
         "SampleName",
-        "Projectid",
+        #"Projectid",
         "owner",
         "DateCreated"
     ]
