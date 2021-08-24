@@ -83,9 +83,11 @@ class Sequence(Dataset):
 
                 row['owner_id'] = ObjectId(self._owner_id)
                 row['project_id'] = row.pop('BioProject')
+                
                 row['SequencerModel'] = row.pop('Model')
                 row['DateCreated'] = dateutil.parser.parse(row.pop('ReleaseDate'))
                 row['id'] = row.pop('Run')
+                row['assembly_id'] = row['id']
                 row['seqtype'] = type
                 row['LastUpdate'] = datetime.now()
                 row['Description'] = ""

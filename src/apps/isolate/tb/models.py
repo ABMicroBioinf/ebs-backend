@@ -6,8 +6,11 @@ from apps.seq.models import Sequence
 
 class Psummary(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
-    sequence = models.ForeignKey(
-        Sequence, related_name="Psummaries", on_delete=models.CASCADE, null=True)
+    sequence = models.OneToOneField(
+        Sequence,
+        on_delete=models.CASCADE,
+        #primary_key=True,
+    )
     Description = models.TextField(max_length=1000, null=True, blank=True)
     owner = models.ForeignKey(
         Account, related_name="profileSummaries", on_delete=models.CASCADE, null=True)
@@ -95,9 +98,11 @@ class Resistance(models.Model):
 
 class Profile(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
-    sequence = models.ForeignKey(
-        Sequence, related_name="profiles", on_delete=models.CASCADE, null=True)
-    
+    sequence = models.OneToOneField(
+        Sequence,
+        on_delete=models.CASCADE,
+        #primary_key=True,
+    )
     pct_reads_mapped = models.FloatField()
     num_reads_mapped = models.IntegerField()
     main_lin = models.CharField(max_length=100, null=True)

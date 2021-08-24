@@ -23,6 +23,6 @@ class FlattenMixin(object):
                 i = 0
                 for item in objrep:
                     for key in item:
-                        rep[field + "_" + str(i) + "__" + key] = item[key]
+                        rep[field  + "__" + key + "_" + str(i)] = item[key]
                     i += 1
         return rep

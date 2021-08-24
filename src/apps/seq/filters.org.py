@@ -49,8 +49,51 @@ class MultipleCharValueFilter(Filter):
         qs = super().filter(qs, value_list)
         return qs
 
+class ProjectFilter(filters.FilterSet):
+    owner__username = CharFilter(lookup_expr="icontains")
+    id = CharFilter(lookup_expr="iexact")
+    title = CharFilter(lookup_expr="icontains")
+    DateCreated = DateFromToRangeFilter()
+    LastUpdate = DateFromToRangeFilter()
+    Description = CharFilter(lookup_expr="icontains")
+
 class SequenceFilter(filters.FilterSet):
     
+    owner__username = CharFilter(lookup_expr="icontains")
+    project__id = MultipleCharValueFilter(lookup_expr="in")
+    project__title = MultipleCharValueFilter(lookup_expr="icontains")
+    
+    seqtype = CharFilter(lookup_expr="iexact")
+
+    id = CharFilter(lookup_expr="icontains")
+    #default lookup_expr is exact
+    TaxID = NumberFilter(lookup_expr="exact")
+    
+    ScientificName = CharFilter(lookup_expr="icontains")
+    Experiment = MultipleCharValueFilter(lookup_expr="in")
+    LibraryName = MultipleCharValueFilter(lookup_expr="in")
+    LibraryStrategy = MultipleCharValueFilter(lookup_expr="in")
+    LibrarySelection = MultipleCharValueFilter(lookup_expr="in")
+    LibrarySource = MultipleCharValueFilter(lookup_expr="in")
+    LibraryLayout = MultipleCharValueFilter(lookup_expr="in")
+    Platform = MultipleCharValueFilter(lookup_expr="in")
+    SequencerModel = MultipleCharValueFilter(lookup_expr="in")
+    
+    SampleName = CharFilter(lookup_expr="icontains")
+    CenterName = MultipleCharValueFilter(lookup_expr="in")
+    DateCreated = DateFromToRangeFilter()
+    LastUpdate = DateFromToRangeFilter()
+    Description = CharFilter(lookup_expr="icontains")
+
+    taxName_1 = CharFilter(lookup_expr="icontains")
+    taxFrac_1 = NumberFilter(lookup_expr="exact")
+    taxName_2 = CharFilter(lookup_expr="icontains")
+    taxFrac_2 = NumberFilter(lookup_expr="exact")
+    taxName_3 = CharFilter(lookup_expr="icontains")
+    taxFrac_3 = NumberFilter(lookup_expr="exact")
+    taxName_4 = CharFilter(lookup_expr="icontains")
+    taxFrac_4 = NumberFilter(lookup_expr="exact")
+
     RawStats__Reads = RawStatsFilter(
         field_name="RawStats__Reads", lookup_expr="exact"
     )
@@ -113,7 +156,7 @@ class SequenceFilter(filters.FilterSet):
             "RawStats",
             "QcStats",
         )  # Temporary
-        
+
         #it is possible to override default filters for all the models fields of the same kind using filter_overrides on the Meta class:
         filter_overrides = {
             models.CharField: {
@@ -155,9 +198,9 @@ class CustomSearchFilter(SearchFilter):
 
         search_fields = self.get_search_fields(view, request)
         search_terms = self.get_search_terms(request)
-        # print("*********************************")
-        # print(type(search_fields))
-        # print(search_fields)
+        print("*********************************")
+        print(type(search_fields))
+        print(search_fields)
         if not search_fields or not search_terms:
             return queryset
 

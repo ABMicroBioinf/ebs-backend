@@ -21,8 +21,13 @@ class Pipeline(models.Model):
 
 class Assembly(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
-    sequence = models.ForeignKey(
-        Sequence, related_name="genomes", on_delete=models.CASCADE, null=True)
+    # sequence = models.ForeignKey(
+    #     Sequence, related_name="assemblies", on_delete=models.CASCADE, null=True)
+    sequence = models.OneToOneField(
+        Sequence,
+        on_delete=models.CASCADE,
+        #primary_key=True,
+    )
     seqtype = models.CharField(max_length=100, null=True, blank=True)
     count = models.IntegerField(null=True, blank=True)
     bp = models.IntegerField(null=True, blank=True)
@@ -56,9 +61,14 @@ class Allele(models.Model):
 
 class Mlst(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
-    assembly = models.ForeignKey(Assembly, related_name='mlsts', on_delete=models.CASCADE)
-    sequence = models.ForeignKey(
-        Sequence, related_name="mlsts", on_delete=models.CASCADE, null=True)
+    sequence = models.OneToOneField(
+        Sequence,
+        on_delete=models.CASCADE,
+        #primary_key=True,
+    )
+    #assembly = models.ForeignKey(Assembly, related_name='mlsts', on_delete=models.CASCADE)
+    # sequence = models.ForeignKey(
+    #     Sequence, related_name="mlsts", on_delete=models.CASCADE, null=True)
     #sequence = models.OneToOneField(Sequence, on_delete=models.CASCADE)
     seqtype = models.CharField(max_length=100)
     scheme = models.CharField(max_length=100)
@@ -105,9 +115,12 @@ class Virulence(Gene):
 
 class Resistome(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
-    assembly = models.ForeignKey(Assembly, related_name='resistomes', on_delete=models.CASCADE)
-    sequence = models.ForeignKey(
-        Sequence, related_name="resistomes", on_delete=models.CASCADE, null=True)
+    
+    sequence = models.OneToOneField(
+        Sequence,
+        on_delete=models.CASCADE,
+        #primary_key=True,
+    )
     seqtype = models.CharField(max_length=100)
     num_found = models.IntegerField()
     profile = models.ArrayField(
@@ -129,9 +142,11 @@ class Resistome(models.Model):
 
 class Virulome(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
-    assembly = models.ForeignKey(Assembly, related_name='virulomes', on_delete=models.CASCADE)
-    sequence = models.ForeignKey(
-        Sequence, related_name="virulomes", on_delete=models.CASCADE, null=True)
+    sequence = models.OneToOneField(
+        Sequence,
+        on_delete=models.CASCADE,
+        #primary_key=True,
+    )
     seqtype = models.CharField(max_length=100)
     num_found = models.IntegerField()
     profile = models.ArrayField(
@@ -174,9 +189,7 @@ class Annotation(models.Model):
     )
     seqtype = models.CharField(max_length=100)
     assembly = models.ForeignKey(Assembly, related_name='annotations', on_delete=models.CASCADE)
-    sequence = models.ForeignKey(
-        Sequence, related_name="annotations", on_delete=models.CASCADE, null=True)
-
+    
     owner = models.ForeignKey(
         Account, related_name="annotations", on_delete=models.CASCADE, null=True)
     DateCreated = models.DateTimeField(

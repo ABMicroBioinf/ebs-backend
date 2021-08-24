@@ -18,15 +18,13 @@ class ProjectSerializer(DjongoModelSerializer):
     class Meta:
         model = Project
         #fields = "__all__"
-        fields = ['id', 'owner', 'title', 'DateCreated', 'LastUpdate', 'sequences']
+        fields = ['id', 'owner', 'title', 'description', 'DateCreated', 'LastUpdate', 'sequences']
        
 
 class SequenceSerializer(FlattenMixin, DjongoModelSerializer):
     owner = serializers.ReadOnlyField(source="owner.username")
-    #serialized as nested relation
-    #project = ProjectSerializer()
-    project_id = serializers.CharField(source='project.id')
-    project_title = serializers.CharField(source='project.title')
+    project__id = serializers.CharField(source='project.id')
+    project__title = serializers.CharField(source='project.title')
     class Meta:
         model = Sequence
         fields = "__all__"

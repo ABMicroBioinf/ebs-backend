@@ -2,6 +2,7 @@ from djongo import models
 from django.conf import settings
 from django.utils.text import slugify
 from apps.account.models import Account
+#from apps.isolate.gbase.models import Assembly
 from .common import *
 
 
@@ -36,6 +37,9 @@ class Sequence(models.Model):
     #Projectid = models.CharField(max_length=100)
     project = models.ForeignKey(
         Project, related_name="sequences", on_delete=models.CASCADE, null=True)
+    # assembly = models.ForeignKey(
+    #     Assembly, related_name="sequences", on_delete=models.CASCADE, null=True)
+
     TaxID = models.IntegerField()
     ScientificName = models.CharField(max_length=100)
     seqtype = models.CharField(max_length=100, choices=seqtypes, null=True, blank=True) # WGS

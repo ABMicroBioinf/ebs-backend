@@ -181,7 +181,7 @@ class GbaseDataset(Dataset):
                         virulome_list.append({'geneName': key, 'pctCoverage': float(value)})
                     results.append({
                         "id": id,
-                        'genome_id': id,
+                        'assembly_id': id,
                         "sequence_id": id,
                         "seqtype": seqtype,
                         "num_found": num_found, 
@@ -228,7 +228,7 @@ class GbaseDataset(Dataset):
                         
                     results.append({
                         "id": id,
-                        'genome_id': id,
+                        'assembly_id': id,
                         "sequence_id": id,
                         "seqtype": seqtype,
                         "num_found": int(num_found), 
@@ -274,7 +274,7 @@ class GbaseDataset(Dataset):
                     
                 results.append({
                     "id": id,
-                    'genome_id': id,
+                    'assembly_id': id,
                     'sequence_id': id,
                     "seqtype": seqtype, 
                     "scheme": scheme, 
@@ -354,7 +354,7 @@ class GbaseDataset(Dataset):
                         data['attr'] = attributes
                          
                         data['sequence_id'] = sampleid
-                        data['genome_id'] = sampleid
+                        data['assembly_id'] = sampleid
                         data['seqtype'] = seqtype
                         data['Description'] = ""
                         data['owner_id'] = ObjectId(self._owner_id)

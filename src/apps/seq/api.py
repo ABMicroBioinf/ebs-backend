@@ -3,7 +3,7 @@ from gizmos.pagination import CustomPagination
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
-from django_filters import rest_framework as filters
+from django_filters.rest_framework import DjangoFilterBackend
 
 from .filters import SequenceFilter, CustomSearchFilter
 
@@ -40,15 +40,37 @@ class ProjectViewSet(
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     pagination_class = CustomPagination
+    
     filter_backends = (
         SearchFilter,
         OrderingFilter,
+        DjangoFilterBackend
         
     )
-    search_fields = "__all__"
-    ordering_fields = "__all__" 
-    
- 
+    #equality-based filtering
+    filterset_fields = [
+        'id',
+        'title',
+        'owner__username',
+        'description'
+    ]
+
+    #generic filtering only for text, char field
+    search_fields = [
+        'id',
+        'title',
+        'owner__username',
+        'description'
+    ]
+    ordering_fields =  [
+        'id',
+        'title',
+        'owner__username',
+        'DateCreated',
+        'LastUpdate',
+    ]
+    ordering = ['DateCreated']
+
     def get_queryset(self):
         return self.queryset.filter(owner=self.request.user)
     def perform_create(self, serializer):
@@ -64,17 +86,19 @@ class SequenceViewSet(
 ):  # handle delete
     queryset = Sequence.objects.all()
     serializer_class = SequenceSerializer
+
+    #this define nested field
     filterset_class = SequenceFilter
     pagination_class = CustomPagination
     filter_backends = (
         # SearchFilter,
         CustomSearchFilter,
         OrderingFilter,
-        filters.DjangoFilterBackend,
+        DjangoFilterBackend,
     )
-    ordering_fields = "__all__"
-    search_fields = [
-        # "owner",
+    filterset_fields = [f.name for f in Sequence._meta.get_fields()]
+    #equality-based filtering
+    filterset_fields = [
         "seqtype",
         "id",
         "owner__username",
@@ -86,11 +110,10 @@ class SequenceViewSet(
         "LibrarySelection",
         "LibrarySource",
         "LibraryLayout",
-        # "InsertSize",
-        # "InsertDev",
         "Platform",
         "SequencerModel",
-        "Projectid",
+        "project__id",
+        "project__title",
         "SampleName",
         "CenterName",
         "DateCreated",
@@ -124,6 +147,61 @@ class SequenceViewSet(
         "QcStats__Ambiguous",
     ]
 
+    #searchFilter will only be applied if the view has search_fields
+    #search fields should be a list of names of test type fields such as CharField, TextField
+    search_fields = [
+        # "owner",
+        "seqtype",
+        "id",
+        "owner__username",
+        "project__id",
+        "project__title",
+        "TaxID",
+        "ScientificName",
+        "Experiment",
+        "LibraryName",
+        "LibraryStrategy",
+        "LibrarySelection",
+        "LibrarySource",
+        "LibraryLayout",
+        "Platform",
+        "SequencerModel",
+        "SampleName",
+        "CenterName",
+        "DateCreated",
+        "LastUpdate",
+        "Description",
+        "taxName_1",
+        "taxFrac_1",
+        "taxName_2",
+        "taxFrac_2",
+        "taxName_3",
+        "taxFrac_3",
+        "taxName_4",
+        "taxFrac_4",
+        "RawStats__Reads",
+        "RawStats__Yield",
+        "RawStats__GeeCee",
+        "RawStats__MinLen",
+        "RawStats__AvgLen",
+        "RawStats__MaxLen",
+        "RawStats__AvgQual",
+        "RawStats__ErrQual",
+        "RawStats__Ambiguous",
+        "QcStats__Reads",
+        "QcStats__Yield",
+        "QcStats__GeeCee",
+        "QcStats__MinLen",
+        "QcStats__AvgLen",
+        "QcStats__MaxLen",
+        "QcStats__AvgQual",
+        "QcStats__ErrQual",
+        "QcStats__Ambiguous",
+    ]
+
+    ordering_fields = "__all__"
+    ordering = ['DateCreated']
+
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
@@ -151,7 +229,7 @@ class SequenceViewSet_0(
     filter_backends = (
         SearchFilter,
         OrderingFilter,
-        filters.DjangoFilterBackend,
+        DjangoFilterBackend,
     )
     # search_fields = "__all__"
     # ordering_fields = "__all__" 
