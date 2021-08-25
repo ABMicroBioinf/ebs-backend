@@ -19,7 +19,7 @@ src/.venv
 src/media_cdn/*
 src/media_cdn/*/*
 src/tmp/
-srt/scripts/data/*
+src/scripts/data/*
 test_data
 examples/*
 util/*
