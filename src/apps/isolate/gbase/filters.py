@@ -1,20 +1,19 @@
-from .models import Assembly, Mlst, Resistome, Virulome, Annotation
-from gizmos.util import *
-from django_filters import rest_framework as filters
-from django_filters.constants import EMPTY_VALUES
 from djongo import models
 from rest_framework.compat import distinct
 from rest_framework.filters import SearchFilter
-import operator
-from functools import reduce
-
+from django_filters import rest_framework
+from django_filters.constants import EMPTY_VALUES
 from django_filters.filters import (
     CharFilter,
     DateFromToRangeFilter,
     Filter,
     NumberFilter,
 )
+import operator
+from functools import reduce
 
+from .models import Assembly, Mlst, Resistome, Virulome, Annotation
+from gizmos.util import *
 class ProfileFilter(Filter):
     # only for depth = 2
     
@@ -50,23 +49,45 @@ class AttrFilter(Filter):
         return qs
 
 
-class AssemblyFilter(filters.FilterSet):
+class AssemblyFilter(rest_framework.FilterSet):
     
-    owner__username = CharFilter(lookup_expr="iexact")
-    sequence__Projectid = CharFilter(lookup_expr="iexact")
-    seqtype = CharFilter(lookup_expr="iexact")
-    #allow the partial match
-    id = CharFilter(lookup_expr="icontains")
-    count = NumberFilter(lookup_expr="exact")
-    bp = NumberFilter(lookup_expr="exact")
-    Ns = NumberFilter(lookup_expr="exact")
-    gaps = NumberFilter(lookup_expr="exact")
-    min = NumberFilter(lookup_expr="exact")
-    max = NumberFilter(lookup_expr="exact")
-    avg = NumberFilter(lookup_expr="exact")
-    N50 = NumberFilter(lookup_expr="exact")
+    class Meta:
+        model = Assembly
+        
+        #equality-based filtering
+        fields = [field.name for field in Assembly._meta.fields]
+        fields.remove("owner")
+        fields.remove("sequence")
+    
+        extra = [
+            
+            "sequence__project__id",
+            "sequence__project__title",
+            "owner__username",
+            "sequence__LibrarySource",
+            "sequence__LibraryLayout",
+            "sequence__SequencerModel",
+            "sequence__CenterName",
+        ]
+        fields = fields + extra
+        
+        #it is possible to override default filters for all the models fields of the same kind using filter_overrides on the Meta class:
+        filter_overrides = {
+            models.CharField: {
+                'filter_class': CharFilter,
+                'extra': lambda f: {
+                    'lookup_expr': 'icontains',
+                },
+            },
+            models.IntegerField: {
+                'filter_class': NumberFilter,
+                'extra': lambda f: {
+                    'lookup_expr': 'exact',
+                },
+            },
+        }
 
-class MlstFilter(filters.FilterSet):
+class MlstFilter(rest_framework.FilterSet):
     
     id = CharFilter(lookup_expr="icontains")
     owner__username = CharFilter(lookup_expr="iexact")
@@ -94,7 +115,7 @@ class MlstFilter(filters.FilterSet):
            
         )  # Temporary
 
-class ResistomeFilter(filters.FilterSet):
+class ResistomeFilter(rest_framework.FilterSet):
     id = CharFilter(lookup_expr="icontains")
     owner__username = CharFilter(lookup_expr="iexact")
     sequence__Projectid = CharFilter(lookup_expr='iexact')
@@ -119,7 +140,7 @@ class ResistomeFilter(filters.FilterSet):
            
         )  # Temporary
 
-class VirulomeFilter(filters.FilterSet):
+class VirulomeFilter(rest_framework.FilterSet):
     sequence__Projectid = CharFilter(lookup_expr="iexact")
     owner__username = CharFilter(lookup_expr="iexact")
     profile__geneName = ProfileFilter(
@@ -136,7 +157,7 @@ class VirulomeFilter(filters.FilterSet):
            
         )  # Temporary
 
-class AnnotationFilter(filters.FilterSet):
+class AnnotationFilter(rest_framework.FilterSet):
     id = CharFilter(lookup_expr="icontains")
     owner__username = CharFilter(lookup_expr="iexact")
     sequence__Projectid = CharFilter(lookup_expr='iexact')

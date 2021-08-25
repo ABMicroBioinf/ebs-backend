@@ -1,15 +1,14 @@
 from .models import Sequence
 from gizmos.util import *
-from django_filters import rest_framework as filters
-from django_filters.constants import EMPTY_VALUES
 from djongo import models
 from rest_framework.compat import distinct
 from rest_framework.filters import SearchFilter
 import operator
 from functools import reduce
 from djongo import models
-import django_filters
 
+from django_filters import rest_framework 
+from django_filters.constants import EMPTY_VALUES
 from django_filters.filters import (
     CharFilter,
     DateFromToRangeFilter,
@@ -50,7 +49,7 @@ class MultipleCharValueFilter(Filter):
         return qs
 
 #define equaity based filter
-class SequenceFilter(filters.FilterSet):
+class SequenceFilter(rest_framework.FilterSet):
     
     RawStats__Reads = RawStatsFilter(
         field_name="RawStats__Reads", lookup_expr="exact"
@@ -148,13 +147,13 @@ class SequenceFilter(filters.FilterSet):
         #it is possible to override default filters for all the models fields of the same kind using filter_overrides on the Meta class:
         filter_overrides = {
             models.CharField: {
-                'filter_class': django_filters.CharFilter,
+                'filter_class': CharFilter,
                 'extra': lambda f: {
                     'lookup_expr': 'icontains',
                 },
             },
             models.IntegerField: {
-                'filter_class': django_filters.NumberFilter,
+                'filter_class': NumberFilter,
                 'extra': lambda f: {
                     'lookup_expr': 'exact',
                 },

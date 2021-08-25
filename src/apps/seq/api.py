@@ -129,7 +129,6 @@ class SequenceViewSet(
         'project__title', 
         'owner__username'
         ]
-        
     #TODO ordering is not working with nested fields
     #ordering_fields = SequenceFilter.Meta.fields
     ordering_fields = search_fields

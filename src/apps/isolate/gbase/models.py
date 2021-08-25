@@ -61,32 +61,25 @@ class Allele(models.Model):
 
 class Mlst(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
-    sequence = models.OneToOneField(
-        Sequence,
-        on_delete=models.CASCADE,
-        #primary_key=True,
-    )
-    #assembly = models.ForeignKey(Assembly, related_name='mlsts', on_delete=models.CASCADE)
-    # sequence = models.ForeignKey(
-    #     Sequence, related_name="mlsts", on_delete=models.CASCADE, null=True)
-    #sequence = models.OneToOneField(Sequence, on_delete=models.CASCADE)
     seqtype = models.CharField(max_length=100)
     scheme = models.CharField(max_length=100)
     st = models.IntegerField(null=True, blank=True)
     profile = models.ArrayField(
         model_container = Allele,       
     )
-    owner = models.ForeignKey(
-        Account, related_name="mlsts", on_delete=models.CASCADE)
-    """ sequence = models.ForeignKey(
-        Sequence, related_name="mlsts", on_delete=models.CASCADE) """
-    
     DateCreated = models.DateTimeField(
         verbose_name='date created', auto_now=True)
     LastUpdate = models.DateTimeField(
         verbose_name='last update', auto_now=True)
     
     Description = models.TextField()
+    assembly = models.OneToOneField(
+        Assembly,
+        on_delete=models.CASCADE,
+    )
+    owner = models.ForeignKey(
+        Account, related_name="mlsts", on_delete=models.CASCADE)
+    
     objects = models.DjongoManager()
     
     def __str__(self):

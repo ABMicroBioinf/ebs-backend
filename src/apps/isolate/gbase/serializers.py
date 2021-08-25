@@ -19,14 +19,13 @@ class AssemblySerializer(DjongoModelSerializer):
         view_name='seq:sequence-detail'
     ) 
     
+    
     #sequences = SequenceSerializer(many=True)
-
     owner = serializers.ReadOnlyField(source='owner.username')
 
     #reterieve fields from the related collection
-    project__id = serializers.CharField(source='sequence.project.id')
-    project__title = serializers.CharField(source='sequence.project.title')
-
+    sequence__project__id = serializers.CharField(source='sequence.project.id')
+    sequence__project__title = serializers.CharField(source='sequence.project.title')
 
     sequence__LibrarySource = serializers.CharField(source='sequence.LibrarySource')
     sequence__LibraryLayout = serializers.CharField(source='sequence.LibraryLayout')
@@ -36,31 +35,30 @@ class AssemblySerializer(DjongoModelSerializer):
     class Meta:
         model = Assembly
         fields = '__all__'
-        #fields = [field.name for field in Assembly._meta.fields] + ['sequences', 'sequences1']
-        #fields = [field.name for field in Assembly._meta.fields] + ['annotations']
-        #fields.append("sequences1")
         read_only_fields = ['owner']
 
 class MlstSerializer(FlattenMixin, DjongoModelSerializer):
-    sequence= serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='seq:sequence-detail'
-    ) 
+
+    #is not working
+    # assembly = serializers.HyperlinkedRelatedField(
+    #     many=False,
+    #     read_only=True,
+    #     view_name='isolate.gbase:assembly-detail'
+    # ) 
     
     #sequences = SequenceSerializer(many=True)
 
     owner = serializers.ReadOnlyField(source='owner.username')
-
+    assembly = serializers.ReadOnlyField(source='assembly.id')
     #reterieve fields from the related collection
-    project__id = serializers.CharField(source='sequence.project.id')
-    project__title = serializers.CharField(source='sequence.project.title')
+    assembly__sequence__project__id = serializers.CharField(source='assembly.sequence.project.id')
+    assembly__sequence__project__title = serializers.CharField(source='assembly.sequence.project.title')
 
     
-    sequence__LibrarySource = serializers.CharField(source='sequence.LibrarySource')
-    sequence__LibraryLayout = serializers.CharField(source='sequence.LibraryLayout')
-    sequence__SequencerModel = serializers.CharField(source='sequence.SequencerModel')
-    sequence__CenterName = serializers.CharField(source='sequence.CenterName')
+    assembly__sequence__LibrarySource = serializers.CharField(source='assembly.sequence.LibrarySource')
+    assembly__sequence__LibraryLayout = serializers.CharField(source='assembly.sequence.LibraryLayout')
+    assembly__sequence__SequencerModel = serializers.CharField(source='assembly.sequence.SequencerModel')
+    assembly__sequence__CenterName = serializers.CharField(source='assembly.sequence.CenterName')
 
 
     class Meta:

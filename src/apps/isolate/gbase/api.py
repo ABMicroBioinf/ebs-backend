@@ -36,49 +36,20 @@ class AssemblyViewSet(GenericViewSet,  # generic view functionality
                      UpdateModelMixin,  # handles PUTs and PATCHes
                      ListModelMixin,  # handles GETs for many Companies
                      DestroyModelMixin,): #handle delete
+      
       queryset = Assembly.objects.all()
       serializer_class = AssemblySerializer
       filterset_class = AssemblyFilter
       pagination_class = CustomPagination
+
       filter_backends = (
           SearchFilter,
           OrderingFilter,
           filters.DjangoFilterBackend,
       )
-      # __all__ not working with the API search box on browser
-      search_fields = [
-        'bp',
-        'Ns',
-        'gaps',
-        'min',
-        'avg',
-        'max',
-        'N50',
-        'count',
-        'id',
-        'seqtype',
-        'owner__username',
-        'DateCreated',
-        'LastUpdate',
-        'Description',
-        'sequence__Projectid'
 
-      ]
-      ordering_fields = [
-        'bp',
-        'Ns',
-        'gaps',
-        'min',
-        'avg',
-        'max',
-        'N50',
-        'count',
-        'id',
-        'seqtype',
-        'owner__username',
-        'DateCreated',
-        'LastUpdate',
-      ]
+      search_fields = AssemblyFilter.Meta.fields
+      ordering = ['DateCreated']
 
       # This method should be overriden
       # if we dont want to modify query set based on current instance attributes
@@ -105,22 +76,13 @@ class MlstViewSet(GenericViewSet,  # generic view functionality
           OrderingFilter,
           filters.DjangoFilterBackend,
       )
-      # search_fields = "__all__"
-      ordering_fields = "__all__"
-      search_fields = [
-        "id",
-        "sequence__Projectid",
-        "owner__username",
-        "seqtype",
-        "scheme",
-        "st",
-        "DateCreated",
-        "LastUpdate", 
-        "Description",
-        "profile__locus",
-        "profile__allele"
-        ]
       
+
+       # This method should be overriden
+      # if we dont want to modify query set based on current instance attributes
+      def get_queryset(self):
+        return self.queryset.filter(owner=self.request.user)
+
       def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
