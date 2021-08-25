@@ -99,6 +99,8 @@ class SequenceViewSet(
     #filterset_fields define equaity based searching, this is defined in SequenceFilter class
     print("equaity based search fields: *******************************************")
     print(SequenceFilter.Meta.fields)
+    #print(SequenceFilter.Meta.fields)
+
 
     #generic filtering only for text, char field
     #searchFilter will only be applied if the view has search_fields
@@ -127,8 +129,10 @@ class SequenceViewSet(
         'project__title', 
         'owner__username'
         ]
-
-    ordering_fields = "__all__"
+        
+    #TODO ordering is not working with nested fields
+    #ordering_fields = SequenceFilter.Meta.fields
+    ordering_fields = search_fields
     ordering = ['DateCreated']
 
     def perform_create(self, serializer):
