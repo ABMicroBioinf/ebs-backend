@@ -5,8 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
-from .filters import SequenceFilter, CustomSearchFilter
-
+from .filters import SequenceFilter
 from rest_framework.mixins import (
     CreateModelMixin,
     DestroyModelMixin,
@@ -51,23 +50,23 @@ class ProjectViewSet(
     filterset_fields = [
         'id',
         'title',
+        'description',
         'owner__username',
-        'description'
     ]
 
     #generic filtering only for text, char field
     search_fields = [
         'id',
         'title',
+        'description',
         'owner__username',
-        'description'
     ]
     ordering_fields =  [
         'id',
         'title',
-        'owner__username',
         'DateCreated',
         'LastUpdate',
+        'owner__username',
     ]
     ordering = ['DateCreated']
 
@@ -91,113 +90,43 @@ class SequenceViewSet(
     filterset_class = SequenceFilter
     pagination_class = CustomPagination
     filter_backends = (
-        # SearchFilter,
-        CustomSearchFilter,
+        SearchFilter,
+        #CustomSearchFilter,
         OrderingFilter,
         DjangoFilterBackend,
     )
-    filterset_fields = [f.name for f in Sequence._meta.get_fields()]
-    #equality-based filtering
-    filterset_fields = [
-        "seqtype",
-        "id",
-        "owner__username",
-        "TaxID",
-        "ScientificName",
-        "Experiment",
-        "LibraryName",
-        "LibraryStrategy",
-        "LibrarySelection",
-        "LibrarySource",
-        "LibraryLayout",
-        "Platform",
-        "SequencerModel",
-        "project__id",
-        "project__title",
-        "SampleName",
-        "CenterName",
-        "DateCreated",
-        "LastUpdate",
-        "Description",
-        "taxName_1",
-        "taxFrac_1",
-        "taxName_2",
-        "taxFrac_2",
-        "taxName_3",
-        "taxFrac_3",
-        "taxName_4",
-        "taxFrac_4",
-        "RawStats__Reads",
-        "RawStats__Yield",
-        "RawStats__GeeCee",
-        "RawStats__MinLen",
-        "RawStats__AvgLen",
-        "RawStats__MaxLen",
-        "RawStats__AvgQual",
-        "RawStats__ErrQual",
-        "RawStats__Ambiguous",
-        "QcStats__Reads",
-        "QcStats__Yield",
-        "QcStats__GeeCee",
-        "QcStats__MinLen",
-        "QcStats__AvgLen",
-        "QcStats__MaxLen",
-        "QcStats__AvgQual",
-        "QcStats__ErrQual",
-        "QcStats__Ambiguous",
-    ]
 
+    #filterset_fields define equaity based searching, this is defined in SequenceFilter class
+    print("equaity based search fields: *******************************************")
+    print(SequenceFilter.Meta.fields)
+
+    #generic filtering only for text, char field
     #searchFilter will only be applied if the view has search_fields
     #search fields should be a list of names of test type fields such as CharField, TextField
     search_fields = [
-        # "owner",
-        "seqtype",
-        "id",
-        "owner__username",
-        "project__id",
-        "project__title",
-        "TaxID",
-        "ScientificName",
-        "Experiment",
-        "LibraryName",
-        "LibraryStrategy",
-        "LibrarySelection",
-        "LibrarySource",
-        "LibraryLayout",
-        "Platform",
-        "SequencerModel",
-        "SampleName",
-        "CenterName",
-        "DateCreated",
-        "LastUpdate",
-        "Description",
-        "taxName_1",
-        "taxFrac_1",
-        "taxName_2",
-        "taxFrac_2",
-        "taxName_3",
-        "taxFrac_3",
-        "taxName_4",
-        "taxFrac_4",
-        "RawStats__Reads",
-        "RawStats__Yield",
-        "RawStats__GeeCee",
-        "RawStats__MinLen",
-        "RawStats__AvgLen",
-        "RawStats__MaxLen",
-        "RawStats__AvgQual",
-        "RawStats__ErrQual",
-        "RawStats__Ambiguous",
-        "QcStats__Reads",
-        "QcStats__Yield",
-        "QcStats__GeeCee",
-        "QcStats__MinLen",
-        "QcStats__AvgLen",
-        "QcStats__MaxLen",
-        "QcStats__AvgQual",
-        "QcStats__ErrQual",
-        "QcStats__Ambiguous",
-    ]
+        'id', 
+        'TaxID', 
+        'ScientificName', 
+        'seqtype', 
+        'Experiment', 
+        'LibraryName', 
+        'LibraryStrategy', 
+        'LibrarySelection', 
+        'LibrarySource', 
+        'LibraryLayout', 
+        'Platform', 
+        'SequencerModel', 
+        'SampleName', 
+        'CenterName', 
+        'taxName_1', 
+        'taxName_2', 
+        'taxName_3', 
+        'taxName_4', 
+        'Description', 
+        'project__id', 
+        'project__title', 
+        'owner__username'
+        ]
 
     ordering_fields = "__all__"
     ordering = ['DateCreated']
