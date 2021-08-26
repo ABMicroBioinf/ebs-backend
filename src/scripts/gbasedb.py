@@ -182,7 +182,7 @@ class GbaseDataset(Dataset):
                     results.append({
                         "id": id,
                         'assembly_id': id,
-                        "sequence_id": id,
+                        #"sequence_id": id,
                         "seqtype": seqtype,
                         "num_found": num_found, 
                         "profile": virulome_list, 
@@ -229,7 +229,7 @@ class GbaseDataset(Dataset):
                     results.append({
                         "id": id,
                         'assembly_id': id,
-                        "sequence_id": id,
+                        #"sequence_id": id,
                         "seqtype": seqtype,
                         "num_found": int(num_found), 
                         "profile": resistome_list, 
@@ -275,7 +275,7 @@ class GbaseDataset(Dataset):
                 results.append({
                     "id": id,
                     'assembly_id': id,
-                    'sequence_id': id,
+                    #'sequence_id': id,
                     "seqtype": seqtype, 
                     "scheme": scheme, 
                     "st": int(st), 
@@ -353,7 +353,7 @@ class GbaseDataset(Dataset):
                         data['phase'] =segment[7]
                         data['attr'] = attributes
                          
-                        data['sequence_id'] = sampleid
+                        #data['sequence_id'] = sampleid
                         data['assembly_id'] = sampleid
                         data['seqtype'] = seqtype
                         data['Description'] = ""

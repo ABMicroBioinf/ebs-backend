@@ -109,10 +109,9 @@ class Virulence(Gene):
 class Resistome(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
     
-    sequence = models.OneToOneField(
-        Sequence,
+    assembly = models.OneToOneField(
+        Assembly,
         on_delete=models.CASCADE,
-        #primary_key=True,
     )
     seqtype = models.CharField(max_length=100)
     num_found = models.IntegerField()
@@ -135,10 +134,9 @@ class Resistome(models.Model):
 
 class Virulome(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
-    sequence = models.OneToOneField(
-        Sequence,
+    assembly = models.OneToOneField(
+        Assembly,
         on_delete=models.CASCADE,
-        #primary_key=True,
     )
     seqtype = models.CharField(max_length=100)
     num_found = models.IntegerField()

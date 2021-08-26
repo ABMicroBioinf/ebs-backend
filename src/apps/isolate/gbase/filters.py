@@ -8,12 +8,16 @@ from django_filters.filters import (
     DateFromToRangeFilter,
     Filter,
     NumberFilter,
-)
+
+) 
 import operator
 from functools import reduce
-
 from .models import Assembly, Mlst, Resistome, Virulome, Annotation
 from gizmos.util import *
+from gizmos.filter import EbsSearchFilter
+
+#TODO: nested fields are not working with partial matching
+
 class ProfileFilter(Filter):
     # only for depth = 2
     
@@ -24,8 +28,9 @@ class ProfileFilter(Filter):
         print("***************************")
         import json
         print(json.dumps(hierarchy))
-        qs = qs.filter(profile={hierarchy[1]: value})
+        #qs = qs.filter(profile__icontains={hierarchy[1]: value})
         print("*************************** after qs")
+        qs = qs.filter(profile={hierarchy[1]: value})
         from django.db import connection
         print(connection.queries) 
         
@@ -89,17 +94,6 @@ class AssemblyFilter(rest_framework.FilterSet):
 
 class MlstFilter(rest_framework.FilterSet):
     
-    id = CharFilter(lookup_expr="icontains")
-    owner__username = CharFilter(lookup_expr="iexact")
-    sequence__Projectid = CharFilter(lookup_expr='iexact')
-    seqtype = CharFilter(lookup_expr="iexact")
-    #allow the partial match
-    scheme = CharFilter(lookup_expr="iexact")
-    st = NumberFilter(lookup_expr="exact")
-    DateCreated = DateFromToRangeFilter()
-    LastUpdate = DateFromToRangeFilter()
-    Description = CharFilter(lookup_expr="icontains")
-
     profile__locus = ProfileFilter(
         field_name="profile__locus", lookup_expr="icontains"
     )
@@ -109,241 +103,223 @@ class MlstFilter(rest_framework.FilterSet):
     
     class Meta:
         model = Mlst
-        exclude = (
-            "profile",
-            "sequence"
+        
+        #equality-based filtering
+        fields = [field.name for field in Mlst._meta.fields]
+        print(fields)
+        fields.remove("owner")
+        fields.remove("assembly")
+        fields.remove("profile")
+    
+        extra = [
+            "profile__allele",
+            "profile__locus",
+            "owner__username",
+            "assembly__sequence__project__id",
+            "assembly__sequence__project__title",
+            "assembly__sequence__LibrarySource",
+            "assembly__sequence__LibraryLayout",
+            "assembly__sequence__SequencerModel",
+            "assembly__sequence__CenterName",
+        ]
+        fields = fields + extra
+        
+        #it is possible to override default filters for all the models fields of the same kind using filter_overrides on the Meta class:
+        filter_overrides = {
+            models.CharField: {
+                'filter_class': CharFilter,
+                'extra': lambda f: {
+                    'lookup_expr': 'icontains',
+                },
+            },
+            models.IntegerField: {
+                'filter_class': NumberFilter,
+                'extra': lambda f: {
+                    'lookup_expr': 'exact',
+                },
+            },
+        }
+
+class MlstSearchFilter(EbsSearchFilter):
+    def __init__(self):
+        self.nested_fields =  [
+            "profile__locus",
+            "profile__allele",
+        ]
+        self.nested_cats = [
+            'profile',
            
-        )  # Temporary
+        ]
+
 
 class ResistomeFilter(rest_framework.FilterSet):
-    id = CharFilter(lookup_expr="icontains")
-    owner__username = CharFilter(lookup_expr="iexact")
-    sequence__Projectid = CharFilter(lookup_expr='iexact')
-    seqtype = CharFilter(lookup_expr="iexact")
-    #allow the partial match
-    num_found = NumberFilter(lookup_expr="exact")
-    DateCreated = DateFromToRangeFilter()
-    LastUpdate = DateFromToRangeFilter()
-    Description = CharFilter(lookup_expr="icontains")
     
     profile__geneName = ProfileFilter(
-        field_name="profile__geneName", lookup_expr="iexact"
+        field_name="profile__geneName", lookup_expr="icontains"
     )
     profile__pctCoverage = ProfileFilter(
-        field_name="profile__pctCoverage", lookup_expr="exact"
+        field_name="profile__pctCoverage", lookup_expr="icontains"
     )
 
     class Meta:
-        model = Resistome
-        exclude = (
-            "profile",
+        model = Resistome 
+        #equality-based filtering
+        fields = [field.name for field in Resistome._meta.fields]
+        print(fields)
+        fields.remove("owner")
+        fields.remove("assembly")
+        fields.remove("profile")
+    
+        extra = [
+            "profile__geneName",
+            "profile__pctCoverage",
+            "owner__username",
+            "assembly__sequence__project__id",
+            "assembly__sequence__project__title",
+            "assembly__sequence__LibrarySource",
+            "assembly__sequence__LibraryLayout",
+            "assembly__sequence__SequencerModel",
+            "assembly__sequence__CenterName",
+        ]
+        fields = fields + extra
+        
+        #it is possible to override default filters for all the models fields of the same kind using filter_overrides on the Meta class:
+        filter_overrides = {
+            models.CharField: {
+                'filter_class': CharFilter,
+                'extra': lambda f: {
+                    'lookup_expr': 'icontains',
+                },
+            },
+            models.IntegerField: {
+                'filter_class': NumberFilter,
+                'extra': lambda f: {
+                    'lookup_expr': 'exact',
+                },
+            },
+            
+        }
+
+class ResistomeSearchFilter(EbsSearchFilter):
+    def __init__(self):
+        self.nested_fields =  [
+            "profile__geneName",
+            "profile__pctCoverage",
+        ]
+        self.nested_cats = [
+            'profile',
            
-        )  # Temporary
+        ]
 
 class VirulomeFilter(rest_framework.FilterSet):
-    sequence__Projectid = CharFilter(lookup_expr="iexact")
-    owner__username = CharFilter(lookup_expr="iexact")
     profile__geneName = ProfileFilter(
-        field_name="profile__geneName", lookup_expr="icontain"
+        field_name="profile__geneName", lookup_expr="icontains"
     )
     profile__pctCoverage = ProfileFilter(
-        field_name="profile__pctCoverage", lookup_expr="exact"
+        field_name="profile__pctCoverage", lookup_expr="icontains"
     )
-
     class Meta:
         model = Virulome
-        exclude = (
-            "profile",
-           
-        )  # Temporary
+        fields = [field.name for field in Resistome._meta.fields]
+        print(fields)
+        fields.remove("owner")
+        fields.remove("assembly")
+        fields.remove("profile")
+    
+        extra = [
+            "profile__geneName",
+            "profile__pctCoverage",
+            "owner__username",
+            "assembly__sequence__project__id",
+            "assembly__sequence__project__title",
+            "assembly__sequence__LibrarySource",
+            "assembly__sequence__LibraryLayout",
+            "assembly__sequence__SequencerModel",
+            "assembly__sequence__CenterName",
+        ]
+        fields = fields + extra
+        
+        #it is possible to override default filters for all the models fields of the same kind using filter_overrides on the Meta class:
+        filter_overrides = {
+            models.CharField: {
+                'filter_class': CharFilter,
+                'extra': lambda f: {
+                    'lookup_expr': 'icontains',
+                },
+            },
+            models.IntegerField: {
+                'filter_class': NumberFilter,
+                'extra': lambda f: {
+                    'lookup_expr': 'exact',
+                },
+            },
+            
+        }
+
+class VirulomeSearchFilter(EbsSearchFilter):
+    def __init__(self):
+        self.nested_fields =  [
+            "profile__geneName",
+            "profile__pctCoverage",
+        ]
+        self.nested_cats = [
+            'profile',  
+        ]
 
 class AnnotationFilter(rest_framework.FilterSet):
-    id = CharFilter(lookup_expr="icontains")
-    owner__username = CharFilter(lookup_expr="iexact")
-    sequence__Projectid = CharFilter(lookup_expr='iexact')
-    seqtype = CharFilter(lookup_expr="iexact")
-    
-    seqid = CharFilter(lookup_expr="iexact")
-    source = CharFilter(lookup_expr="iexact")
-    ftype = CharFilter(lookup_expr="iexact")
-    start = NumberFilter(lookup_expr="exact")
-    end = NumberFilter(lookup_expr="exact")
-    score = CharFilter(lookup_expr="iexact")
-    strand = CharFilter(lookup_expr="iexact")
-    phase = CharFilter(lookup_expr="iexact")
-
-    DateCreated = DateFromToRangeFilter()
-    LastUpdate = DateFromToRangeFilter()
-    Description = CharFilter(lookup_expr="icontains")
 
     attr__tag = AttrFilter(
-        field_name="attr__tag", lookup_expr="iexact"
+        field_name="attr__tag", lookup_expr="icontains"
     )
     attr__value = AttrFilter(
-        field_name="attr__value", lookup_expr="iexact"
+        field_name="attr__value", lookup_expr="icontains"
     )
     
     class Meta:
         model = Annotation
-        exclude = (
-            "attr",
-            "sequence"
-           
-        )  # Temporary
-
-class CustomSearchFilter(SearchFilter):
-
-    def filter_queryset(self, request, queryset, view):
-        nested_fields = [
-            "profile__locus",
-            "profile__allele"
-        ]
-
-        search_fields = self.get_search_fields(view, request)
-        search_terms = self.get_search_terms(request)
-        if not search_fields or not search_terms:
-            return queryset
-
-        nested_target = list(set(search_fields) & set(nested_fields))
-        regular_target = list(set(search_fields) - set(nested_fields))
-
-        orm_lookups = [
-            self.construct_search(str(search_field))
-            for search_field in regular_target
-        ]
-
-        nested_lookups = [
-            self.construct_search(str(search_field))
-            for search_field in nested_target
-        ]
-
-        conditions = []
-        print("**************************************************************** search term")
-        print(search_fields)
-        print(orm_lookups)
-        print(search_terms)
-        for search_term in search_terms:
-            queries = [
-                models.Q(**{orm_lookup: search_term})
-                for orm_lookup in orm_lookups
-            ]
-            conditions.append(reduce(operator.or_, queries))
-        regular_queryset = queryset.filter(reduce(operator.and_, conditions))
-
-        nested_conditions = []
-        
-        for search_term in search_terms:
-            queries = [
-                models.Q(
-                    profile={
-                        **{
-                            # "__".join(
-                            #     nested_lookup.split("__")[1:]
-                            # ): search_term
-                            nested_lookup.split("__")[1]: search_term
-                            
-                        }
-                    }
-                )
-                
-                for nested_lookup in nested_lookups
-            ]
-            nested_conditions.append(reduce(operator.or_, queries))
-        nested_queryset = queryset.filter(
-            reduce(operator.and_, nested_conditions)
-        )
-
-        queryset = regular_queryset | nested_queryset
-
-        if self.must_call_distinct(queryset, search_fields):
-            # Filtering against a many-to-many field requires us to
-            # call queryset.distinct() in order to avoid duplicate items
-            # in the resulting queryset.
-            # We try to avoid this if possible, for performance reasons.
-            queryset = distinct(queryset, base)
-        return queryset
-
-
-class AnnotationSearchFilter(SearchFilter):
-
-
-    def filter_queryset(self, request, queryset, view):
-        nested_fields = [
+        fields = [field.name for field in Annotation._meta.fields]
+        print(fields)
+        fields.remove("owner")
+        fields.remove("assembly")
+        fields.remove("attr")
+    
+        extra = [
             "attr__tag",
-            "attr__value"
+            "attr__value",
+            "owner__username",
+            "assembly__sequence__project__id",
+            "assembly__sequence__project__title",
+            "assembly__sequence__LibrarySource",
+            "assembly__sequence__LibraryLayout",
+            "assembly__sequence__SequencerModel",
+            "assembly__sequence__CenterName",
         ]
-
-        search_fields = self.get_search_fields(view, request)
-        search_terms = self.get_search_terms(request)
-        if not search_fields or not search_terms:
-            return queryset
-
-        nested_target = list(set(search_fields) & set(nested_fields))
-        regular_target = list(set(search_fields) - set(nested_fields))
-
-        orm_lookups = [
-            self.construct_search(str(search_field))
-            for search_field in regular_target
-        ]
-
-        nested_lookups = [
-            self.construct_search(str(search_field))
-            for search_field in nested_target
-        ]
-
-        conditions = []
-        print("**************************************************************** search term")
-        print(search_fields)
-        print(orm_lookups)
-        print(search_terms)
-
-        for search_term in search_terms:
-            print("search term=" + search_term)
-            queries = [
-                models.Q(**{orm_lookup: search_term})
-                for orm_lookup in orm_lookups
-            ]
-            for orm_lookup in orm_lookups:
-                print("asdfkas;dfjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
-                print(type(orm_lookup))
-                print(orm_lookup)
-            if queries:
-                conditions.append(reduce(operator.or_, queries))
-        if conditions:
-            regular_queryset = queryset.filter(reduce(operator.and_, conditions))
-        else:
-            regular_queryset = queryset
-
-        nested_conditions = []
+        fields = fields + extra
         
-        for search_term in search_terms:
-            queries = [
-                models.Q(
-                    attr={
-                        **{
-                            # "__".join(
-                            #     nested_lookup.split("__")[1:]
-                            # ): search_term
-                            nested_lookup.split("__")[1]: search_term
-                            
-                        }
-                    }
-                )
-                
-                for nested_lookup in nested_lookups
-            ]
-            nested_conditions.append(reduce(operator.or_, queries))
-        nested_queryset = queryset.filter(
-            reduce(operator.and_, nested_conditions)
-        )
+        #it is possible to override default filters for all the models fields of the same kind using filter_overrides on the Meta class:
+        filter_overrides = {
+            models.CharField: {
+                'filter_class': CharFilter,
+                'extra': lambda f: {
+                    'lookup_expr': 'icontains',
+                },
+            },
+            models.IntegerField: {
+                'filter_class': NumberFilter,
+                'extra': lambda f: {
+                    'lookup_expr': 'exact',
+                },
+            },
+            
+        }
 
-        queryset = regular_queryset | nested_queryset
 
-        if self.must_call_distinct(queryset, search_fields):
-            # Filtering against a many-to-many field requires us to
-            # call queryset.distinct() in order to avoid duplicate items
-            # in the resulting queryset.
-            # We try to avoid this if possible, for performance reasons.
-            queryset = distinct(queryset, base)
-        return queryset
-        
+class AnnotationSearchFilter(EbsSearchFilter):
+    def __init__(self):
+        self.nested_fields =  [
+            "attr__tag",
+            "attr__value",
+        ]
+        self.nested_cats = [
+            'attr',  
+        ]
