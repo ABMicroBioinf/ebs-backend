@@ -81,8 +81,8 @@ class SequenceMetadataSerializer(serializers.Serializer):
     SequencerModel = serializers.SerializerMethodField(
         "get_distinct_count_for_sequencer_model"
     )
-    Projectid = serializers.SerializerMethodField(
-        "get_distinct_count_for_Projectid"
+    project__id = serializers.SerializerMethodField(
+        "get_distinct_count_for_project"
     )
 
     class Meta:
@@ -121,8 +121,8 @@ class SequenceMetadataSerializer(serializers.Serializer):
 
     def get_distinct_count_for_sequencer_model(self, seq):
         return seq.values("SequencerModel").annotate(total=Count("SequencerModel")).order_by('total')
-    def get_distinct_count_for_Projectid(self, seq):
-        return seq.values("Projectid").annotate(total=Count("Projectid")).order_by('total')
+    def get_distinct_count_for_project(self, seq):
+        return seq.values("project").annotate(total=Count("project")).order_by('total')
 
     # Example of distinct count for nested field when 'JOIN' issue occurs
     # def get_count_for_library_source(self, run):
