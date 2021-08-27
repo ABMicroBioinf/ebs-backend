@@ -7,7 +7,7 @@ from django_filters import rest_framework as filters
 from .models import Profile, Psummary
 from .serializers import ProfileSerializer, PsummarySerializer
 from gizmos.pagination import CustomPagination
-from .filters import ProfileFilter, PsummaryFilter
+from .filters import ProfileFilter, PsummaryFilter, ProfileSearchFilter
 
 class ProfileViewSet(GenericViewSet,  # generic view functionality
                      CreateModelMixin,  # handles POSTs
@@ -21,14 +21,17 @@ class ProfileViewSet(GenericViewSet,  # generic view functionality
       filterset_class = ProfileFilter
       pagination_class = CustomPagination
       filter_backends = (
-          SearchFilter,
-          #CustomSearchFilter,
+          #SearchFilter,
+          ProfileSearchFilter,
           OrderingFilter,
           filters.DjangoFilterBackend,
       )
-      search_fields = "__all__"
-      ordering_fields = "__all__"
-      
+      #filterset_fields define equaity based searching, this is defined in SequenceFilter class
+      print("equaity based search fields: *******************************************")
+      print(ProfileFilter.Meta.fields)
+      search_fields = ProfileFilter.Meta.fields
+      ordering = ['DateCreated']
+
       # This method should be overriden
       # if we dont want to modify query set based on current instance attributes
       def get_queryset(self):
@@ -51,52 +54,16 @@ class PsummaryViewSet(GenericViewSet,  # generic view functionality
       pagination_class = CustomPagination
       filter_backends = (
           SearchFilter,
-          #CustomSearchFilter,
           OrderingFilter,
           filters.DjangoFilterBackend,
       )
       
-      ordering_fields = "__all__"
-      search_fields = [
+      #filterset_fields define equaity based searching, this is defined in SequenceFilter class
+      print("equaity based search fields: *******************************************")
+      print(PsummaryFilter.Meta.fields)
+      search_fields = PsummaryFilter.Meta.fields
+      ordering = ['DateCreated']
 
-        "id",
-        "sequence__Projectid",
-        "owner__username",
-        "Description",
-        "DateCreated",
-        "LastUpdate",
-        "pct_reads_mapped",
-        "num_reads_mapped",
-        "main_lin",
-        "sublin",
-        "num_dr_variants",
-        "num_other_variants",
-        "drtype",
-        "rifampicin",
-        "isoniazid",
-        "pyrazinamide",
-        "ethambutol",
-        "streptomycin",
-        "fluoroquinolones",
-        "moxifloxacin",
-        "ofloxacin",
-        "levofloxacin",
-        "ciprofloxacin",
-        "aminoglycosides",
-        "amikacin",
-        "kanamycin",
-        "capreomycin",
-        "ethionamide",
-        "para_aminosalicylic_acid",
-        "cycloserine",
-        "linezolid",
-        "bedaquiline",
-        "clofazimine",
-        "delamanid",
-        "sequence"
-
-      ]
-      
       # This method should be overriden
       # if we dont want to modify query set based on current instance attributes
       def get_queryset(self):

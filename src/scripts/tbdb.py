@@ -177,6 +177,7 @@ class TBDataset(Dataset):
             for key, value in jsonData.items():
               if key not in {"qc", "delly", "lineage", "dr_variants","other_variants", "pipeline", "db_version",  "tbprofiler_version", "timestamp"}:
                 data[key] = value
+                print("********************key=")
                 print(key)
                 print(value)
               elif key == "dr_variants":

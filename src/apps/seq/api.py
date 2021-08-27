@@ -5,7 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
-from .filters import SequenceFilter
+from .filters import SequenceFilter, SequenceSearchFilter
 from rest_framework.mixins import (
     CreateModelMixin,
     DestroyModelMixin,
@@ -90,49 +90,21 @@ class SequenceViewSet(
     filterset_class = SequenceFilter
     pagination_class = CustomPagination
     filter_backends = (
-        SearchFilter,
-        #CustomSearchFilter,
+        #SearchFilter,
+        SequenceSearchFilter,
         OrderingFilter,
         DjangoFilterBackend,
     )
-
     #filterset_fields define equaity based searching, this is defined in SequenceFilter class
     print("equaity based search fields: *******************************************")
     print(SequenceFilter.Meta.fields)
-    #print(SequenceFilter.Meta.fields)
-
-
-    #generic filtering only for text, char field
-    #searchFilter will only be applied if the view has search_fields
-    #search fields should be a list of names of test type fields such as CharField, TextField
-    search_fields = [
-        'id', 
-        'TaxID', 
-        'ScientificName', 
-        'seqtype', 
-        'Experiment', 
-        'LibraryName', 
-        'LibraryStrategy', 
-        'LibrarySelection', 
-        'LibrarySource', 
-        'LibraryLayout', 
-        'Platform', 
-        'SequencerModel', 
-        'SampleName', 
-        'CenterName', 
-        'taxName_1', 
-        'taxName_2', 
-        'taxName_3', 
-        'taxName_4', 
-        'Description', 
-        'project__id', 
-        'project__title', 
-        'owner__username'
-        ]
-    #TODO ordering is not working with nested fields
-    #ordering_fields = SequenceFilter.Meta.fields
-    ordering_fields = search_fields
+    search_fields = SequenceFilter.Meta.fields
     ordering = ['DateCreated']
+
+    # This method should be overriden
+    # if we dont want to modify query set based on current instance attributes
+    def get_queryset(self):
+        return self.queryset.filter(owner=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

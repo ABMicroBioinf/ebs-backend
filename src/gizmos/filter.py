@@ -3,6 +3,33 @@ from rest_framework.compat import distinct
 from rest_framework.filters import SearchFilter
 import operator
 from functools import reduce
+from django_filters.filters import Filter
+from django_filters.constants import EMPTY_VALUES
+
+#TODO 
+#nested fields work well with string but not with number
+class NestedFilter(Filter):
+    # only for depth = 2
+    # def __init__(self,field_parent):
+    #     self.field_parent = field_parent
+    #     super.__init__(self)
+
+    def filter(self, qs, value):
+        if value in EMPTY_VALUES:
+            return qs
+        hierarchy = self.field_name.split("__")
+        d = {}
+        d[hierarchy[0]] = {hierarchy[1]: value}
+        print("testing nested fields..................................")
+        print(d)
+        #qs = qs.filter(profile={hierarchy[1]: value})
+        qs = qs.filter(**d)
+        from django.db import connection
+        print(connection.queries) 
+        
+        return qs
+
+
 #https://zhuanlan.zhihu.com/p/59072252
 class EbsSearchFilter(SearchFilter):
 

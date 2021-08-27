@@ -1,118 +1,76 @@
-from .models import Sequence
-from gizmos.util import *
 from djongo import models
-from rest_framework.compat import distinct
-from rest_framework.filters import SearchFilter
-import operator
-from functools import reduce
-from djongo import models
-
 from django_filters import rest_framework 
-from django_filters.constants import EMPTY_VALUES
 from django_filters.filters import (
     CharFilter,
     DateFromToRangeFilter,
     Filter,
-    NumberFilter,
-    
+    NumberFilter,    
 )
-
-class RawStatsFilter(Filter):
-    # only for depth = 2
-    
-    def filter(self, qs, value):
-        if value in EMPTY_VALUES:
-            return qs
-        hierarchy = self.field_name.split("__")
-        qs = qs.filter(RawStats={hierarchy[1]: num(value)})
-        """ from django.db import connection
-        print(connection.queries) """
-        
-        return qs
-
-
-class QcStatsFilter(Filter):
-    # only for depth = 2
-    def filter(self, qs, value):
-        if value in EMPTY_VALUES:
-            return qs
-        hierarchy = self.field_name.split("__")
-        qs = qs.filter(QcStats={hierarchy[1]: num(value)})
-        return qs
-
-class MultipleCharValueFilter(Filter):
-    def filter(self, qs, value):
-        if value in EMPTY_VALUES:
-            return qs
-        value_list = value.split(",")
-        qs = super().filter(qs, value_list)
-        return qs
+from .models import Sequence
+from gizmos.filter import EbsSearchFilter, NestedFilter
 
 #define equaity based filter
 class SequenceFilter(rest_framework.FilterSet):
     
-    RawStats__Reads = RawStatsFilter(
+    RawStats__Reads = NestedFilter(
         field_name="RawStats__Reads", lookup_expr="exact"
     )
-    RawStats__Yield = RawStatsFilter(
+    RawStats__Yield = NestedFilter(
         field_name="RawStats__Yield", lookup_expr="exact"
     )
-    RawStats__GeeCee = RawStatsFilter(
+    RawStats__GeeCee = NestedFilter(
         field_name="RawStats__GeeCee", lookup_expr="exact"
     )
-    RawStats__MinLen = RawStatsFilter(
+    RawStats__MinLen = NestedFilter(
         field_name="RawStats__MinLen", lookup_expr="exact"
     )
-    RawStats__AvgLen = RawStatsFilter(
+    RawStats__AvgLen = NestedFilter(
         field_name="RawStats__AvgLen", lookup_expr="exact"
     )
-    RawStats__MaxLen = RawStatsFilter(
+    RawStats__MaxLen = NestedFilter(
         field_name="RawStats__MaxLen", lookup_expr="exact"
     )
-    RawStats__AvgQual = RawStatsFilter(
+    RawStats__AvgQual = NestedFilter(
         field_name="RawStats__AvgQual", lookup_expr="exact"
     )
-    RawStats__ErrQual = RawStatsFilter(
+    RawStats__ErrQual = NestedFilter(
         field_name="RawStats__ErrQual", lookup_expr="exact"
     )
-    RawStats__Ambiguous = RawStatsFilter(
+    RawStats__Ambiguous = NestedFilter(
         field_name="RawStats__Ambiguous", lookup_expr="exact"
     )
 
-    QcStats__Reads = QcStatsFilter(
+    QcStats__Reads = NestedFilter(
         field_name="QcStats__Reads", lookup_expr="exact"
     )
-    QcStats__Yield = QcStatsFilter(
+    QcStats__Yield = NestedFilter(
         field_name="QcStats__Yield", lookup_expr="exact"
     )
-    QcStats__GeeCee = QcStatsFilter(
+    QcStats__GeeCee = NestedFilter(
         field_name="QcStats__GeeCee", lookup_expr="exact"
     )
-    QcStats__MinLen = QcStatsFilter(
+    QcStats__MinLen = NestedFilter(
         field_name="QcStats__MinLen", lookup_expr="exact"
     )
-    QcStats__AvgLen = QcStatsFilter(
+    QcStats__AvgLen = NestedFilter(
         field_name="QcStats__AvgLen", lookup_expr="exact"
     )
-    QcStats__MaxLen = QcStatsFilter(
+    QcStats__MaxLen = NestedFilter(
         field_name="QcStats__MaxLen", lookup_expr="exact"
     )
-    QcStats__AvgQual = QcStatsFilter(
+    QcStats__AvgQual = NestedFilter(
         field_name="QcStats__AvgQual", lookup_expr="exact"
     )
-    QcStats__ErrQual = QcStatsFilter(
+    QcStats__ErrQual = NestedFilter(
         field_name="QcStats__ErrQual", lookup_expr="exact"
     )
-    QcStats__Ambiguous = QcStatsFilter(
+    QcStats__Ambiguous = NestedFilter(
         field_name="QcStats__Ambiguous", lookup_expr="exact"
     )
     
     class Meta:
         model = Sequence
-        """ exclude = (
-            "RawStats",
-            "QcStats",
-        )  # Temporary """
+        
         #equality-based filtering
         fields = [field.name for field in Sequence._meta.fields]
         fields.remove("owner")
@@ -160,9 +118,9 @@ class SequenceFilter(rest_framework.FilterSet):
             },
         }
 
-class CustomSearchFilter(SearchFilter):
-    def filter_queryset(self, request, queryset, view):
-        nested_fields = [
+class SequenceSearchFilter(EbsSearchFilter):
+    def __init__(self):
+        self.nested_fields =  [
             "RawStats__Reads",
             "RawStats__Yield",
             "RawStats__GeeCee",
@@ -182,76 +140,8 @@ class CustomSearchFilter(SearchFilter):
             "QcStats__ErrQual",
             "QcStats__Ambiguous",
         ]
-
-        search_fields = self.get_search_fields(view, request)
-        search_terms = self.get_search_terms(request)
-        print("*********************************")
-        print(type(search_fields))
-        print(search_fields)
-        if not search_fields or not search_terms:
-            return queryset
-
-        nested_target = list(set(search_fields) & set(nested_fields))
-        regular_target = list(set(search_fields) - set(nested_fields))
-
-        orm_lookups = [
-            self.construct_search(str(search_field))
-            for search_field in regular_target
+        self.nested_cats = [
+            'RawStats',
+            'QcStats',
+           
         ]
-
-        nested_lookups = [
-            self.construct_search(str(search_field))
-            for search_field in nested_target
-        ]
-
-        base = queryset
-
-        conditions = []
-        for search_term in search_terms:
-            queries = [
-                models.Q(**{orm_lookup: search_term})
-                for orm_lookup in orm_lookups
-            ]
-            conditions.append(reduce(operator.or_, queries))
-        regular_queryset = queryset.filter(reduce(operator.and_, conditions))
-
-        nested_conditions = []
-        for search_term in search_terms:
-            queries = [
-                models.Q(
-                    RawStats={
-                        **{
-                            # "__".join(
-                            #     nested_lookup.split("__")[1:]
-                            # ): search_term
-                            nested_lookup.split("__")[1]: search_term
-                        }
-                    }
-                )
-                if nested_lookup.split("__")[0] == "RawStats"
-                else models.Q(
-                    QcStats={
-                        **{
-                            # "__".join(
-                            #     nested_lookup.split("__")[1:]
-                            # ): search_term
-                            nested_lookup.split("__")[1]: search_term
-                        }
-                    }
-                )
-                for nested_lookup in nested_lookups
-            ]
-            nested_conditions.append(reduce(operator.or_, queries))
-        nested_queryset = queryset.filter(
-            reduce(operator.and_, nested_conditions)
-        )
-
-        queryset = regular_queryset | nested_queryset
-
-        if self.must_call_distinct(queryset, search_fields):
-            # Filtering against a many-to-many field requires us to
-            # call queryset.distinct() in order to avoid duplicate items
-            # in the resulting queryset.
-            # We try to avoid this if possible, for performance reasons.
-            queryset = distinct(queryset, base)
-        return queryset

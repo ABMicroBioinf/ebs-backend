@@ -1,58 +1,15 @@
 from djongo import models
-from rest_framework.compat import distinct
-from rest_framework.filters import SearchFilter
 from django_filters import rest_framework
-from django_filters.constants import EMPTY_VALUES
 from django_filters.filters import (
     CharFilter,
     DateFromToRangeFilter,
     Filter,
     NumberFilter,
-
 ) 
-import operator
-from functools import reduce
 from .models import Assembly, Mlst, Resistome, Virulome, Annotation
-from gizmos.util import *
-from gizmos.filter import EbsSearchFilter
+from gizmos.filter import EbsSearchFilter, NestedFilter
 
 #TODO: nested fields are not working with partial matching
-
-class ProfileFilter(Filter):
-    # only for depth = 2
-    
-    def filter(self, qs, value):
-        if value in EMPTY_VALUES:
-            return qs
-        hierarchy = self.field_name.split("__")
-        print("***************************")
-        import json
-        print(json.dumps(hierarchy))
-        #qs = qs.filter(profile__icontains={hierarchy[1]: value})
-        print("*************************** after qs")
-        qs = qs.filter(profile={hierarchy[1]: value})
-        from django.db import connection
-        print(connection.queries) 
-        
-        return qs
-
-class AttrFilter(Filter):
-    # only for depth = 2
-    
-    def filter(self, qs, value):
-        if value in EMPTY_VALUES:
-            return qs
-        hierarchy = self.field_name.split("__")
-        print("*************************** attr")
-        import json
-        print(json.dumps(hierarchy))
-        qs = qs.filter(attr={hierarchy[1]: value})
-        print("*************************** after qs")
-        from django.db import connection
-        print(connection.queries) 
-        
-        return qs
-
 
 class AssemblyFilter(rest_framework.FilterSet):
     
@@ -94,10 +51,10 @@ class AssemblyFilter(rest_framework.FilterSet):
 
 class MlstFilter(rest_framework.FilterSet):
     
-    profile__locus = ProfileFilter(
+    profile__locus = NestedFilter(
         field_name="profile__locus", lookup_expr="icontains"
     )
-    profile__allele = ProfileFilter(
+    profile__allele = NestedFilter(
         field_name="profile__allele", lookup_expr="iexact"
     )
     
@@ -154,10 +111,10 @@ class MlstSearchFilter(EbsSearchFilter):
 
 class ResistomeFilter(rest_framework.FilterSet):
     
-    profile__geneName = ProfileFilter(
+    profile__geneName = NestedFilter(
         field_name="profile__geneName", lookup_expr="icontains"
     )
-    profile__pctCoverage = ProfileFilter(
+    profile__pctCoverage = NestedFilter(
         field_name="profile__pctCoverage", lookup_expr="icontains"
     )
 
@@ -212,10 +169,10 @@ class ResistomeSearchFilter(EbsSearchFilter):
         ]
 
 class VirulomeFilter(rest_framework.FilterSet):
-    profile__geneName = ProfileFilter(
+    profile__geneName = NestedFilter(
         field_name="profile__geneName", lookup_expr="icontains"
     )
-    profile__pctCoverage = ProfileFilter(
+    profile__pctCoverage = NestedFilter(
         field_name="profile__pctCoverage", lookup_expr="icontains"
     )
     class Meta:
@@ -267,14 +224,13 @@ class VirulomeSearchFilter(EbsSearchFilter):
         ]
 
 class AnnotationFilter(rest_framework.FilterSet):
-
-    attr__tag = AttrFilter(
+   
+    attr__tag = NestedFilter(
         field_name="attr__tag", lookup_expr="icontains"
     )
-    attr__value = AttrFilter(
+    attr__value = NestedFilter(
         field_name="attr__value", lookup_expr="icontains"
     )
-    
     class Meta:
         model = Annotation
         fields = [field.name for field in Annotation._meta.fields]

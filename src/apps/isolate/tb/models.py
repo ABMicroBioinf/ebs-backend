@@ -78,7 +78,7 @@ class Lineage(models.Model):
 
 class Variant(models.Model):
     chr = models.CharField(max_length=50)
-    genome_pos = models.FloatField()
+    genome_pos = models.IntegerField()
     type = models.CharField(max_length=20)
     change = models.CharField(max_length=50)
     freq = models.FloatField()

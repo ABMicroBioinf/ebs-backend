@@ -10,16 +10,10 @@ class ProfileSerializer(FlattenMixin, DjongoModelSerializer):
         read_only=True,
         view_name='seq:sequence-detail'
     ) 
-    
-    #sequences = SequenceSerializer(many=True)
-
     owner = serializers.ReadOnlyField(source='owner.username')
-
     #reterieve fields from the related collection
-    project__id = serializers.CharField(source='sequence.project.id')
-    project__title = serializers.CharField(source='sequence.project.title')
-
-    
+    sequence__project__id = serializers.CharField(source='sequence.project.id')
+    sequence__project__title = serializers.CharField(source='sequence.project.title')
     sequence__LibrarySource = serializers.CharField(source='sequence.LibrarySource')
     sequence__LibraryLayout = serializers.CharField(source='sequence.LibraryLayout')
     sequence__SequencerModel = serializers.CharField(source='sequence.SequencerModel')
