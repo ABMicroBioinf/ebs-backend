@@ -29,6 +29,14 @@ class NestedFilter(Filter):
         
         return qs
 
+class MultipleCharValueFilter(Filter):
+    def filter(self, qs, value):
+        if value in EMPTY_VALUES:
+            return qs
+        value_list = value.split(",")
+        qs = super().filter(qs, value_list)
+        return qs
+
 
 #https://zhuanlan.zhihu.com/p/59072252
 class EbsSearchFilter(SearchFilter):

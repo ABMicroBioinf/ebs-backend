@@ -7,7 +7,11 @@ from django_filters.filters import (
     NumberFilter,    
 )
 from .models import Sequence
-from gizmos.filter import EbsSearchFilter, NestedFilter
+from gizmos.filter import (
+    EbsSearchFilter, 
+    NestedFilter,
+    MultipleCharValueFilter
+)
 
 #define equaity based filter
 class SequenceFilter(rest_framework.FilterSet):
@@ -67,7 +71,18 @@ class SequenceFilter(rest_framework.FilterSet):
     QcStats__Ambiguous = NestedFilter(
         field_name="QcStats__Ambiguous", lookup_expr="exact"
     )
-    
+    project__id = MultipleCharValueFilter(lookup_expr="in")
+    project__title = MultipleCharValueFilter(lookup_expr="icontains")
+    Experiment = MultipleCharValueFilter(lookup_expr="in")
+    LibraryName = MultipleCharValueFilter(lookup_expr="in")
+    LibraryStrategy = MultipleCharValueFilter(lookup_expr="in")
+    LibrarySelection = MultipleCharValueFilter(lookup_expr="in")
+    LibrarySource = MultipleCharValueFilter(lookup_expr="in")
+    LibraryLayout = MultipleCharValueFilter(lookup_expr="in")
+    Platform = MultipleCharValueFilter(lookup_expr="in")
+    SequencerModel = MultipleCharValueFilter(lookup_expr="in")
+    CenterName = MultipleCharValueFilter(lookup_expr="in")
+
     class Meta:
         model = Sequence
         
