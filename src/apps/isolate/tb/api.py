@@ -1,11 +1,16 @@
+from rest_framework.decorators import action
+from rest_framework import status
+from rest_framework.response import Response
+
 from rest_framework.mixins import (
     CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
 )
 from rest_framework.viewsets import GenericViewSet
+
 from rest_framework.filters import OrderingFilter, SearchFilter
 from django_filters import rest_framework as filters
 from .models import Profile, Psummary
-from .serializers import ProfileSerializer, PsummarySerializer
+from .serializers import ProfileSerializer, PsummarySerializer, PsummaryMetadataSerializer
 from gizmos.pagination import CustomPagination
 from .filters import ProfileFilter, PsummaryFilter, ProfileSearchFilter
 
@@ -71,3 +76,9 @@ class PsummaryViewSet(GenericViewSet,  # generic view functionality
 
       def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+        
+      @action(detail=False)
+      def metadata(self, request):
+        psummary = Psummary.objects.all()
+        serializer = PsummaryMetadataSerializer(psummary)
+        return Response(serializer.data, status=status.HTTP_200_OK)

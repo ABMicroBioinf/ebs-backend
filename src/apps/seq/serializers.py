@@ -1,4 +1,5 @@
 from django.db.models import Count
+from django.db.models.aggregates import Max, Min
 from gizmos.mixins import FlattenMixin
 from rest_framework import serializers
 from rest_framework.compat import distinct
@@ -84,6 +85,12 @@ class SequenceMetadataSerializer(serializers.Serializer):
     project__id = serializers.SerializerMethodField(
         "get_distinct_count_for_project"
     )
+    DateCreated = serializers.SerializerMethodField(
+        "get_min_max_for_date_created"
+    )
+    LastUpdate = serializers.SerializerMethodField(
+        "get_min_max_for_last_update"
+    )
 
     class Meta:
         model: Sequence
@@ -122,7 +129,18 @@ class SequenceMetadataSerializer(serializers.Serializer):
     def get_distinct_count_for_sequencer_model(self, seq):
         return seq.values("SequencerModel").annotate(total=Count("SequencerModel")).order_by('total')
     def get_distinct_count_for_project(self, seq):
-        return seq.values("project").annotate(total=Count("project")).order_by('total')
+        return seq.values("project__id").annotate(total=Count("project__id")).order_by('total')
+    
+    def get_min_max_for_date_created(self, seq):
+        return(
+            seq.values("DateCreated")
+            .aggregate(Min("DateCreated"), Max("DateCreated"))
+        )
+    def get_min_max_for_last_update(self, seq):
+        return(
+            seq.values("LastUpdate")
+            .aggregate(Min("LastUpdate"), Max("LastUpdate"))
+        )
 
     # Example of distinct count for nested field when 'JOIN' issue occurs
     # def get_count_for_library_source(self, run):

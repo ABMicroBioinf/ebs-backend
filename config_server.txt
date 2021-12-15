@@ -1,0 +1,126 @@
+mkdir /data/web
+sudo rsync nginx.conf nginx.conf.org
+modify nginx.conf file and change access and error log locations to /data/web/log/nginx
+create gunicorn_start script in src/bin directory:
+
+
+#!/bin/bash
+
+# Name of the application
+NAME="config"
+
+# Django project directory
+DJANGODIR=/data/web/ebs-backend/src
+
+# the user to run as
+USER=xdong
+# the group to run as
+GROUP=users
+# how many worker processes should Gunicorn spawn
+WORKERS=3
+
+# we will communicte using this unix socket
+SOCKFILE=/data/web/ebs-backend/src/run/gunicorn.sock
+
+# which settings file should Django use
+DJANGO_SETTINGS_MODULE=config.settings.dev
+
+# WSGI module name
+DJANGO_WSGI_MODULE=config.wsgi
+
+echo "Starting $NAME as `whoami`"
+
+LOGLEVEL=error
+
+# Activate the virtual environment
+cd $DJANGODIR
+source .venv/bin/activate
+
+export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
+export PYTHONPATH=$DJANGODIR:$PYTHONPATH
+
+# Create the run directory if it doesn't exist
+RUNDIR=$(dirname $SOCKFILE)
+test -d $RUNDIR || mkdir -p $RUNDIR
+
+# Programs meant to be run under supervisor should not daemonize themselves (do not use --daemon)
+
+exec .venv/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \
+  --name $NAME \
+  --workers $WORKERS \
+  --user=$USER \
+  --group=$GROUP \
+  --bind=unix:$SOCKFILE \
+  --log-level=$LOGLEVEL \
+  --log-file=-
+
+
+
+  make script excutable
+
+  create daemon file under /etc/systemd/system/gunicorn.service
+
+  [Unit]
+Description=gunicorn daemon
+After=network.target
+
+[Service]
+User=xdong
+Group=users
+WorkingDirectory=/data/web/ebs-backend/src
+ExecStart=/data/web/ebs-backend/src/bin/gunicorn_start
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+
+config nginx server:
+
+
+
+install mongodb
+
+1
+Configure the package management system (yum).
+Create a /etc/yum.repos.d/mongodb-org-5.0.repo file so that you can install MongoDB directly using yum:
+
+[mongodb-org-5.0]
+name=MongoDB Repository
+baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/5.0/x86_64/
+gpgcheck=1
+enabled=1
+gpgkey=https://www.mongodb.org/static/pgp/server-5.0.asc
+
+
+Install the MongoDB packages.
+To install the latest stable version of MongoDB, issue the following command:
+
+sudo yum install -y mongodb-org
+
+sudo service mongod start
+
+
+
+################# deploy 
+rsync  -av --exclude '.git' --exclude 'examples' --exclude '.venv' ebs-backend xdong@itappgenwebd02.ucalgary.ca:/data/web
+
+cd /data/web/ebs-backend/src
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+#generate static files
+python manage.py collectstatic 
+deactivate
+
+sudo systemctl status gunicorn.service
+
+isntall node and yarn
+ https://computingforgeeks.com/install-node-js-14-on-centos-rhel-linux/
+
+ #run in the project directory 
+ yarn install
+ yarn build
+ 

@@ -23,7 +23,7 @@ CORS_ORIGIN_WHITELIST = [
 ]
 CORS_ALLOW_CREDENTIALS = True
 
-LOGGING = {
+""" LOGGING = {
     'version': 1,
     'filters': {
         'require_debug_true': {
@@ -43,7 +43,7 @@ LOGGING = {
             'handlers': ['console'],
         }
     }
-}
+} """
 
 JWT_SECRET_KEY = 'adf2fa0b-5243-483a-b062-67f51609db60'
 

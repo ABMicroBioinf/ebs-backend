@@ -1,3 +1,7 @@
+from rest_framework.decorators import action
+from rest_framework import status
+from rest_framework.response import Response
+
 from rest_framework.mixins import (
     CreateModelMixin, 
     ListModelMixin, 
@@ -25,10 +29,14 @@ from .filters import (
 
 from .serializers import (
   AssemblySerializer, 
+  AssemblyMetadataSerializer,
   AnnotationSerializer, 
-  VirulomeSerializer, 
-  MlstSerializer, 
-  ResistomeSerializer
+  VirulomeSerializer,
+  VirulomeMetadataSerializer,
+  MlstSerializer,
+  MlstMetadataSerializer,
+  ResistomeSerializer,
+  ResistomeMetadataSerializer
 )
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
@@ -62,6 +70,19 @@ class AssemblyViewSet(GenericViewSet,  # generic view functionality
       
       def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+        
+      @action(detail = False)
+      def metadata(self, request):
+        
+        assembly = (
+          Assembly.objects.filter(seqtype = request.query_params["seqtype"])
+          if "seqtype" in request.GET
+          else Assembly.objects.all()
+        )
+        #seqtype = request.query_params["seqtype"]
+        #assembly = Assembly.objects.filter(seqtype=seqtype)
+        serializer = AssemblyMetadataSerializer(assembly)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class MlstViewSet(GenericViewSet,  # generic view functionality
                      CreateModelMixin,  # handles POSTs
@@ -94,7 +115,16 @@ class MlstViewSet(GenericViewSet,  # generic view functionality
 
       def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-
+      
+      @action(detail = False)
+      def metadata(self, request):
+        mlst = (
+          Mlst.objects.filter(seqtype = request.query_params["seqtype"])
+          if "seqtype" in request.GET
+          else Mlst.objects.all()
+        )
+        serializer = MlstMetadataSerializer(mlst)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class ResistomeViewSet(GenericViewSet,  # generic view functionality
                      CreateModelMixin,  # handles POSTs
@@ -127,6 +157,15 @@ class ResistomeViewSet(GenericViewSet,  # generic view functionality
       def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+      @action(detail = False)
+      def metadata(self, request):
+        resistome = (
+          Resistome.objects.filter(seqtype = request.query_params["seqtype"])
+          if "seqtype" in request.GET
+          else Resistome.objects.all()
+        )
+        serializer = ResistomeMetadataSerializer(resistome)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class VirulomeViewSet(GenericViewSet,  # generic view functionality
@@ -161,6 +200,16 @@ class VirulomeViewSet(GenericViewSet,  # generic view functionality
       def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+      @action(detail = False)
+      def metadata(self, request):
+        virulome = (
+          Virulome.objects.filter(seqtype = request.query_params["seqtype"])
+          if "seqtype" in request.GET
+          else Virulome.objects.all()
+        )
+        serializer = VirulomeMetadataSerializer(virulome)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+      
 class AnnotationViewSet(GenericViewSet,  # generic view functionality
                      CreateModelMixin,  # handles POSTs
                      RetrieveModelMixin,  # handles GETs for 1 Company

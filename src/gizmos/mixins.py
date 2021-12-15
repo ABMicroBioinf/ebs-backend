@@ -7,22 +7,23 @@ class FlattenMixin(object):
         )
         rep = super(FlattenMixin, self).to_representation(obj)
         for field in self.Meta.flatten:
-            # print("********************************* field=" + field)
-            # print(rep)
+            print("********************************* field=" + field)
+            print(rep)
 
             objrep = rep.pop(field)
-
-            # print(type(objrep))
-            # print(objrep)
+            print("********************** print objrep")
+            print(type(objrep))
+            print(objrep)
             if objrep is None:
                 continue
             if isinstance(objrep, dict):
                 for key in objrep:
                     rep[field + "__" + key] = objrep[key]
             elif isinstance(objrep, list):
-                i = 0
-                for item in objrep:
-                    for key in item:
-                        rep[field  + "__" + key + "_" + str(i)] = item[key]
-                    i += 1
+                rep[field] = objrep
+                #i = 0
+                #for item in objrep:
+                #    for key in item:
+                #        rep[field  + "__" + key + "_" + str(i)] = item[key]
+                #    i += 1
         return rep
