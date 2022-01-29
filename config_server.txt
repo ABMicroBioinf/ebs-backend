@@ -123,4 +123,10 @@ isntall node and yarn
  #run in the project directory 
  yarn install
  yarn build
+ sudo systemctl restart react.service
  
+
+
+ current django is 3.1.2, it get the following errors when the version is > 3.2
+
+ TypeError: Abstract models cannot be instantiated.

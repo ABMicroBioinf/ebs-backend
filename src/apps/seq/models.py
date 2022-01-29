@@ -4,20 +4,8 @@ from django.utils.text import slugify
 from apps.account.models import Account
 #from apps.isolate.gbase.models import Assembly
 from .common import *
+from apps.common.models import SeqStat
 
-
-class SeqStat(models.Model):
-    Reads = models.IntegerField(null=True, blank=True)
-    Yield = models.IntegerField(null=True, blank=True)
-    GeeCee = models.FloatField(null=True, blank=True)
-    MinLen = models.IntegerField(null=True, blank=True)
-    AvgLen = models.IntegerField(null=True, blank=True)
-    MaxLen = models.IntegerField(null=True, blank=True)
-    AvgQual = models.FloatField(null=True, blank=True)
-    ErrQual = models.FloatField(null=True, blank=True)
-    Ambiguous = models.FloatField(null=True, blank=True)
-    class Meta:
-        abstract = True
 
 class Project(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
@@ -28,7 +16,8 @@ class Project(models.Model):
     DateCreated = models.DateTimeField(
         verbose_name='date created', auto_now=True)
     LastUpdate = models.DateTimeField(verbose_name='last update', auto_now=True)
-
+    
+        
     def __str__(self):
         return str(self.id)
 

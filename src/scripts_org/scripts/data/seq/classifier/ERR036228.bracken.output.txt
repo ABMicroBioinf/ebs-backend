@@ -1,0 +1,50 @@
+name	taxonomy_id	taxonomy_lvl	kraken_assigned_reads	added_reads	new_est_reads	fraction_total_reads
+Mycobacterium tuberculosis	1773	S	86546	2833150	2919696	0.99135
+Mycobacterium canettii	78331	S	5297	4270	9567	0.00325
+Mycobacterium heidelbergense	53376	S	146	9	155	0.00005
+Mycobacterium saskatchewanense	220927	S	104	3	107	0.00004
+Mycobacterium simiae	1784	S	102	3	105	0.00004
+Mycobacterium shigaense	722731	S	84	5	89	0.00003
+Mycobacterium parmense	185642	S	69	3	72	0.00002
+Mycobacterium stomatepiae	470076	S	64	10	74	0.00003
+Mycobacterium florentinum	292462	S	55	9	64	0.00002
+Mycobacterium shinjukuense	398694	S	440	5	445	0.00015
+Mycobacterium mantenii	560555	S	98	1	99	0.00003
+Mycobacterium avium	1764	S	59	73	132	0.00004
+Mycobacterium marseillense	701042	S	45	2	47	0.00002
+Mycobacterium colombiense	339268	S	44	1	45	0.00002
+Mycobacterium intracellulare	1767	S	13	20	33	0.00001
+Mycobacterium chimaera	222805	S	13	9	22	0.00001
+Mycobacterium lacus	169765	S	323	2	325	0.00011
+Mycobacterium sp. JS623	212767	S	75	2	77	0.00003
+Mycobacterium sp. 3/86Rv	2041046	S	36	12032	12068	0.00410
+Mycobacterium sp. ELW1	1547487	S	16	17	33	0.00001
+Mycobacterium sp. YC-RL4	1682113	S	16	1	17	0.00001
+Mycobacterium sp. MS1601	1936029	S	11	2	13	0.00000
+Mycobacterium sp. DL90	2487344	S	10	0	10	0.00000
+Mycobacterium basiliense	2094119	S	179	0	179	0.00006
+Mycobacterium kansasii	1768	S	153	3	156	0.00005
+Mycobacterium conspicuum	44010	S	126	1	127	0.00004
+Mycobacterium haemophilum	29311	S	125	0	125	0.00004
+Mycobacterium paragordonae	1389713	S	112	2	114	0.00004
+Mycobacterium noviomagense	459858	S	71	0	71	0.00002
+Mycobacterium xenopi	1789	S	68	0	68	0.00002
+Mycobacterium branderi	43348	S	62	0	62	0.00002
+Mycobacterium paraseoulense	590652	S	50	2	52	0.00002
+Mycobacterium seoulense	386911	S	43	2	45	0.00002
+Mycobacterium leprae	1769	S	42	0	42	0.00001
+Mycobacterium marinum	1781	S	32	15	47	0.00002
+Mycobacterium cookii	1775	S	30	0	30	0.00001
+Mycobacterium grossiae	1552759	S	15	1	16	0.00001
+Mycobacterium dioxanotrophicus	482462	S	14	0	14	0.00000
+Mycobacterium gallinarum	39689	S	12	0	12	0.00000
+Mycolicibacter sinensis	875328	S	12	0	12	0.00000
+Streptomyces spongiicola	1690221	S	35	27	62	0.00002
+Saccharomonospora azurea	40988	S	11	1	12	0.00000
+Staphylococcus epidermidis	1282	S	14	2	16	0.00001
+Pseudomonas fluorescens	294	S	295	167	462	0.00016
+Pseudomonas brenneri	129817	S	13	5	18	0.00001
+Acinetobacter guillouiae	106649	S	30	1	31	0.00001
+Stenotrophomonas maltophilia	40324	S	42	15	57	0.00002
+Ralstonia pickettii	329	S	10	4	14	0.00000
+Homo sapiens	9606	S	23	0	23	0.00001

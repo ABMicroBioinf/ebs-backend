@@ -50,8 +50,10 @@ class EbsSearchFilter(SearchFilter):
         search_fields = self.get_search_fields(view, request)
         search_terms = self.get_search_terms(request)
 
-        print("*********************************")
+        print("I am in EbsSearchFilter*********************************")
+        print("search_fields type=")
         print(type(search_fields))
+        print("search_fields=")
         print(search_fields)
 
         if not search_fields or not search_terms:

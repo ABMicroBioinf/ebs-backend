@@ -22,17 +22,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 INSTALLED_APPS = [
 
     # my apps
-    'home',
-    'apps.account',
-    'apps.seq',
-    'sandbox',
-    'apps.isolate.gbase',
-    'apps.isolate.tb',
-    #
+    'apps.account.apps.AccountConfig',
+    'apps.seq.apps.SeqConfig',
+    'apps.mseq.apps.MseqConfig',
+    'apps.isolate.apps.IsolateConfig',
+    #'apps.isolate.gbase.apps.GbaseConfig',
+    #'apps.isolate.tb.apps.TbConfig',
+    
+    # installed
     'djongo',
-
-    # rest framework
     'rest_framework',
+    'rest_framework_simplejwt',
 
     # django apps
     'django.contrib.admin',
@@ -50,7 +50,7 @@ INSTALLED_APPS = [
 #from rest_framework.parsers import JSONParser,FormParser
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        # 'rest_framework.authentication.BasicAuthentication',
+        #'rest_framework.authentication.BasicAuthentication',
         #this is for making login button in the django interface to work to do the testing
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',

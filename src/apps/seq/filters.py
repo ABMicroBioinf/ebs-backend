@@ -82,6 +82,10 @@ class SequenceFilter(rest_framework.FilterSet):
     Platform = MultipleCharValueFilter(lookup_expr="in")
     SequencerModel = MultipleCharValueFilter(lookup_expr="in")
     CenterName = MultipleCharValueFilter(lookup_expr="in")
+    seqtype = MultipleCharValueFilter(lookup_expr="in")
+    DateCreated  = MultipleCharValueFilter(lookup_expr="in")
+    LastUpdate = MultipleCharValueFilter(lookup_expr="in")
+    
 
     class Meta:
         model = Sequence

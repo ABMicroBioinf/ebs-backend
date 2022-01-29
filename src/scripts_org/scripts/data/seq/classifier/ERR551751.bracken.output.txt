@@ -1,0 +1,47 @@
+name	taxonomy_id	taxonomy_lvl	kraken_assigned_reads	added_reads	new_est_reads	fraction_total_reads
+Mycobacterium tuberculosis	1773	S	195108	3972342	4167450	0.99171
+Mycobacterium canettii	78331	S	7057	2573	9630	0.00229
+Mycobacterium heidelbergense	53376	S	114	12	126	0.00003
+Mycobacterium shigaense	722731	S	71	8	79	0.00002
+Mycobacterium saskatchewanense	220927	S	63	3	66	0.00002
+Mycobacterium simiae	1784	S	51	3	54	0.00001
+Mycobacterium parmense	185642	S	39	2	41	0.00001
+Mycobacterium stomatepiae	470076	S	30	10	40	0.00001
+Mycobacterium florentinum	292462	S	25	8	33	0.00001
+Mycobacterium shinjukuense	398694	S	430	1	431	0.00010
+Mycobacterium mantenii	560555	S	141	4	145	0.00003
+Mycobacterium avium	1764	S	41	31	72	0.00002
+Mycobacterium colombiense	339268	S	39	1	40	0.00001
+Mycobacterium marseillense	701042	S	30	2	32	0.00001
+Mycobacterium chimaera	222805	S	17	16	33	0.00001
+Mycobacterium intracellulare	1767	S	11	24	35	0.00001
+Mycobacterium lepraemurium	64667	S	10	5	15	0.00000
+Mycobacterium sp. 3/86Rv	2041046	S	155	21726	21881	0.00521
+Mycobacterium sp. JS623	212767	S	94	0	94	0.00002
+Mycobacterium sp. MS1601	1936029	S	24	0	24	0.00001
+Mycobacterium sp. EPa45	1545728	S	18	0	18	0.00000
+Mycobacterium sp. WY10	1920667	S	14	13	27	0.00001
+Mycobacterium sp. ELW1	1547487	S	12	0	12	0.00000
+Mycobacterium sp. DL90	2487344	S	12	0	12	0.00000
+Mycobacterium basiliense	2094119	S	276	0	276	0.00007
+Mycobacterium lacus	169765	S	224	0	224	0.00005
+Mycobacterium haemophilum	29311	S	140	0	140	0.00003
+Mycobacterium kansasii	1768	S	134	0	134	0.00003
+Mycobacterium paragordonae	1389713	S	82	0	82	0.00002
+Mycobacterium branderi	43348	S	59	0	59	0.00001
+Mycobacterium cookii	1775	S	57	0	57	0.00001
+Mycobacterium conspicuum	44010	S	52	0	52	0.00001
+Mycobacterium xenopi	1789	S	52	0	52	0.00001
+Mycobacterium noviomagense	459858	S	46	0	46	0.00001
+Mycobacterium leprae	1769	S	43	0	43	0.00001
+Mycobacterium ulcerans	1809	S	37	25	62	0.00001
+Mycobacterium paraseoulense	590652	S	27	0	27	0.00001
+Mycobacterium seoulense	386911	S	24	0	24	0.00001
+Mycobacterium marinum	1781	S	23	5	28	0.00001
+Mycobacterium gallinarum	39689	S	14	0	14	0.00000
+Mycobacterium dioxanotrophicus	482462	S	11	0	11	0.00000
+Streptomyces spongiicola	1690221	S	57	4	61	0.00001
+Brevibacterium linens	1703	S	16	0	16	0.00000
+Cutibacterium acnes	1747	S	28	0	28	0.00001
+Mesorhizobium loti	381	S	16	4	20	0.00000
+Homo sapiens	9606	S	408	0	408	0.00010

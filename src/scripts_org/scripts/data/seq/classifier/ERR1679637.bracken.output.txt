@@ -1,0 +1,32 @@
+name	taxonomy_id	taxonomy_lvl	kraken_assigned_reads	added_reads	new_est_reads	fraction_total_reads
+Mycobacterium tuberculosis	1773	S	11273	415571	426844	0.98770
+Mycobacterium canettii	78331	S	1512	418	1930	0.00447
+Mycobacterium heidelbergense	53376	S	45	1	46	0.00011
+Mycobacterium shigaense	722731	S	30	0	30	0.00007
+Mycobacterium saskatchewanense	220927	S	26	0	26	0.00006
+Mycobacterium florentinum	292462	S	21	1	22	0.00005
+Mycobacterium simiae	1784	S	20	0	20	0.00005
+Mycobacterium parmense	185642	S	18	0	18	0.00004
+Mycobacterium stomatepiae	470076	S	15	0	15	0.00003
+Mycobacterium lacus	169765	S	155	0	155	0.00036
+Mycobacterium shinjukuense	398694	S	143	0	143	0.00033
+Mycobacterium mantenii	560555	S	46	2	48	0.00011
+Mycobacterium avium	1764	S	19	21	40	0.00009
+Mycobacterium colombiense	339268	S	19	1	20	0.00005
+Mycobacterium marseillense	701042	S	11	1	12	0.00003
+Mycobacterium basiliense	2094119	S	85	0	85	0.00020
+Mycobacterium sp. 3/86Rv	2041046	S	23	2256	2279	0.00527
+Mycobacterium sp. JS623	212767	S	19	4	23	0.00005
+Mycobacterium kansasii	1768	S	72	0	72	0.00017
+Mycobacterium haemophilum	29311	S	66	0	66	0.00015
+Mycobacterium conspicuum	44010	S	38	0	38	0.00009
+Mycobacterium noviomagense	459858	S	38	0	38	0.00009
+Mycobacterium paragordonae	1389713	S	32	0	32	0.00007
+Mycobacterium branderi	43348	S	31	0	31	0.00007
+Mycobacterium xenopi	1789	S	28	0	28	0.00006
+Mycobacterium leprae	1769	S	22	0	22	0.00005
+Mycobacterium cookii	1775	S	18	0	18	0.00004
+Mycobacterium seoulense	386911	S	14	0	14	0.00003
+Mycobacterium marinum	1781	S	11	1	12	0.00003
+Mycolicibacter sinensis	875328	S	10	0	10	0.00002
+Homo sapiens	9606	S	13	0	13	0.00003

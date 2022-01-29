@@ -11,17 +11,19 @@ import xml.etree.ElementTree as ET
 
 class Sequence(Dataset):
 
-    def parse_seqstats(self, filePath, newkey):
+    def parse_seqstats(self, filePath, newkey, sep):
         
         pp = pprint.PrettyPrinter(indent=4)
         with open(filePath) as file:
-            reader = csv.DictReader(file, delimiter=",")
+            reader = csv.DictReader(file, delimiter=sep)
             list_seqstats = list(reader)
             print(list_seqstats)
             for rowindex, row in enumerate(list_seqstats):
-                seqid = row['Seqfile']
-                del row['seqtype']
-                del row['Seqfile']
+                #seqid = row['Seqfile']
+                seqid = row['Isolate']
+                #del row['seqtype']
+                #del row['Seqfile']
+                del row['Isolate']
                 print("******************************")
                 print(type(row))
                 newrow = {}
@@ -109,11 +111,11 @@ class Sequence(Dataset):
         #ERR036228.bracken.output.txt
         for filename in os.listdir(dir):
             data = {}
-            if filename.endswith(".bracken.output.txt"): 
+            if filename.endswith("_bracken.output.txt"): 
                 print(filename)
                 #fname = ntpath.basename(filename)
-                id = filename.split(os.extsep)[0]
-                
+                prefix = filename.split(os.extsep)[0]
+                id = prefix.replace('_bracken', '')
                 data['id'] = id
                 print("***********************=" + id)
                 file = os.path.join(dir, filename)
@@ -123,7 +125,7 @@ class Sequence(Dataset):
                     for line in f:
                         row = line.rstrip()
                         segment = re.split('\t', row)
-                        #print(line)
+                        print(line)
                         i += 1
                         data["taxName_" + str(i)] = segment[0]
                         data["taxFrac_" + str(i)] = float(segment[-1])
@@ -144,17 +146,25 @@ class Sequence(Dataset):
 def main():
   
     data = Sequence("ebsdb", "seq_sequence", "60d4dfba7109403cf2d20636")
-    data.parse_runinfo("data/seq/tb_runinfo.txt", "TB")
-    raw_list = data.parse_seqstats("data/seq/raw_stats.txt", "RawStats")
-    qc_list = data.parse_seqstats("data/seq/qc_stats.txt", "QcStats")
-    braken_list = data.parse_bracken_output("data/seq/classifier")
+    # data.parse_runinfo("data/seq/tb_runinfo.txt", "TB")
+    # raw_list = data.parse_seqstats("data/seq/raw_stats.txt", "RawStats", "\t")
+    # qc_list = data.parse_seqstats("data/seq/qc_stats.txt", "QcStats", "\t")
+    # braken_list = data.parse_bracken_output("data/seq/classifier")
+    print("parse cpo")
+    data.parse_runinfo("data/cpo/PRJNA725227/cpo_SraRunInfo_PRJNA725227.csv", "CPO")
+    raw_list = data.parse_seqstats("data/cpo/PRJNA725227/Report/short_reads_raw_seqstats.tsv", "RawStats", "\t")
+    qc_list = data.parse_seqstats("data/cpo/PRJNA725227/Report/short_reads_qc_seqstats.tsv", "QcStats", "\t")
+    braken_list = data.parse_bracken_output("data/cpo/PRJNA725227/Report/Taxonomy/kraken2")
     
-    data.parse_runinfo("data/seq/cpo_SraRunInfo_PRJNA640134.csv", "CPO")
-    data.parse_runinfo("data/seq/cpo_SraRunInfo_PRJNA725227.csv", "CPO")
-    data.parse_runinfo("data/seq/mg_PRJNA234047_paired_SraRunInfo.csv", "MG")
-    data.parse_runinfo("data/seq/mg_PRJNA234047_nanopore_SraRunInfo.csv", "MG")
+    data.parse_runinfo("data/cpo/PRJNA640134/cpo_SraRunInfo_PRJNA640134.csv", "CPO")
+    raw_list = data.parse_seqstats("data/cpo/PRJNA640134/Report/short_reads_raw_seqstats.tsv", "RawStats", "\t")
+    qc_list = data.parse_seqstats("data/cpo/PRJNA640134/Report/short_reads_qc_seqstats.tsv", "QcStats", "\t")
+    braken_list = data.parse_bracken_output("data/cpo/PRJNA640134/Report/Taxonomy/kraken2")
     
+    # data.parse_runinfo("data/seq/mg_PRJNA234047_paired_SraRunInfo.csv", "MG")
+    # data.parse_runinfo("data/seq/mg_PRJNA234047_nanopore_SraRunInfo.csv", "MG")
     
+    re
 
 if __name__ == '__main__':
   main()

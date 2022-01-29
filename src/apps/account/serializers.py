@@ -1,9 +1,9 @@
 from rest_framework import serializers
-
 from .models import Account
-#from seq.models import Study
+from gizmos.util import ObjectIdField
 
 class AccountSerializer(serializers.ModelSerializer):
+    _id = ObjectIdField(read_only=True)
     
     def create(self, validated_data):
         password = validated_data.pop('password', None)
@@ -36,6 +36,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
+        print("xiaoli login..................................................................token")
         token = super().get_token(user)
 
         # Add custom claims

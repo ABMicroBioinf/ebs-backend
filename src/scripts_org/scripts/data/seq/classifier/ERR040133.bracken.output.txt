@@ -1,0 +1,80 @@
+name	taxonomy_id	taxonomy_lvl	kraken_assigned_reads	added_reads	new_est_reads	fraction_total_reads
+Mycobacterium tuberculosis	1773	S	228478	7110751	7339229	0.98774
+Mycobacterium canettii	78331	S	14710	15187	29897	0.00402
+Mycobacterium heidelbergense	53376	S	536	45	581	0.00008
+Mycobacterium saskatchewanense	220927	S	361	15	376	0.00005
+Mycobacterium shigaense	722731	S	287	22	309	0.00004
+Mycobacterium simiae	1784	S	283	13	296	0.00004
+Mycobacterium parmense	185642	S	242	16	258	0.00003
+Mycobacterium stomatepiae	470076	S	216	46	262	0.00004
+Mycobacterium florentinum	292462	S	205	43	248	0.00003
+Mycobacterium mantenii	560555	S	521	22	543	0.00007
+Mycobacterium avium	1764	S	227	172	399	0.00005
+Mycobacterium marseillense	701042	S	214	24	238	0.00003
+Mycobacterium colombiense	339268	S	174	8	182	0.00002
+Mycobacterium chimaera	222805	S	58	86	144	0.00002
+Mycobacterium intracellulare	1767	S	55	195	250	0.00003
+Mycobacterium lepraemurium	64667	S	55	30	85	0.00001
+Mycobacterium shinjukuense	398694	S	1482	23	1505	0.00020
+Mycobacterium lacus	169765	S	1001	11	1012	0.00014
+Mycobacterium basiliense	2094119	S	646	3	649	0.00009
+Mycobacterium kansasii	1768	S	645	6	651	0.00009
+Mycobacterium sp. JS623	212767	S	146	3	149	0.00002
+Mycobacterium sp. 3/86Rv	2041046	S	110	48039	48149	0.00648
+Mycobacterium sp. EPa45	1545728	S	54	39	93	0.00001
+Mycobacterium sp. YC-RL4	1682113	S	50	3	53	0.00001
+Mycobacterium sp. DL90	2487344	S	50	2	52	0.00001
+Mycobacterium sp. MS1601	1936029	S	48	5	53	0.00001
+Mycobacterium sp. ELW1	1547487	S	41	23	64	0.00001
+Mycobacterium haemophilum	29311	S	487	4	491	0.00007
+Mycobacterium conspicuum	44010	S	446	10	456	0.00006
+Mycobacterium paragordonae	1389713	S	414	3	417	0.00006
+Mycobacterium seoulense	386911	S	339	25	364	0.00005
+Mycobacterium branderi	43348	S	243	3	246	0.00003
+Mycobacterium noviomagense	459858	S	239	1	240	0.00003
+Mycobacterium xenopi	1789	S	223	2	225	0.00003
+Mycobacterium paraseoulense	590652	S	200	13	213	0.00003
+Mycobacterium cookii	1775	S	157	1	158	0.00002
+Mycobacterium leprae	1769	S	142	0	142	0.00002
+Mycobacterium marinum	1781	S	108	70	178	0.00002
+Mycobacterium dioxanotrophicus	482462	S	63	0	63	0.00001
+Mycobacterium grossiae	1552759	S	58	1	59	0.00001
+Mycobacterium ulcerans	1809	S	35	47	82	0.00001
+Mycobacterium gallinarum	39689	S	31	0	31	0.00000
+Mycobacterium pseudoshottsii	265949	S	10	30	40	0.00001
+Mycolicibacterium helvum	1534349	S	19	4	23	0.00000
+Mycolicibacterium smegmatis	1772	S	19	9	28	0.00000
+Mycolicibacterium anyangense	1431246	S	18	2	20	0.00000
+Mycolicibacterium chitae	1792	S	18	4	22	0.00000
+Mycolicibacterium psychrotolerans	216929	S	17	4	21	0.00000
+Mycolicibacterium tokaiense	39695	S	17	1	18	0.00000
+Mycolicibacterium duvalii	39688	S	17	3	20	0.00000
+Mycolicibacterium fallax	1793	S	16	3	19	0.00000
+Mycolicibacterium celeriflavum	1249101	S	16	3	19	0.00000
+Mycolicibacterium goodii	134601	S	16	7	23	0.00000
+Mycolicibacterium hassiacum	46351	S	14	6	20	0.00000
+Mycolicibacterium mageritense	53462	S	14	2	16	0.00000
+Mycolicibacterium pulveris	36813	S	14	2	16	0.00000
+Mycolicibacterium aurum	1791	S	13	2	15	0.00000
+Mycolicibacterium litorale	758802	S	13	3	16	0.00000
+Mycolicibacterium sediminis	1286180	S	12	2	14	0.00000
+Mycolicibacterium thermoresistibile	1797	S	12	3	15	0.00000
+Mycolicibacterium insubricum	444597	S	11	1	12	0.00000
+Mycolicibacterium phlei	1771	S	10	4	14	0.00000
+Mycolicibacterium confluentis	28047	S	10	1	11	0.00000
+Mycolicibacterium vanbaalenii	110539	S	10	4	14	0.00000
+Mycolicibacterium fortuitum	1766	S	10	3	13	0.00000
+Mycolicibacterium parafortuitum	39692	S	10	3	13	0.00000
+Mycolicibacter terrae	1788	S	19	3	22	0.00000
+Mycolicibacter sinensis	875328	S	12	1	13	0.00000
+Mycolicibacter hiberniae	29314	S	10	2	12	0.00000
+Mycobacteroides salmoniphilum	404941	S	10	8	18	0.00000
+Mycolicibacillus koreensis	1069220	S	18	0	18	0.00000
+Rhodococcus sp. p52	935199	S	12	39	51	0.00001
+Rhodococcus opacus	37919	S	10	2	12	0.00000
+Dietzia sp. oral taxon 368	712270	S	19	3	22	0.00000
+Streptomyces spongiicola	1690221	S	86	78	164	0.00002
+Microbacterium sp. TPU 3598	1938334	S	37	18	55	0.00001
+Cutibacterium acnes	1747	S	14	2	16	0.00000
+Xanthomonas vasicola	56459	S	40	57	97	0.00001
+Homo sapiens	9606	S	293	0	293	0.00004

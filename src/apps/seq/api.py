@@ -69,7 +69,7 @@ class ProjectViewSet(
         'owner__username',
     ]
     ordering = ['DateCreated']
-
+ 
     def get_queryset(self):
         return self.queryset.filter(owner=self.request.user)
     def perform_create(self, serializer):
@@ -103,19 +103,43 @@ class SequenceViewSet(
 
     # This method should be overriden
     # if we dont want to modify query set based on current instance attributes
-    def get_queryset(self):
+    def get_queryset_0(self):
         return self.queryset.filter(owner=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-
+    
+    def get_queryset(self):
+        qs = super().get_queryset()
+        """ if self.request.user.groups.filter(name='Administrator').exists():
+            self.filterset_class = AdminFilterSet """
+        self.filterset_class = SequenceFilter
+        self.filter = self.filterset_class(self.request.GET, queryset=qs)
+        return self.filter.qs
+    
     @action(detail=False)
-    def metadata(self, request):
-        seqtype = request.query_params["seqtype"]
-        seq = Sequence.objects.filter(seqtype=seqtype)
+    def metadata_0(self, request):
+        seq = (
+          Sequence.objects.filter(seqtype = request.query_params["seqtype"])
+          if "seqtype" in request.GET
+          else Sequence.objects.all()
+        )
+        
         serializer = SequenceMetadataSerializer(seq)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
+    
+    #https://stackoverflow.com/questions/58855861/dynamically-set-filterset-class-in-django-listview
+    @action(detail=False)
+    def metadata(self, request):
+        qs = super().get_queryset()
+        self.filterset_class = SequenceFilter
+        self.filter = self.filterset_class(self.request.GET, queryset=qs)
+        seq = self.filter.qs
+        #get QueryDict
+        # q = request.GET
+        # seq =  self.queryset.filter(**q.dict())
+        serializer = SequenceMetadataSerializer(seq)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class SeqFileViewSet(
     GenericViewSet,  # generic view functionality
