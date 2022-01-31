@@ -73,9 +73,19 @@ class AssemblyViewSet(GenericViewSet,  # generic view functionality
       
       def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-        
-      @action(detail = False)
+      
+       #https://stackoverflow.com/questions/58855861/dynamically-set-filterset-class-in-django-listview
+      @action(detail=False)
       def metadata(self, request):
+        qs = super().get_queryset()
+        self.filterset_class = AssemblyFilter
+        self.filter = self.filterset_class(self.request.GET, queryset=qs)
+        assembly = self.filter.qs
+        serializer = AssemblyMetadataSerializer(assembly)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+      
+      @action(detail = False)
+      def metadata_0(self, request):
         
         assembly = (
           Assembly.objects.filter(seqtype = request.query_params["seqtype"])
@@ -116,9 +126,19 @@ class StatsViewSet(GenericViewSet,  # generic view functionality
       
       def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-        
-      @action(detail = False)
+       
+       #https://stackoverflow.com/questions/58855861/dynamically-set-filterset-class-in-django-listview
+      @action(detail=False)
       def metadata(self, request):
+        qs = super().get_queryset()
+        self.filterset_class = StatsFilter
+        self.filter = self.filterset_class(self.request.GET, queryset=qs)
+        stats = self.filter.qs
+        serializer = StatsMetadataSerializer(stats)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+      
+      @action(detail = False)
+      def metadata_0(self, request):
         stats = (
           Stats.objects.filter(seqtype = request.query_params["seqtype"])
           if "seqtype" in request.GET
@@ -159,9 +179,19 @@ class MlstViewSet(GenericViewSet,  # generic view functionality
 
       def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+        
+       #https://stackoverflow.com/questions/58855861/dynamically-set-filterset-class-in-django-listview
+      @action(detail=False)
+      def metadata(self, request):
+        qs = super().get_queryset()
+        self.filterset_class = MlstFilter
+        self.filter = self.filterset_class(self.request.GET, queryset=qs)
+        mlst = self.filter.qs
+        serializer = MlstMetadataSerializer(mlst)
+        return Response(serializer.data, status=status.HTTP_200_OK)
       
       @action(detail = False)
-      def metadata(self, request):
+      def metadata_0(self, request):
         mlst = (
           Mlst.objects.filter(seqtype = request.query_params["seqtype"])
           if "seqtype" in request.GET
@@ -201,8 +231,18 @@ class ResistomeViewSet(GenericViewSet,  # generic view functionality
       def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-      @action(detail = False)
+       #https://stackoverflow.com/questions/58855861/dynamically-set-filterset-class-in-django-listview
+      @action(detail=False)
       def metadata(self, request):
+        qs = super().get_queryset()
+        self.filterset_class = ResistomeFilter
+        self.filter = self.filterset_class(self.request.GET, queryset=qs)
+        resistome = self.filter.qs
+        serializer = AssemblyMetadataSerializer(resistome)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+      
+      @action(detail = False)
+      def metadata_0(self, request):
         resistome = (
           Resistome.objects.filter(seqtype = request.query_params["seqtype"])
           if "seqtype" in request.GET
@@ -244,8 +284,18 @@ class VirulomeViewSet(GenericViewSet,  # generic view functionality
       def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-      @action(detail = False)
+       #https://stackoverflow.com/questions/58855861/dynamically-set-filterset-class-in-django-listview
+      @action(detail=False)
       def metadata(self, request):
+        qs = super().get_queryset()
+        self.filterset_class = VirulomeFilter
+        self.filter = self.filterset_class(self.request.GET, queryset=qs)
+        viru = self.filter.qs
+        serializer = AssemblyMetadataSerializer(viru)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+      
+      @action(detail = False)
+      def metadata_0(self, request):
         virulome = (
           Virulome.objects.filter(seqtype = request.query_params["seqtype"])
           if "seqtype" in request.GET
@@ -356,9 +406,19 @@ class TbProfileSummaryViewSet(GenericViewSet,  # generic view functionality
 
       def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-        
+      
+       #https://stackoverflow.com/questions/58855861/dynamically-set-filterset-class-in-django-listview
       @action(detail=False)
       def metadata(self, request):
+        qs = super().get_queryset()
+        self.filterset_class  = TbProfileSummaryFilter
+        self.filter = self.filterset_class(self.request.GET, queryset=qs)
+        psummary = self.filter.qs
+        serializer =  TbProfileSummaryMetadataSerializer(psummary)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+        
+      @action(detail=False)
+      def metadata_0(self, request):
         psummary = TbProfileSummary.objects.all()
         serializer = TbProfileSummaryMetadataSerializer(psummary)
         return Response(serializer.data, status=status.HTTP_200_OK)
