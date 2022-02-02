@@ -5,14 +5,23 @@ from django_filters.filters import (
     DateFromToRangeFilter,
     Filter,
     NumberFilter,
+    RangeFilter,
+  
 ) 
+import django_filters
 from .models import Assembly, Stats, Mlst, Resistome, Virulome, Annotation
-from gizmos.filter import EbsSearchFilter, NestedFilter, MultipleCharValueFilter
+from gizmos.filter import EbsSearchFilter, NestedFilter, MultipleCharValueFilter,NumberRangeFilter
 
+    
 #TODO: nested fields are not working with partial matching
 
 class AssemblyFilter(rest_framework.FilterSet):
+    seqtype = MultipleCharValueFilter(lookup_expr="in")
     sequence__project__id = MultipleCharValueFilter(lookup_expr="in")
+    #http://localhost:8000/api/isolate/assembly/?count_range=100,200
+    count_range = NumberRangeFilter(field_name='count', lookup_expr='range')
+    bp_range = NumberRangeFilter(field_name='bp', lookup_expr='range')
+                                 
     class Meta:
         model = Assembly
         
@@ -30,6 +39,9 @@ class AssemblyFilter(rest_framework.FilterSet):
             "sequence__LibraryLayout",
             "sequence__SequencerModel",
             "sequence__CenterName",
+            "count",
+            "count_range",
+            "bp_range"
         ]
         fields = fields + extra
         
@@ -52,6 +64,7 @@ class AssemblyFilter(rest_framework.FilterSet):
 class StatsFilter(rest_framework.FilterSet):
     assembly__sequence__project__id = MultipleCharValueFilter(lookup_expr="in")
     seqtype = MultipleCharValueFilter(lookup_expr="in")
+    CDS_range = NumberRangeFilter(field_name='CDS', lookup_expr='range')
     class Meta:
         model = Stats
         
@@ -69,6 +82,7 @@ class StatsFilter(rest_framework.FilterSet):
             "assembly__sequence__LibraryLayout",
             "assembly__sequence__SequencerModel",
             "assembly__sequence__CenterName",
+            'CDS_range'
         ]
         fields = fields + extra
         

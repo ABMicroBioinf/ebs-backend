@@ -3,7 +3,7 @@ from rest_framework.compat import distinct
 from rest_framework.filters import SearchFilter
 import operator
 from functools import reduce
-from django_filters.filters import Filter
+from django_filters.filters import Filter, BaseRangeFilter, NumberFilter
 from django_filters.constants import EMPTY_VALUES
 
 #TODO 
@@ -30,13 +30,30 @@ class NestedFilter(Filter):
         return qs
 
 class MultipleCharValueFilter(Filter):
+    
     def filter(self, qs, value):
+        print(type(self))
+        print(self.field_name)
         if value in EMPTY_VALUES:
             return qs
+        print(value)
         value_list = value.split(",")
-        qs = super().filter(qs, value_list)
+        print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+        print(value)
+        print(value_list)
+        print(type(value_list))
+        mylist = []
+       
+        for item in value_list:
+          mylist.append(item.replace("‑", ","))
+          
+        print(qs)
+        qs = super().filter(qs, mylist)
         return qs
+    
 
+class NumberRangeFilter(BaseRangeFilter, NumberFilter):
+   pass
 
 #https://zhuanlan.zhihu.com/p/59072252
 class EbsSearchFilter(SearchFilter):

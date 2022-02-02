@@ -110,11 +110,18 @@ class SequenceViewSet(
         serializer.save(owner=self.request.user)
     
     def get_queryset(self):
+        print("rerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
+        print(self.request)
+        print(self.request.GET)
+        print(type(self.request.GET))
         qs = super().get_queryset()
         """ if self.request.user.groups.filter(name='Administrator').exists():
             self.filterset_class = AdminFilterSet """
         self.filterset_class = SequenceFilter
+        
+        
         self.filter = self.filterset_class(self.request.GET, queryset=qs)
+        #self.filterset_class()
         return self.filter.qs
     
     @action(detail=False)
@@ -133,6 +140,7 @@ class SequenceViewSet(
     def metadata(self, request):
         qs = super().get_queryset()
         self.filterset_class = SequenceFilter
+       
         self.filter = self.filterset_class(self.request.GET, queryset=qs)
         seq = self.filter.qs
         #get QueryDict

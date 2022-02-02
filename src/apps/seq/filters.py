@@ -15,7 +15,8 @@ from gizmos.filter import (
 
 #define equaity based filter
 class SequenceFilter(rest_framework.FilterSet):
-    
+    print("I am in sequenceFilter 88888888888888888888888888888888")
+
     RawStats__Reads = NestedFilter(
         field_name="RawStats__Reads", lookup_expr="exact"
     )
@@ -82,7 +83,8 @@ class SequenceFilter(rest_framework.FilterSet):
     Platform = MultipleCharValueFilter(lookup_expr="in")
     SequencerModel = MultipleCharValueFilter(lookup_expr="in")
     CenterName = MultipleCharValueFilter(lookup_expr="in")
-    seqtype = MultipleCharValueFilter(lookup_expr="in")
+    seqtype = MultipleCharValueFilter(field_name ="seqtype", lookup_expr="in")
+    #seqtype = CharFilter(lookup_expr="in")
     DateCreated  = MultipleCharValueFilter(lookup_expr="in")
     LastUpdate = MultipleCharValueFilter(lookup_expr="in")
     
@@ -126,7 +128,7 @@ class SequenceFilter(rest_framework.FilterSet):
             models.CharField: {
                 'filter_class': CharFilter,
                 'extra': lambda f: {
-                    'lookup_expr': 'icontains',
+                'lookup_expr': 'icontains',
                 },
             },
             models.IntegerField: {
