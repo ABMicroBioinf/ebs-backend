@@ -7,11 +7,11 @@ from django_filters.filters import Filter, BaseRangeFilter, NumberFilter
 from django_filters.constants import EMPTY_VALUES
 
 #TODO 
-#nested fields work well with string but not with number
+# nested fields work well with string but not with number
 class NestedFilter(Filter):
     # only for depth = 2
     # def __init__(self,field_parent):
-    #     self.field_parent = field_parent
+    #     self.field_parent = field_parentp[---- ]
     #     super.__init__(self)
 
     def filter(self, qs, value):
@@ -32,16 +32,42 @@ class NestedFilter(Filter):
 class MultipleCharValueFilter(Filter):
     
     def filter(self, qs, value):
-        print(type(self))
+        print("MultipleCharValueFilter filter input parameters=")
+        print("value=")
+        print(value)
+        print(type(value))
+       # value is string
+        mylist = []
+        if value is not None:
+            if isinstance(value, str):
+                print("MultipleCharValueFilter input value is string .......................................")
+                mylist = value.split(",")
+            else:
+                print("MultipleCharValueFilter input value is list .......................................")
+                mylist = value
+                print(mylist)
+            
+        if value in EMPTY_VALUES:
+            return qs
+        
+        qs = super().filter(qs, mylist)
+        print("MultipleCharValueFilter  return =" + str(qs.count()) + " data points ******************")
+       
+        return qs
+class MultipleCharValueFilter_0(Filter):
+    
+    def filter(self, qs, value):
+        #print(type(self))
         print(self.field_name)
         if value in EMPTY_VALUES:
             return qs
-        print(value)
-        value_list = value.split(",")
         print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         print(value)
-        print(value_list)
-        print(type(value_list))
+        value_list = value.split(",")
+        # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+        # print(value)
+        # print(value_list)
+        # print(type(value_list))
         mylist = []
        
         for item in value_list:
@@ -53,8 +79,35 @@ class MultipleCharValueFilter(Filter):
     
 
 class NumberRangeFilter(BaseRangeFilter, NumberFilter):
-   pass
+    pass
+        
 
+class MultipleNumberRangeFilter(BaseRangeFilter, NumberFilter):
+    print("YYYYYYYYYYYYYYYYYYYYYYY")
+    def filter(self, qs, value):
+        print("MultipleCharValueFilter filter input parameters=")
+        print("value=")
+        print(value)
+        
+       # value is string
+        mylist = []
+        if value is not None:
+            if isinstance(value, str):
+                print("MultipleCharValueFilter input value is string .......................................")
+                mylist = value.split("-")
+            else:
+                print("MultipleCharValueFilter input value is list .......................................")
+                mylist = value
+                print(mylist)
+            
+        if value in EMPTY_VALUES:
+            return qs
+        
+        qs = super().filter(qs, mylist)
+        print("MultipleCharValueFilter  return =" + str(qs.count()) + " data points ******************")
+       
+        return qs
+       
 #https://zhuanlan.zhihu.com/p/59072252
 class EbsSearchFilter(SearchFilter):
 
@@ -140,3 +193,34 @@ class EbsSearchFilter(SearchFilter):
             queryset = distinct(queryset, base)
         return queryset
 
+        
+from rest_framework.filters import OrderingFilter
+
+
+class EbsOrderFilter(OrderingFilter):
+    allowed_custom_filters = ['RawStats__Reads', 'RawStats__Yield']
+    fields_related = {
+        'RawStats__Reads': 'RawStats__Reads', # ForeignKey Field lookup for ordering
+        'RawStats__Yield': 'RawStats__Yield'
+    }
+    def get_ordering(self, request, queryset, view):
+        params = request.query_params.get(self.ordering_param)
+        if params:
+            fields = [param.strip() for param in params.split(',')]
+            ordering = [f for f in fields if f.lstrip('-') in self.allowed_custom_filters]
+            if ordering:
+                return ordering
+
+        return self.get_default_ordering(view)
+
+    def filter_queryset(self, request, queryset, view):
+        order_fields = []
+        ordering = self.get_ordering(request, queryset, view)
+        if ordering:
+            for field in ordering:
+                symbol = "-" if "-" in field else ""
+                order_fields.append(symbol+self.fields_related[field.lstrip('-')])
+        if order_fields:
+            return queryset.order_by(*order_fields)
+
+        return queryset

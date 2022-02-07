@@ -10,18 +10,34 @@ from django_filters.filters import (
 ) 
 import django_filters
 from .models import Assembly, Stats, Mlst, Resistome, Virulome, Annotation
-from gizmos.filter import EbsSearchFilter, NestedFilter, MultipleCharValueFilter,NumberRangeFilter
+from gizmos.filter import (
+    EbsSearchFilter, 
+    NestedFilter, 
+    MultipleCharValueFilter,
+    NumberRangeFilter,
+    MultipleNumberRangeFilter
+)
 
     
 #TODO: nested fields are not working with partial matching
 
 class AssemblyFilter(rest_framework.FilterSet):
     seqtype = MultipleCharValueFilter(lookup_expr="in")
+    
+    print(seqtype)
     sequence__project__id = MultipleCharValueFilter(lookup_expr="in")
     #http://localhost:8000/api/isolate/assembly/?count_range=100,200
     count_range = NumberRangeFilter(field_name='count', lookup_expr='range')
     bp_range = NumberRangeFilter(field_name='bp', lookup_expr='range')
-                                 
+    # count_range = MultipleNumberRangeFilter(field_name='bp', lookup_expr='range')
+    # bp_range = MultipleNumberRangeFilter(field_name='bp', lookup_expr='range')
+    
+    """ def filter_queryset(self, queryset):
+            print("I am filter_querset")
+            print(self.data)
+            queryset = super(rest_framework.FilterSet, self).filter_queryset(queryset)
+            return queryset
+                          """
     class Meta:
         model = Assembly
         
@@ -29,7 +45,6 @@ class AssemblyFilter(rest_framework.FilterSet):
         fields = [field.name for field in Assembly._meta.fields]
         fields.remove("owner")
         fields.remove("sequence")
-    
         extra = [
             
             "sequence__project__id",
@@ -60,6 +75,8 @@ class AssemblyFilter(rest_framework.FilterSet):
                 },
             },
         }
+        
+       
 
 class StatsFilter(rest_framework.FilterSet):
     assembly__sequence__project__id = MultipleCharValueFilter(lookup_expr="in")

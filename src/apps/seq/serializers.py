@@ -49,6 +49,7 @@ class SequenceSerializer(FlattenMixin, serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source="owner.username")
     project__id = serializers.CharField(source='project.id')
     project__title = serializers.CharField(source='project.title')
+    
     class Meta:
         model = Sequence
         fields = "__all__"

@@ -18,3 +18,18 @@ python manage.py migrate isolate --run-syncdb
 TODO
 Seperate metagenome sequence and project from isolate 
 implement metagenome applied.
+thusman
+thus_
+Nov '20
+ssh -L 27017:localhost:27017 me@myhost
+
+Hey Jack, thank you, that is super interesting. I completely skip the “More Options” and SSH Login of Compass now and do the following:
+
+in my local terminal ssh -L 27017:localhost:27017 me@myhost
+Create a new connection inside Compass to localhost with User/Pass Auth of the remote DB
+Connect – it works :smile:
+That’s a great solution, I didn’t know something like this was possible. I still don’t really understand why it doesn’t work with the SSH Options inside Compass, but this looks like a super future proof solution. Thanks!
+
+
+2090  mongodump --host=localhost --port=27017 --db=ebsdb
+ 2091  mongorestore dump

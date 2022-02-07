@@ -166,3 +166,4 @@ class SequenceSearchFilter(EbsSearchFilter):
             'QcStats',
            
         ]
+        

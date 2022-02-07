@@ -1,11 +1,11 @@
 from gizmos.pagination import CustomPagination
-
+from gizmos.filter import EbsOrderFilter
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
-from .filters import SequenceFilter, SequenceSearchFilter
+from .filters import SequenceFilter, SequenceSearchFilter #, SequenceOrderFilter
 from rest_framework.mixins import (
     CreateModelMixin,
     DestroyModelMixin,
@@ -93,14 +93,17 @@ class SequenceViewSet(
         #SearchFilter,
         SequenceSearchFilter,
         OrderingFilter,
+        #EbsOrderFilter,
         DjangoFilterBackend,
+        
     )
     #filterset_fields define equaity based searching, this is defined in SequenceFilter class
     print("equaity based search fields: *******************************************")
     print(SequenceFilter.Meta.fields)
     search_fields = SequenceFilter.Meta.fields
+    #ordering_fields = ['RawStats_Reads']
     ordering = ['DateCreated']
-
+    
     # This method should be overriden
     # if we dont want to modify query set based on current instance attributes
     def get_queryset_0(self):
@@ -110,18 +113,12 @@ class SequenceViewSet(
         serializer.save(owner=self.request.user)
     
     def get_queryset(self):
-        print("rerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
-        print(self.request)
-        print(self.request.GET)
-        print(type(self.request.GET))
         qs = super().get_queryset()
         """ if self.request.user.groups.filter(name='Administrator').exists():
             self.filterset_class = AdminFilterSet """
         self.filterset_class = SequenceFilter
-        
-        
         self.filter = self.filterset_class(self.request.GET, queryset=qs)
-        #self.filterset_class()
+       
         return self.filter.qs
     
     @action(detail=False)

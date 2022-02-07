@@ -30,8 +30,8 @@ class Sequence(models.Model):
     #     Assembly, related_name="sequences", on_delete=models.CASCADE, null=True)
 
     TaxID = models.IntegerField()
-    ScientificName = models.CharField(max_length=100)
     seqtype = models.CharField(max_length=100, choices=seqtypes, null=True, blank=True) # WGS
+    ScientificName = models.CharField(max_length=100)
     Experiment = models.CharField(max_length=100)
     LibraryName = models.CharField(max_length=100)
     LibraryStrategy = models.CharField(max_length=100, choices=seq_exp_strategies, null=True, blank=True) # WGS

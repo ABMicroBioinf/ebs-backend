@@ -19,15 +19,17 @@ from django.db.models import Max, Min
 from djongo import models
 from gizmos.util import ObjectIdField
 
+
 #class AssemblySerializer(DjongoModelSerializer):
 class AssemblySerializer(serializers.ModelSerializer):
+    print("********************************** serializer")
     _id = ObjectIdField(read_only=True)
     sequence = serializers.HyperlinkedRelatedField(
         many=False,
         read_only=True,
         view_name='seq:sequence-detail'
     )
-
+    
     #sequences = SequenceSerializer(many=True)
     owner = serializers.ReadOnlyField(source='owner.username')
 
@@ -43,12 +45,12 @@ class AssemblySerializer(serializers.ModelSerializer):
     sequence__SequencerModel = serializers.CharField(
         source='sequence.SequencerModel')
     sequence__CenterName = serializers.CharField(source='sequence.CenterName')
-
+    
+    
     class Meta:
         model = Assembly
         fields = '__all__'
         read_only_fields = ['owner']
-
 
 class AssemblyMetadataSerializer(serializers.Serializer):
     # contig = serializers.SerializerMethodField("get_max_for_count")
@@ -60,17 +62,18 @@ class AssemblyMetadataSerializer(serializers.Serializer):
     project__id = serializers.SerializerMethodField(
         "get_distinct_count_for_project"
     )
-    count = serializers.SerializerMethodField(
+    count_range = serializers.SerializerMethodField(
         "get_count_bins"
     )
-    bp = serializers.SerializerMethodField(
+    bp_range = serializers.SerializerMethodField(
         "get_bp_bins"
     )
     class Meta:
         model = Assembly
         fields = (
             "contig",
-            "total_length"
+            "total_length",
+        
         )
     def get_distinct_count_for_seqtype(self, assembly):
         return assembly.values("seqtype").annotate(total=Count("seqtype")).order_by("seqtype")
@@ -102,7 +105,7 @@ class AssemblyMetadataSerializer(serializers.Serializer):
    
     def get_count_bins(self, assembly):
         dict = assembly.values("count").aggregate(Min("count"), Max("count"))
-        #print(dict)
+        print(dict)
         min = dict["count__min"]
         max = dict["count__max"]
         print(min)
@@ -118,8 +121,8 @@ class AssemblyMetadataSerializer(serializers.Serializer):
                 start = i
                 continue
             end = i
-            num = assembly.values("count").filter(count__range=(start, end-1)).count()
-            bins.append({ "count": str(start) + "," + str(end-1), "total": num})
+            num = assembly.values("count").filter(count__range=(start, end)).count()
+            bins.append({ "count_range": str(start) + "," + str(end), "total": num})
             #print(query)
             start = end
         #print(bins)
@@ -143,8 +146,8 @@ class AssemblyMetadataSerializer(serializers.Serializer):
                 start = i
                 continue
             end = i
-            num = assembly.values("bp").filter(bp__range=(start, end-1)).count()
-            bins.append({ "bp": str(start) + ","  + str(end-1), "total": num})
+            num = assembly.values("bp").filter(bp__range=(start, end)).count()
+            bins.append({ "bp_range": str(start) + ","  + str(end), "total": num})
             #print(query)
             start = end
         #print(bins)
@@ -181,7 +184,7 @@ class StatsMetadataSerializer(serializers.Serializer):
     project__id = serializers.SerializerMethodField(
         "get_distinct_count_for_project"
     )
-    CDS = serializers.SerializerMethodField(
+    CDS_range = serializers.SerializerMethodField(
         "get_CDS_bins"
     )
     class Meta:
@@ -219,8 +222,8 @@ class StatsMetadataSerializer(serializers.Serializer):
                 start = i
                 continue
             end = i
-            num = assembly.values("CDS").filter(CDS__range=(start, end-1)).count()
-            bins.append({ "CDS": str(start) + ","  + str(end-1), "total": num})
+            num = assembly.values("CDS").filter(CDS__range=(start, end)).count()
+            bins.append({ "CDS_range": str(start) + ","  + str(end), "total": num})
             #print(query)
             start = end
         #print(bins)
