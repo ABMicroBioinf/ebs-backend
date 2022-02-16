@@ -69,7 +69,7 @@ class AssemblyViewSet(GenericViewSet,  # generic view functionality
     )
 
     search_fields = AssemblyFilter.Meta.fields
-    ordering = ['DateCreated']
+    ordering = ['sequence__project__id']
     """ def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
       
@@ -155,7 +155,7 @@ class StatsViewSet(GenericViewSet,  # generic view functionality
     )
 
     search_fields = StatsFilter.Meta.fields
-    ordering = ['DateCreated']
+    ordering = ['assembly__sequence__project__id']
   # This method should be overriden
     # if we dont want to modify query set based on current instance attributes
 
@@ -219,8 +219,8 @@ class MlstViewSet(GenericViewSet,  # generic view functionality
     print("equaity based search fields: *******************************************")
     print(MlstFilter.Meta.fields)
     search_fields = MlstFilter.Meta.fields
-    ordering = ['DateCreated']
-
+    
+    ordering = ['assembly__sequence__project__id']
     # This method should be overriden
     # if we dont want to modify query set based on current instance attributes
     def get_queryset(self):
@@ -277,7 +277,7 @@ class ResistomeViewSet(GenericViewSet,  # generic view functionality
     print("equaity based search fields: *******************************************")
     print(ResistomeFilter.Meta.fields)
     search_fields = ResistomeFilter.Meta.fields
-    ordering = ['DateCreated']
+    ordering = ['assembly__sequence__project__id']
 
     # This method should be overriden
     # if we dont want to modify query set based on current instance attributes
@@ -334,7 +334,7 @@ class VirulomeViewSet(GenericViewSet,  # generic view functionality
     print("equaity based search fields: *******************************************")
     print(VirulomeFilter.Meta.fields)
     search_fields = VirulomeFilter.Meta.fields
-    ordering = ['DateCreated']
+    ordering = ['assembly__sequence__project__id']
 
     # This method should be overriden
     # if we dont want to modify query set based on current instance attributes
@@ -423,7 +423,7 @@ class TbProfileViewSet(GenericViewSet,  # generic view functionality
     print("equaity based search fields: *******************************************")
     print(TbProfileFilter.Meta.fields)
     search_fields = TbProfileFilter.Meta.fields
-    ordering = ['DateCreated']
+    ordering = ['sequence__project__id']
 
     # This method should be overriden
     # if we dont want to modify query set based on current instance attributes
@@ -455,7 +455,7 @@ class TbProfileSummaryViewSet(GenericViewSet,  # generic view functionality
     print("equaity based search fields: *******************************************")
     print(TbProfileSummaryFilter.Meta.fields)
     search_fields = TbProfileSummaryFilter.Meta.fields
-    ordering = ['DateCreated']
+    ordering = ['sequence__project__id']
 
     # This method should be overriden
     # if we dont want to modify query set based on current instance attributes

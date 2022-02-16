@@ -197,30 +197,86 @@ class EbsSearchFilter(SearchFilter):
 from rest_framework.filters import OrderingFilter
 
 
-class EbsOrderFilter(OrderingFilter):
-    allowed_custom_filters = ['RawStats__Reads', 'RawStats__Yield']
-    fields_related = {
-        'RawStats__Reads': 'RawStats__Reads', # ForeignKey Field lookup for ordering
-        'RawStats__Yield': 'RawStats__Yield'
-    }
+class EbsOrderingFilter(OrderingFilter, EbsSearchFilter):
+
+    def __init__(self,nested_fields, nested_cats):
+        self.nested_fields = nested_fields
+        self.nested_cats = nested_cats
+        super.__init__(self)
+        
+    def filter_queryset(self, request, queryset, view):
+        ordering = self.get_ordering(request, queryset, view)
+
+        if ordering:
+            #return queryset.order_by(*ordering)
+            return queryset.order_by('RawStats__Reads')
+
+
+        return queryset
+    
     def get_ordering(self, request, queryset, view):
+        """
+        Ordering is set by a comma delimited ?ordering=... query parameter.
+        The `ordering` query parameter can be overridden by setting
+        the `ordering_param` value on the OrderingFilter or by
+        specifying an `ORDERING_PARAM` value in the API settings.
+        """
         params = request.query_params.get(self.ordering_param)
+        print("EbsOrderingFilter ............... params=")
+        print(params)
+       
         if params:
             fields = [param.strip() for param in params.split(',')]
-            ordering = [f for f in fields if f.lstrip('-') in self.allowed_custom_filters]
+            print("fields=")
+            print(fields)
+            ordering = self.remove_invalid_fields(queryset, fields, view, request)
+            print("ordering=")
+            print(ordering)
             if ordering:
                 return ordering
 
+        # No ordering was included, or all the ordering fields were invalid
         return self.get_default_ordering(view)
+    
+    def remove_invalid_fields(self, queryset, fields, view, request):
+        valid_fields = [item[0] for item in self.get_valid_fields(queryset, view, {'request': request})]
+        print("remove_invalid_fields= after the first statement=")
+        print(valid_fields)
+        def term_valid(term):
+            if term.startswith("-"):
+                term = term[1:]
+            return term in valid_fields
+        print("before return from remove_invalid_fields===========================")
+        print([term for term in fields if term_valid(term)])
+        return [term for term in fields if term_valid(term)]
+    
+    def get_valid_fields(self, queryset, view, context={}):
+        valid_fields = getattr(view, 'ordering_fields', self.ordering_fields)
+        print("valid_fields=")
+        print(valid_fields)
+        if valid_fields is None:
+            # Default to allowing filtering on serializer fields
+            return self.get_default_valid_fields(queryset, view, context)
 
-    def filter_queryset(self, request, queryset, view):
-        order_fields = []
-        ordering = self.get_ordering(request, queryset, view)
-        if ordering:
-            for field in ordering:
-                symbol = "-" if "-" in field else ""
-                order_fields.append(symbol+self.fields_related[field.lstrip('-')])
-        if order_fields:
-            return queryset.order_by(*order_fields)
-
-        return queryset
+        elif valid_fields == '__all__':
+            # View explicitly allows filtering on any model field
+            valid_fields = [
+                (field.name, field.verbose_name) for field in queryset.model._meta.fields
+            ]
+            
+            valid_fields += [ (field, field) for field in self.nested_fields]
+           
+            valid_fields += [
+                (key, key.title().split('__'))
+                for key in queryset.query.annotations
+            ]
+        else:
+            valid_fields = [
+                (item, item) if isinstance(item, str) else item
+                for item in valid_fields
+            ]
+        print("before returning from  get_valid_fields")
+        print(valid_fields)
+        return valid_fields
+    
+    

@@ -23,14 +23,15 @@ from gizmos.filter import (
 
 class AssemblyFilter(rest_framework.FilterSet):
     seqtype = MultipleCharValueFilter(lookup_expr="in")
-    
-    print(seqtype)
     sequence__project__id = MultipleCharValueFilter(lookup_expr="in")
+    
     #http://localhost:8000/api/isolate/assembly/?count_range=100,200
     count_range = NumberRangeFilter(field_name='count', lookup_expr='range')
     bp_range = NumberRangeFilter(field_name='bp', lookup_expr='range')
-    # count_range = MultipleNumberRangeFilter(field_name='bp', lookup_expr='range')
-    # bp_range = MultipleNumberRangeFilter(field_name='bp', lookup_expr='range')
+    min_count = django_filters.NumberFilter(field_name="count", lookup_expr='gte')
+    max_count = django_filters.NumberFilter(field_name="count", lookup_expr='lte')
+    min_bp = django_filters.NumberFilter(field_name="bp", lookup_expr='gte')
+    max_bp = django_filters.NumberFilter(field_name="bp", lookup_expr='lte')
     
     """ def filter_queryset(self, queryset):
             print("I am filter_querset")
@@ -121,7 +122,7 @@ class StatsFilter(rest_framework.FilterSet):
 
 
 class MlstFilter(rest_framework.FilterSet):
-    
+    assembly__sequence__project__id = MultipleCharValueFilter(lookup_expr="in")
     profile__locus = NestedFilter(
         field_name="profile__locus", lookup_expr="icontains"
     )
@@ -184,6 +185,7 @@ class MlstSearchFilter(EbsSearchFilter):
 
 
 class ResistomeFilter(rest_framework.FilterSet):
+    assembly__sequence__project__id = MultipleCharValueFilter(lookup_expr="in")
     
     profile__geneName = NestedFilter(
         field_name="profile__geneName", lookup_expr="icontains"
@@ -269,6 +271,7 @@ class ResistomeSearchFilter(EbsSearchFilter):
         ]
 
 class VirulomeFilter(rest_framework.FilterSet):
+    assembly__sequence__project__id = MultipleCharValueFilter(lookup_expr="in")
     profile__geneName = NestedFilter(
         field_name="profile__geneName", lookup_expr="icontains"
     )
@@ -388,7 +391,7 @@ class AnnotationSearchFilter(EbsSearchFilter):
 from .models import TbProfileSummary, TbProfile
 
 class TbProfileSummaryFilter(rest_framework.FilterSet): 
-   
+   sequence__project__id = MultipleCharValueFilter(lookup_expr="in")
    main_lin = MultipleCharValueFilter(lookup_expr="in")
    sublin = MultipleCharValueFilter(lookup_expr="in")
    num_dr_variants = MultipleCharValueFilter(lookup_expr="in")

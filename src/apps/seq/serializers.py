@@ -43,7 +43,8 @@ class SequenceSerializer_org(serializers.Serializer):
             "RawStats",
             "QcStats",
         ]
-    
+        
+        
 class SequenceSerializer(FlattenMixin, serializers.ModelSerializer):
     _id = ObjectIdField(read_only=True)
     owner = serializers.ReadOnlyField(source="owner.username")
@@ -79,8 +80,12 @@ class MyFileSerializer(serializers.Serializer):
 
 class SequenceMetadataSerializer(serializers.Serializer):
     
+   
     seqtype = serializers.SerializerMethodField(
         "get_distinct_count_for_seqtype"
+    )
+    project__id = serializers.SerializerMethodField(
+        "get_distinct_count_for_project"
     )
     LibraryLayout = serializers.SerializerMethodField(
         "get_distinct_count_for_library_layout"
@@ -100,10 +105,9 @@ class SequenceMetadataSerializer(serializers.Serializer):
     LastUpdate = serializers.SerializerMethodField(
         "get_distinct_count_for_last_update"
     )
-    """ project__id = serializers.SerializerMethodField(
-        "get_distinct_count_for_project"
-    )
     
+   
+    """ 
     LibraryStrategy = serializers.SerializerMethodField(
         "get_distinct_count_for_library_strategy"
     )

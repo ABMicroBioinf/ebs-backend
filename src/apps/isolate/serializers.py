@@ -62,12 +62,19 @@ class AssemblyMetadataSerializer(serializers.Serializer):
     project__id = serializers.SerializerMethodField(
         "get_distinct_count_for_project"
     )
-    count_range = serializers.SerializerMethodField(
+    """  count_range = serializers.SerializerMethodField(
         "get_count_bins"
     )
     bp_range = serializers.SerializerMethodField(
         "get_bp_bins"
+    ) """
+    contig_total_count = serializers.SerializerMethodField(
+        "get_min_max_for_count"
     )
+    contig_total_length = serializers.SerializerMethodField(
+        "get_min_max_for_bp"
+    )
+    
     class Meta:
         model = Assembly
         fields = (
@@ -98,7 +105,10 @@ class AssemblyMetadataSerializer(serializers.Serializer):
 
     def get_max_for_count(self, assembly):
         return assembly.values("count").aggregate(Max("count"))
-
+    def get_min_for_count(self, assembly):
+        return assembly.values("count").aggregate(Min("count"))
+    def get_min_max_for_count(self, assembly):
+        return assembly.values("count").aggregate(Min("count"), Max("count"))
     def get_min_max_for_bp(self, assembly):
         return assembly.values("bp").aggregate(Min("bp"), Max("bp"))
    
@@ -184,9 +194,9 @@ class StatsMetadataSerializer(serializers.Serializer):
     project__id = serializers.SerializerMethodField(
         "get_distinct_count_for_project"
     )
-    CDS_range = serializers.SerializerMethodField(
+    """  CDS_range = serializers.SerializerMethodField(
         "get_CDS_bins"
-    )
+    ) """
     class Meta:
         model = Stats
         fields = (
@@ -270,6 +280,9 @@ class MlstSerializer(FlattenMixin, serializers.ModelSerializer):
 class MlstMetadataSerializer(serializers.Serializer):
     seqtype = serializers.SerializerMethodField(
         "get_distinct_count_for_seqtype")
+    project__id = serializers.SerializerMethodField(
+        "get_distinct_count_for_project"
+    )
     scheme = serializers.SerializerMethodField("get_distinct_count_for_scheme")
     st = serializers.SerializerMethodField("get_distinct_count_for_st")
 
@@ -283,7 +296,13 @@ class MlstMetadataSerializer(serializers.Serializer):
 
     def get_distinct_count_for_seqtype(self, mlst):
         return mlst.values("seqtype").annotate(total=Count("seqtype")).order_by("seqtype")
-
+    def get_distinct_count_for_project(self, stats):
+        queryset = stats.values("assembly__sequence__project__id")
+        return queryset.annotate(
+                total=Count("assembly__sequence__project__id", distinct=True)
+            ).order_by("assembly__sequence__project__id")
+        #return queryset
+        
     def get_distinct_count_for_scheme(self, mlst):
         return mlst.values("scheme").annotate(total=Count("scheme", distinct=True)).order_by("scheme")
 
@@ -325,6 +344,9 @@ class ResistomeSerializer(FlattenMixin, serializers.ModelSerializer):
 class ResistomeMetadataSerializer(serializers.Serializer):
     seqtype = serializers.SerializerMethodField(
         "get_distinct_count_for_seqtype")
+    project__id = serializers.SerializerMethodField(
+        "get_distinct_count_for_project"
+    )
     num_found = serializers.SerializerMethodField(
         "get_distinct_count_for_num_found")
 
@@ -340,7 +362,11 @@ class ResistomeMetadataSerializer(serializers.Serializer):
 
     def get_distinct_count_for_num_found(self, resistome):
         return resistome.values("num_found").annotate(total=Count("num_found")).order_by("num_found")
-
+    def get_distinct_count_for_project(self, resistome):
+        queryset = resistome.values("assembly__sequence__project__id")
+        return queryset.annotate(
+                total=Count("assembly__sequence__project__id", distinct=True)
+            ).order_by("assembly__sequence__project__id")
 
 class VirulomeSerializer(ResistomeSerializer):
     #_id = ObjectIdField(read_only=True)
@@ -373,6 +399,9 @@ class VirulomeSerializer(ResistomeSerializer):
 class VirulomeMetadataSerializer(serializers.Serializer):
     seqtype = serializers.SerializerMethodField(
         "get_distinct_count_for_seqtype")
+    project__id = serializers.SerializerMethodField(
+        "get_distinct_count_for_project"
+    )
     num_found = serializers.SerializerMethodField(
         "get_distinct_count_for_num_found")
 
@@ -388,6 +417,12 @@ class VirulomeMetadataSerializer(serializers.Serializer):
 
     def get_distinct_count_for_num_found(self, resistome):
         return resistome.values("num_found").annotate(total=Count("num_found")).order_by("num_found")
+    
+    def get_distinct_count_for_project(self, virulome):
+        queryset = virulome.values("assembly__sequence__project__id")
+        return queryset.annotate(
+                total=Count("assembly__sequence__project__id", distinct=True)
+            ).order_by("assembly__sequence__project__id")
 
 #class AnnotationSerializer(FlattenMixin, DjongoModelSerializer):
 class AnnotationSerializer(FlattenMixin, serializers.ModelSerializer):
@@ -460,14 +495,19 @@ class TbProfileSummarySerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
 
     #reterieve fields from the related collection
-    project__id = serializers.CharField(source='sequence.project.id')
-    project__title = serializers.CharField(source='sequence.project.title')
+    # reterieve fields from the related collection
+    sequence__project__id = serializers.CharField(source='sequence.project.id')
+    sequence__project__title = serializers.CharField(
+        source='sequence.project.title')
 
-    
-    sequence__LibrarySource = serializers.CharField(source='sequence.LibrarySource')
-    sequence__LibraryLayout = serializers.CharField(source='sequence.LibraryLayout')
-    sequence__SequencerModel = serializers.CharField(source='sequence.SequencerModel')
+    sequence__LibrarySource = serializers.CharField(
+        source='sequence.LibrarySource')
+    sequence__LibraryLayout = serializers.CharField(
+        source='sequence.LibraryLayout')
+    sequence__SequencerModel = serializers.CharField(
+        source='sequence.SequencerModel')
     sequence__CenterName = serializers.CharField(source='sequence.CenterName')
+    
     
     class Meta:
         model = TbProfileSummary
@@ -478,6 +518,9 @@ class TbProfileSummarySerializer(serializers.ModelSerializer):
 
 class TbProfileSummaryMetadataSerializer(serializers.ModelSerializer):
 
+    project__id = serializers.SerializerMethodField(
+        "get_distinct_count_for_project"
+    )
     main_lin = serializers.SerializerMethodField(
         "get_distinct_count_for_main_lin")
     sublin = serializers.SerializerMethodField("get_distinct_count_for_sublin")
@@ -491,11 +534,13 @@ class TbProfileSummaryMetadataSerializer(serializers.ModelSerializer):
 
         model = TbProfileSummary
         fields = (
+              "project__id",
             "main_lin",
             "sublin",
             "num_dr_variants",
             "num_other_variants",
-            "drtype"
+            "drtype", 
+          
         )
 
     def get_distinct_count_for_main_lin(self, psummary):
@@ -527,3 +572,8 @@ class TbProfileSummaryMetadataSerializer(serializers.ModelSerializer):
             psummary.values("drtype").annotate(
                 total=Count("drtype")).order_by("drtype")
         )
+    def get_distinct_count_for_project(self, psummary):
+        queryset = psummary.values("sequence__project__id")
+        return queryset.annotate(
+                total=Count("sequence__project__id", distinct=True)
+            ).order_by("sequence__project__id")

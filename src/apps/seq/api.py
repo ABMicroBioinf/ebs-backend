@@ -1,11 +1,11 @@
 from gizmos.pagination import CustomPagination
-from gizmos.filter import EbsOrderFilter
+#from gizmos.filter import EbsOrderFilter
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
-from .filters import SequenceFilter, SequenceSearchFilter #, SequenceOrderFilter
+from .filters import SequenceFilter, SequenceSearchFilter, SequenceOrderingFilter
 from rest_framework.mixins import (
     CreateModelMixin,
     DestroyModelMixin,
@@ -93,7 +93,7 @@ class SequenceViewSet(
         #SearchFilter,
         SequenceSearchFilter,
         OrderingFilter,
-        #EbsOrderFilter,
+        #SequenceOrderingFilter,
         DjangoFilterBackend,
         
     )
@@ -101,8 +101,10 @@ class SequenceViewSet(
     print("equaity based search fields: *******************************************")
     print(SequenceFilter.Meta.fields)
     search_fields = SequenceFilter.Meta.fields
-    #ordering_fields = ['RawStats_Reads']
-    ordering = ['DateCreated']
+    
+    ordering_fields = '__all__'
+   
+    ordering = ['project']
     
     # This method should be overriden
     # if we dont want to modify query set based on current instance attributes
