@@ -11,6 +11,7 @@ class SequenceAdmin(admin.ModelAdmin):
         "SampleName",
         #"Projectid",
         "owner",
+     
         "DateCreated"
     ]
 

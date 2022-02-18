@@ -53,8 +53,6 @@ class AssemblySerializer(serializers.ModelSerializer):
         read_only_fields = ['owner']
 
 class AssemblyMetadataSerializer(serializers.Serializer):
-    # contig = serializers.SerializerMethodField("get_max_for_count")
-    # total_length = serializers.SerializerMethodField("get_min_max_for_bp")
     
     seqtype = serializers.SerializerMethodField(
         "get_distinct_count_for_seqtype"
@@ -62,12 +60,7 @@ class AssemblyMetadataSerializer(serializers.Serializer):
     project__id = serializers.SerializerMethodField(
         "get_distinct_count_for_project"
     )
-    """  count_range = serializers.SerializerMethodField(
-        "get_count_bins"
-    )
-    bp_range = serializers.SerializerMethodField(
-        "get_bp_bins"
-    ) """
+   
     contig_total_count = serializers.SerializerMethodField(
         "get_min_max_for_count"
     )
@@ -91,77 +84,14 @@ class AssemblyMetadataSerializer(serializers.Serializer):
                 total=Count("sequence__project__id", distinct=True)
             ).order_by("sequence__project__id")
         #return queryset
-        
-
-    def get_distinct_count_for_sequencer_model(self, assembly):
-        # queryset = assembly.values("sequence__SequencerModel")
-        # print(queryset)
-        # return queryset
-        return(
-            assembly.values(sequence__SequenceModel)
-            .annotate(total=Count("sequence__SequenceModel"))
-            .order_by("total")
-        )
-
-    def get_max_for_count(self, assembly):
-        return assembly.values("count").aggregate(Max("count"))
-    def get_min_for_count(self, assembly):
-        return assembly.values("count").aggregate(Min("count"))
+     
     def get_min_max_for_count(self, assembly):
         return assembly.values("count").aggregate(Min("count"), Max("count"))
+    
     def get_min_max_for_bp(self, assembly):
         return assembly.values("bp").aggregate(Min("bp"), Max("bp"))
    
    
-    def get_count_bins(self, assembly):
-        dict = assembly.values("count").aggregate(Min("count"), Max("count"))
-        print(dict)
-        min = dict["count__min"]
-        max = dict["count__max"]
-        print(min)
-        print(max)
-        step = 100
-        myList = list(range(min, max+step, step))
-        #print(myList)
-        start = -1
-        bins = []
-        for i in myList:
-            #print (i)
-            if start == -1:
-                start = i
-                continue
-            end = i
-            num = assembly.values("count").filter(count__range=(start, end)).count()
-            bins.append({ "count_range": str(start) + "," + str(end), "total": num})
-            #print(query)
-            start = end
-        #print(bins)
-        return bins
-    
-    def get_bp_bins(self, assembly):
-        dict = assembly.values("bp").aggregate(Min("bp"), Max("bp"))
-        #print(dict)
-        min = dict["bp__min"]
-        max = dict["bp__max"]
-        print(min)
-        print(max)
-        step = 100000
-        myList = list(range(min, max+step, step))
-        #print(myList)
-        start = -1
-        bins = []
-        for i in myList:
-            #print (i)
-            if start == -1:
-                start = i
-                continue
-            end = i
-            num = assembly.values("bp").filter(bp__range=(start, end)).count()
-            bins.append({ "bp_range": str(start) + ","  + str(end), "total": num})
-            #print(query)
-            start = end
-        #print(bins)
-        return bins
 
 class StatsSerializer(serializers.ModelSerializer):
     _id = ObjectIdField(read_only=True)
@@ -194,9 +124,7 @@ class StatsMetadataSerializer(serializers.Serializer):
     project__id = serializers.SerializerMethodField(
         "get_distinct_count_for_project"
     )
-    """  CDS_range = serializers.SerializerMethodField(
-        "get_CDS_bins"
-    ) """
+   
     class Meta:
         model = Stats
         fields = (
@@ -214,30 +142,6 @@ class StatsMetadataSerializer(serializers.Serializer):
     def get_distinct_count_for_seqtype(self, stats):
         return stats.values("seqtype").annotate(total=Count("seqtype")).order_by("seqtype")
     
-    def get_CDS_bins(self, assembly):
-        dict = assembly.values("CDS").aggregate(Min("CDS"), Max("CDS"))
-        #print(dict)
-        min = dict["CDS__min"]
-        max = dict["CDS__max"]
-        print(min)
-        print(max)
-        step = 200
-        myList = list(range(min, max+step, step))
-        #print(myList)
-        start = -1
-        bins = []
-        for i in myList:
-            #print (i)
-            if start == -1:
-                start = i
-                continue
-            end = i
-            num = assembly.values("CDS").filter(CDS__range=(start, end)).count()
-            bins.append({ "CDS_range": str(start) + ","  + str(end), "total": num})
-            #print(query)
-            start = end
-        #print(bins)
-        return bins
 #class MlstSerializer(FlattenMixin, DjongoModelSerializer):
 class MlstSerializer(FlattenMixin, serializers.ModelSerializer):
     _id = ObjectIdField(read_only=True)

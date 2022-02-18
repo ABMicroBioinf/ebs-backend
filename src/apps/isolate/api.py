@@ -19,8 +19,9 @@ from gizmos.pagination import CustomPagination
 from .models import Assembly, Stats, Annotation, Virulome, Mlst, Resistome
 from .filters import (
     AssemblyFilter,
-    #AssemblyFilter1,
+    AssemblySearchFilter,
     StatsFilter,
+    StatsSearchFilter,
     MlstFilter,
     MlstSearchFilter,
     ResistomeFilter,
@@ -68,8 +69,12 @@ class AssemblyViewSet(GenericViewSet,  # generic view functionality
 
     )
 
-    search_fields = AssemblyFilter.Meta.fields
+    #define the column for the text search
+    search_fields = AssemblySearchFilter.Meta.fields
+    print(search_fields)
+    
     ordering = ['sequence__project__id']
+    
     """ def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
       
@@ -80,29 +85,10 @@ class AssemblyViewSet(GenericViewSet,  # generic view functionality
 
     def get_queryset(self):
         return self.queryset.filter(owner=self.request.user)
-
-    def get_queryset_test(self):
-        print("queryset ......................")
-        print(Assembly.objects.all().count())
-        return Assembly.objects.all()
-    # This method should be overriden
-    # if we dont want to modify query set based on current instance attributes
-
-    def get_queryset_0(self):
-        # return self.queryset.filter(owner=self.request.user)
-        #queryset  = Assembly.objects.all()
-        queryset = self.queryset.filter(owner=self.request.user)
-        dict_params = dict(self.request.query_params.lists())
-        ft = AssemblyFilter1(dict_params, queryset)
-        print(
-            "get_queryset  is going to call AssemblyFilter  *****************************")
-        queryset = ft.qs
-        print("get_queryset  count=" + str(queryset.count()))
-        return queryset
-
+    
     def perform_create(self, serializer):
-        print("I am in perform_create...................................")
-        print(self.queryset)
+        # print("I am in perform_create...................................")
+        # print(self.queryset)
         serializer.save(owner=self.request.user)
 
        # https://stackoverflow.com/questions/58855861/dynamically-set-filterset-class-in-django-listview
@@ -110,31 +96,11 @@ class AssemblyViewSet(GenericViewSet,  # generic view functionality
     def metadata(self, request):
         qs = super().get_queryset()
         self.filterset_class = AssemblyFilter
-
-        # query_params.get only returs the last occurrence of the parameter
-        #self.filter = self.filterset_class(self.request.GET, queryset=qs)
-
         dict_params = dict(request.query_params.lists())
         self.filter = self.filterset_class(dict_params, queryset=qs)
         assembly = self.filter.qs
         serializer = AssemblyMetadataSerializer(assembly)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-    @action(detail=False)
-    def metadata_0(self, request):
-
-        assembly = (
-            Assembly.objects.filter(seqtype=request.query_params["seqtype"])
-            if "seqtype" in request.GET
-            else Assembly.objects.all()
-
-
-        )
-        #seqtype = request.query_params["seqtype"]
-        #assembly = Assembly.objects.filter(seqtype=seqtype)
-        serializer = AssemblyMetadataSerializer(assembly)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
 
 class StatsViewSet(GenericViewSet,  # generic view functionality
                    CreateModelMixin,  # handles POSTs
@@ -149,12 +115,12 @@ class StatsViewSet(GenericViewSet,  # generic view functionality
     pagination_class = CustomPagination
 
     filter_backends = (
-        SearchFilter,
+        StatsSearchFilter,
         OrderingFilter,
         filters.DjangoFilterBackend,
     )
 
-    search_fields = StatsFilter.Meta.fields
+    search_fields = StatsSearchFilter.Meta.fields
     ordering = ['assembly__sequence__project__id']
   # This method should be overriden
     # if we dont want to modify query set based on current instance attributes
@@ -265,18 +231,19 @@ class ResistomeViewSet(GenericViewSet,  # generic view functionality
 
     queryset = Resistome.objects.all()
     serializer_class = ResistomeSerializer
-    filterset_class = ResistomeFilter
+    #filterset_class = ResistomeFilter
     pagination_class = CustomPagination
     filter_backends = (
-        # SearchFilter,
+        #SearchFilter,
         ResistomeSearchFilter,
         OrderingFilter,
         filters.DjangoFilterBackend,
     )
     # filterset_fields define equaity based searching, this is defined in SequenceFilter class
-    print("equaity based search fields: *******************************************")
+    print("Resistome equaity based search fields: *******************************************")
     print(ResistomeFilter.Meta.fields)
     search_fields = ResistomeFilter.Meta.fields
+    
     ordering = ['assembly__sequence__project__id']
 
     # This method should be overriden

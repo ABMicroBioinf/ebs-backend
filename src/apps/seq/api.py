@@ -101,8 +101,8 @@ class SequenceViewSet(
     print("equaity based search fields: *******************************************")
     print(SequenceFilter.Meta.fields)
     search_fields = SequenceFilter.Meta.fields
-    
-    ordering_fields = '__all__'
+   
+    #ordering_fields = '__all__'
    
     ordering = ['project']
     

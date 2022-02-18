@@ -8,6 +8,7 @@ from django_filters.filters import (
     RangeFilter,
   
 ) 
+from rest_framework.filters import SearchFilter
 import django_filters
 from .models import Assembly, Stats, Mlst, Resistome, Virulome, Annotation
 from gizmos.filter import (
@@ -26,38 +27,29 @@ class AssemblyFilter(rest_framework.FilterSet):
     sequence__project__id = MultipleCharValueFilter(lookup_expr="in")
     
     #http://localhost:8000/api/isolate/assembly/?count_range=100,200
-    count_range = NumberRangeFilter(field_name='count', lookup_expr='range')
-    bp_range = NumberRangeFilter(field_name='bp', lookup_expr='range')
     min_count = django_filters.NumberFilter(field_name="count", lookup_expr='gte')
     max_count = django_filters.NumberFilter(field_name="count", lookup_expr='lte')
     min_bp = django_filters.NumberFilter(field_name="bp", lookup_expr='gte')
     max_bp = django_filters.NumberFilter(field_name="bp", lookup_expr='lte')
-    
-    """ def filter_queryset(self, queryset):
-            print("I am filter_querset")
-            print(self.data)
-            queryset = super(rest_framework.FilterSet, self).filter_queryset(queryset)
-            return queryset
-                          """
+  
     class Meta:
         model = Assembly
-        
         #equality-based filtering
         fields = [field.name for field in Assembly._meta.fields]
         fields.remove("owner")
         fields.remove("sequence")
         extra = [
-            
             "sequence__project__id",
             "sequence__project__title",
-            "owner__username",
             "sequence__LibrarySource",
             "sequence__LibraryLayout",
             "sequence__SequencerModel",
             "sequence__CenterName",
-            "count",
-            "count_range",
-            "bp_range"
+            "owner__username",
+            "min_count",
+            "max_count",
+            "min_bp",
+            "max_bp"
         ]
         fields = fields + extra
         
@@ -76,13 +68,33 @@ class AssemblyFilter(rest_framework.FilterSet):
                 },
             },
         }
-        
-       
+    #from rest_framework import filters  
 
+#only works on text, char field, this is the generic text search
+class AssemblySearchFilter(SearchFilter):
+    class Meta:
+        model = Assembly
+        #equality-based filtering
+        fields = [field.name for field in Assembly._meta.fields]
+        fields.remove("owner")
+        fields.remove("sequence")
+        exclude = [ 'count', 'bp', 'Ns', 'gaps', 'min', 'max', 'avg', 'N50']
+        extra = [
+            "sequence__project__id",
+            "sequence__project__title",
+            "sequence__LibrarySource",
+            "sequence__LibraryLayout",
+            "sequence__SequencerModel",
+            "sequence__CenterName",
+            "owner__username",
+        ]
+        fields = fields + extra
+        
+        
 class StatsFilter(rest_framework.FilterSet):
     assembly__sequence__project__id = MultipleCharValueFilter(lookup_expr="in")
     seqtype = MultipleCharValueFilter(lookup_expr="in")
-    CDS_range = NumberRangeFilter(field_name='CDS', lookup_expr='range')
+   
     class Meta:
         model = Stats
         
@@ -92,7 +104,6 @@ class StatsFilter(rest_framework.FilterSet):
         fields.remove("assembly")
     
         extra = [
-            
             "owner__username",
             "assembly__sequence__project__id",
             "assembly__sequence__project__title",
@@ -100,7 +111,7 @@ class StatsFilter(rest_framework.FilterSet):
             "assembly__sequence__LibraryLayout",
             "assembly__sequence__SequencerModel",
             "assembly__sequence__CenterName",
-            'CDS_range'
+          
         ]
         fields = fields + extra
         
@@ -119,7 +130,26 @@ class StatsFilter(rest_framework.FilterSet):
                 },
             },
         }
-
+#only works on text, char field, this is the generic text search
+class StatsSearchFilter(SearchFilter):
+    class Meta:
+        model = Assembly
+        
+        fields = [
+            'id',
+            'seqtype'
+        ]
+        extra = [
+             "owner__username",
+            "assembly__sequence__project__id",
+            "assembly__sequence__project__title",
+            "assembly__sequence__LibrarySource",
+            "assembly__sequence__LibraryLayout",
+            "assembly__sequence__SequencerModel",
+            "assembly__sequence__CenterName",
+        ]
+        fields = fields + extra
+        
 
 class MlstFilter(rest_framework.FilterSet):
     assembly__sequence__project__id = MultipleCharValueFilter(lookup_expr="in")
@@ -207,10 +237,10 @@ class ResistomeFilter(rest_framework.FilterSet):
     )
     
     profile__pctCoverage = NestedFilter(
-        field_name="profile__pctCoverage", lookup_expr="icontains"
+        field_name="profile__pctCoverage", lookup_expr="iexact"
     )
     profile__pctIdentity = NestedFilter(
-        field_name="profile__pctIdentity", lookup_expr="icontains"
+        field_name="profile__pctIdentity", lookup_expr="iexact"
     )
     seqtype = MultipleCharValueFilter(lookup_expr="in")
     num_found = MultipleCharValueFilter(lookup_expr="in")
@@ -218,7 +248,7 @@ class ResistomeFilter(rest_framework.FilterSet):
         model = Resistome 
         #equality-based filtering
         fields = [field.name for field in Resistome._meta.fields]
-        #print(fields)
+        print(fields)
         fields.remove("owner")
         fields.remove("assembly")
         fields.remove("profile")
@@ -255,15 +285,20 @@ class ResistomeFilter(rest_framework.FilterSet):
                 'extra': lambda f: {
                     'lookup_expr': 'exact',
                 },
-            },
-            
+            }
         }
 
 class ResistomeSearchFilter(EbsSearchFilter):
     def __init__(self):
         self.nested_fields =  [
             "profile__geneName",
+            "profile__sequenceName",
+            "profile__scope",
+            "profile__elementType",
+            "profile__dclass",
+            "profile__method",
             "profile__pctCoverage",
+            "profile__pctIdentity",
         ]
         self.nested_cats = [
             'profile',

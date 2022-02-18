@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class SeqStat(models.Model):
-    id = models.CharField(primary_key=True, max_length=100)
+   # id = models.CharField(primary_key=True, max_length=100)
     Reads = models.IntegerField(null=True, blank=True)
     Yield = models.IntegerField(null=True, blank=True)
     GeeCee = models.FloatField(null=True, blank=True)
