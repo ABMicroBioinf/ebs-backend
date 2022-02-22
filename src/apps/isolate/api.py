@@ -63,7 +63,8 @@ class AssemblyViewSet(GenericViewSet,  # generic view functionality
     pagination_class = CustomPagination
 
     filter_backends = (
-        SearchFilter,
+        #SearchFilter,
+        AssemblySearchFilter,
         OrderingFilter,
         filters.DjangoFilterBackend,
 
@@ -122,16 +123,11 @@ class StatsViewSet(GenericViewSet,  # generic view functionality
 
     search_fields = StatsSearchFilter.Meta.fields
     ordering = ['assembly__sequence__project__id']
+    
   # This method should be overriden
     # if we dont want to modify query set based on current instance attributes
-
     def get_queryset(self):
         print(self.queryset)
-        return self.queryset.filter(owner=self.request.user)
-    # This method should be overriden
-    # if we dont want to modify query set based on current instance attributes
-
-    def get_queryset_1(self):
         return self.queryset.filter(owner=self.request.user)
 
     def perform_create(self, serializer):
@@ -240,9 +236,8 @@ class ResistomeViewSet(GenericViewSet,  # generic view functionality
         filters.DjangoFilterBackend,
     )
     # filterset_fields define equaity based searching, this is defined in SequenceFilter class
-    print("Resistome equaity based search fields: *******************************************")
-    print(ResistomeFilter.Meta.fields)
-    search_fields = ResistomeFilter.Meta.fields
+    #print(ResistomeSearchFilter.Meta.fields)
+    search_fields = ResistomeSearchFilter.Meta.fields
     
     ordering = ['assembly__sequence__project__id']
 
@@ -268,17 +263,6 @@ class ResistomeViewSet(GenericViewSet,  # generic view functionality
         serializer = ResistomeMetadataSerializer(resistome)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    @action(detail=False)
-    def metadata_0(self, request):
-        resistome = (
-            Resistome.objects.filter(seqtype=request.query_params["seqtype"])
-            if "seqtype" in request.GET
-            else Resistome.objects.all()
-        )
-        serializer = ResistomeMetadataSerializer(resistome)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-
 class VirulomeViewSet(GenericViewSet,  # generic view functionality
                       CreateModelMixin,  # handles POSTs
                       RetrieveModelMixin,  # handles GETs for 1 Company
@@ -298,9 +282,9 @@ class VirulomeViewSet(GenericViewSet,  # generic view functionality
     )
 
     # filterset_fields define equaity based searching, this is defined in SequenceFilter class
-    print("equaity based search fields: *******************************************")
-    print(VirulomeFilter.Meta.fields)
-    search_fields = VirulomeFilter.Meta.fields
+    # print("equaity based search fields: *******************************************")
+    # print(VirulomeSearchFilter.Meta.fields)
+    search_fields = VirulomeSearchFilter.Meta.fields
     ordering = ['assembly__sequence__project__id']
 
     # This method should be overriden
@@ -316,25 +300,11 @@ class VirulomeViewSet(GenericViewSet,  # generic view functionality
     def metadata(self, request):
         qs = super().get_queryset()
         self.filterset_class = VirulomeFilter
-        # query_params.get only returs the last occurrence of the parameter
-        #self.filter = self.filterset_class(self.request.GET, queryset=qs)
-
         dict_params = dict(request.query_params.lists())
         self.filter = self.filterset_class(dict_params, queryset=qs)
         viru = self.filter.qs
         serializer = VirulomeMetadataSerializer(viru)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-    @action(detail=False)
-    def metadata_0(self, request):
-        virulome = (
-            Virulome.objects.filter(seqtype=request.query_params["seqtype"])
-            if "seqtype" in request.GET
-            else Virulome.objects.all()
-        )
-        serializer = VirulomeMetadataSerializer(virulome)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
 
 class AnnotationViewSet(GenericViewSet,  # generic view functionality
                         CreateModelMixin,  # handles POSTs

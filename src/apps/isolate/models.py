@@ -11,6 +11,7 @@ from apps.common.models import (
     Lineage,
     Variant,
     Gene,
+    Resistance,
     Amr
 )
 
@@ -273,7 +274,7 @@ class TbProfile(models.Model):
     )
     
     dr_resistances = models.ArrayField(
-        model_container = Gene
+        model_container = Resistance
     )
     
     dr_variants = models.ArrayField(

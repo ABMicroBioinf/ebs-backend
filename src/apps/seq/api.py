@@ -98,9 +98,9 @@ class SequenceViewSet(
         
     )
     #filterset_fields define equaity based searching, this is defined in SequenceFilter class
-    print("equaity based search fields: *******************************************")
-    print(SequenceFilter.Meta.fields)
-    search_fields = SequenceFilter.Meta.fields
+    # print("equaity based search fields: *******************************************")
+    # print(SequenceSearchFilter.Meta.fields)
+    search_fields = SequenceSearchFilter.Meta.fields
    
     #ordering_fields = '__all__'
    

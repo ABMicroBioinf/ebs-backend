@@ -379,7 +379,7 @@ class TbProfileSerializer(FlattenMixin, serializers.ModelSerializer):
         fields = '__all__'
        
         flatten = [
-            # "lineage",
+            "lineage",
             # "dr_variants",
             # "other_variants",
             # "dr_resistances"

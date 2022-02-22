@@ -6,6 +6,7 @@ from django_filters.filters import (
     Filter,
     NumberFilter,    
 )
+from rest_framework.filters import SearchFilter
 from .models import Sequence
 from gizmos.filter import (
     EbsSearchFilter, 
@@ -16,7 +17,7 @@ from gizmos.filter import (
 
 #define equaity based filter
 class SequenceFilter(rest_framework.FilterSet):
-    print("I am in sequenceFilter 88888888888888888888888888888888")
+    """ print("I am in sequenceFilter 88888888888888888888888888888888")
 
     RawStats__Reads = NestedFilter(
         field_name="RawStats__Reads", lookup_expr="exact"
@@ -72,7 +73,7 @@ class SequenceFilter(rest_framework.FilterSet):
     )
     QcStats__Ambiguous = NestedFilter(
         field_name="QcStats__Ambiguous", lookup_expr="exact"
-    )
+    ) """
     project__id = MultipleCharValueFilter(lookup_expr="in")
     project__title = MultipleCharValueFilter(lookup_expr="icontains")
     Experiment = MultipleCharValueFilter(lookup_expr="in")
@@ -99,7 +100,7 @@ class SequenceFilter(rest_framework.FilterSet):
         fields.remove("project")
         fields.remove("QcStats")
         fields.remove("RawStats")
-        extra = [
+        """  extra = [
             "RawStats__Reads",
             "RawStats__Yield",
             "RawStats__GeeCee",
@@ -122,7 +123,7 @@ class SequenceFilter(rest_framework.FilterSet):
             "project__title",
             "owner__username"
         ]
-        fields = fields + extra
+        fields = fields + extra """
         
         #it is possible to override default filters for all the models fields of the same kind using filter_overrides on the Meta class:
         filter_overrides = {
@@ -140,33 +141,30 @@ class SequenceFilter(rest_framework.FilterSet):
             },
         }
 
-class SequenceSearchFilter(EbsSearchFilter):
+class SequenceSearchFilter(SearchFilter):
     def __init__(self):
         self.nested_fields =  [
-            "RawStats__Reads",
-            "RawStats__Yield",
-            "RawStats__GeeCee",
-            "RawStats__MinLen",
-            "RawStats__AvgLen",
-            "RawStats__MaxLen",
-            "RawStats__AvgQual",
-            "RawStats__ErrQual",
-            "RawStats__Ambiguous",
-            "QcStats__Reads",
-            "QcStats__Yield",
-            "QcStats__GeeCee",
-            "QcStats__MinLen",
-            "QcStats__AvgLen",
-            "QcStats__MaxLen",
-            "QcStats__AvgQual",
-            "QcStats__ErrQual",
-            "QcStats__Ambiguous",
-        ]
-        self.nested_cats = [
-            'RawStats',
-            'QcStats',
            
         ]
+        self.nested_cats = [
+           
+        ]
+    class Meta:
+        model = Sequence
+        
+        #equality-based filtering
+        fields = [field.name for field in Sequence._meta.fields]
+        fields.remove("owner")
+        fields.remove("project")
+        fields.remove("QcStats")
+        fields.remove("RawStats")
+        extra = [
+           "project__id",
+            "project__title",
+            "owner__username"
+        ]
+        fields = fields + extra
+        
 from rest_framework.filters import OrderingFilter        
 class SequenceOrderingFilter(OrderingFilter):
     allowed_custom_filters = ['RawStats_Reads']

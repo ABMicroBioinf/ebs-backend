@@ -39,13 +39,13 @@ class AssemblyFilter(rest_framework.FilterSet):
         fields.remove("owner")
         fields.remove("sequence")
         extra = [
-            "sequence__project__id",
-            "sequence__project__title",
-            "sequence__LibrarySource",
-            "sequence__LibraryLayout",
-            "sequence__SequencerModel",
-            "sequence__CenterName",
-            "owner__username",
+            # "sequence__project__id",
+            # "sequence__project__title",
+            # "sequence__LibrarySource",
+            # "sequence__LibraryLayout",
+            # "sequence__SequencerModel",
+            # "sequence__CenterName",
+            # "owner__username",
             "min_count",
             "max_count",
             "min_bp",
@@ -102,7 +102,7 @@ class StatsFilter(rest_framework.FilterSet):
         fields = [field.name for field in Stats._meta.fields]
         fields.remove("owner")
         fields.remove("assembly")
-    
+        """ 
         extra = [
             "owner__username",
             "assembly__sequence__project__id",
@@ -113,7 +113,7 @@ class StatsFilter(rest_framework.FilterSet):
             "assembly__sequence__CenterName",
           
         ]
-        fields = fields + extra
+        fields = fields + extra """
         
         #it is possible to override default filters for all the models fields of the same kind using filter_overrides on the Meta class:
         filter_overrides = {
@@ -217,7 +217,7 @@ class MlstSearchFilter(EbsSearchFilter):
 class ResistomeFilter(rest_framework.FilterSet):
     assembly__sequence__project__id = MultipleCharValueFilter(lookup_expr="in")
     
-    profile__geneName = NestedFilter(
+    """ profile__geneName = NestedFilter(
         field_name="profile__geneName", lookup_expr="icontains"
     )
     profile__sequenceName = NestedFilter(
@@ -241,7 +241,7 @@ class ResistomeFilter(rest_framework.FilterSet):
     )
     profile__pctIdentity = NestedFilter(
         field_name="profile__pctIdentity", lookup_expr="iexact"
-    )
+    ) """
     seqtype = MultipleCharValueFilter(lookup_expr="in")
     num_found = MultipleCharValueFilter(lookup_expr="in")
     class Meta:
@@ -252,7 +252,7 @@ class ResistomeFilter(rest_framework.FilterSet):
         fields.remove("owner")
         fields.remove("assembly")
         fields.remove("profile")
-    
+        """ 
         extra = [
             "profile__geneName",
             "profile__sequenceName",
@@ -270,7 +270,7 @@ class ResistomeFilter(rest_framework.FilterSet):
             "assembly__sequence__SequencerModel",
             "assembly__sequence__CenterName",
         ]
-        fields = fields + extra
+        fields = fields + extra """
         
         #it is possible to override default filters for all the models fields of the same kind using filter_overrides on the Meta class:
         filter_overrides = {
@@ -297,22 +297,47 @@ class ResistomeSearchFilter(EbsSearchFilter):
             "profile__elementType",
             "profile__dclass",
             "profile__method",
-            "profile__pctCoverage",
-            "profile__pctIdentity",
+            # "profile__pctCoverage",
+            # "profile__pctIdentity",
         ]
         self.nested_cats = [
             'profile',
            
         ]
+    class Meta:
+        model = Resistome 
+        #equality-based filtering
+        fields = [field.name for field in Resistome._meta.fields]
+        print(fields)
+        fields.remove("owner")
+        fields.remove("assembly")
+        fields.remove("profile")
+    
+        extra = [
+            "profile__geneName",
+            "profile__sequenceName",
+            "profile__scope",
+            "profile__elementType",
+            "profile__dclass",
+            "profile__method",
+            "owner__username",
+            "assembly__sequence__project__id",
+            "assembly__sequence__project__title",
+            "assembly__sequence__LibrarySource",
+            "assembly__sequence__LibraryLayout",
+            "assembly__sequence__SequencerModel",
+            "assembly__sequence__CenterName",
+        ]
+        fields = fields + extra
 
 class VirulomeFilter(rest_framework.FilterSet):
     assembly__sequence__project__id = MultipleCharValueFilter(lookup_expr="in")
-    profile__geneName = NestedFilter(
+    """ profile__geneName = NestedFilter(
         field_name="profile__geneName", lookup_expr="icontains"
     )
     profile__pctCoverage = NestedFilter(
         field_name="profile__pctCoverage", lookup_expr="icontains"
-    )
+    ) """
     seqtype = MultipleCharValueFilter(lookup_expr="in")
     num_found = MultipleCharValueFilter(lookup_expr="in")
     class Meta:
@@ -323,7 +348,7 @@ class VirulomeFilter(rest_framework.FilterSet):
         fields.remove("assembly")
         fields.remove("profile")
     
-        extra = [
+        """ extra = [
             "profile__geneName",
             "profile__pctCoverage",
             "owner__username",
@@ -334,7 +359,7 @@ class VirulomeFilter(rest_framework.FilterSet):
             "assembly__sequence__SequencerModel",
             "assembly__sequence__CenterName",
         ]
-        fields = fields + extra
+        fields = fields + extra """
         
         #it is possible to override default filters for all the models fields of the same kind using filter_overrides on the Meta class:
         filter_overrides = {
@@ -362,7 +387,25 @@ class VirulomeSearchFilter(EbsSearchFilter):
         self.nested_cats = [
             'profile',  
         ]
-
+    class Meta:
+        model = Virulome
+        fields = [field.name for field in Resistome._meta.fields]
+        #print(fields)
+        fields.remove("owner")
+        fields.remove("assembly")
+        fields.remove("profile")
+    
+        extra = [
+            "profile__geneName",
+            "owner__username",
+            "assembly__sequence__project__id",
+            "assembly__sequence__project__title",
+            "assembly__sequence__LibrarySource",
+            "assembly__sequence__LibraryLayout",
+            "assembly__sequence__SequencerModel",
+            "assembly__sequence__CenterName",
+        ]
+        fields = fields + extra
 class AnnotationFilter(rest_framework.FilterSet):
    
     attr__tag = NestedFilter(
@@ -441,7 +484,7 @@ class TbProfileSummaryFilter(rest_framework.FilterSet):
         fields.remove("owner")
         fields.remove("sequence")
     
-        extra = [
+        """ extra = [
             "sequence__project__id",
             "sequence__project__title",
             "owner__username",
@@ -450,7 +493,7 @@ class TbProfileSummaryFilter(rest_framework.FilterSet):
             "sequence__SequencerModel",
             "sequence__CenterName",
         ]
-        fields = fields + extra
+        fields = fields + extra """
         
         #it is possible to override default filters for all the models fields of the same kind using filter_overrides on the Meta class:
         filter_overrides = {
@@ -470,7 +513,7 @@ class TbProfileSummaryFilter(rest_framework.FilterSet):
 
 class TbProfileFilter(rest_framework.FilterSet): 
     
-    lineage__lin = NestedFilter(
+    """ lineage__lin = NestedFilter(
         field_name="lineage__lin", lookup_expr="iexact"
     )
     lineage__family = NestedFilter(
@@ -546,7 +589,7 @@ class TbProfileFilter(rest_framework.FilterSet):
     )
     dr_resistances__mutations = NestedFilter(
         field_name="dr_resistance__mutations", lookup_expr="iexact"
-    )
+    ) """
     sub_lin = MultipleCharValueFilter(lookup_expr="in")
     class Meta:
         model = TbProfile
@@ -561,7 +604,7 @@ class TbProfileFilter(rest_framework.FilterSet):
         fields.remove("other_variants")
         fields.remove("dr_resistances")
 
-        extra = [
+        """  extra = [
             "lineage__lin",
             "lineage__family",
             "lineage__spoligotype",
@@ -597,7 +640,7 @@ class TbProfileFilter(rest_framework.FilterSet):
             "sequence__SequencerModel",
             "sequence__CenterName",
         ]
-        fields = fields + extra
+        fields = fields + extra """
         
         #it is possible to override default filters for all the models fields of the same kind using filter_overrides on the Meta class:
         filter_overrides = {

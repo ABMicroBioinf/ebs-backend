@@ -20,49 +20,49 @@ class NestedFilter(Filter):
         hierarchy = self.field_name.split("__")
         d = {}
         d[hierarchy[0]] = {hierarchy[1]: value}
-        print("testing nested fields..................................")
-        print(d)
+        # print("testing nested fields..................................")
+        # print(d)
         #qs = qs.filter(profile={hierarchy[1]: value})
         qs = qs.filter(**d)
         from django.db import connection
-        print(connection.queries) 
+        # print(connection.queries) 
         
         return qs
 
 class MultipleCharValueFilter(Filter):
     
     def filter(self, qs, value):
-        print("MultipleCharValueFilter filter input parameters=")
-        print("value=")
-        print(value)
-        print(type(value))
+        # print("MultipleCharValueFilter filter input parameters=")
+        # print("value=")
+        # print(value)
+        # print(type(value))
        # value is string
         mylist = []
         if value is not None:
             if isinstance(value, str):
-                print("MultipleCharValueFilter input value is string .......................................")
+                # print("MultipleCharValueFilter input value is string .......................................")
                 mylist = value.split(",")
             else:
-                print("MultipleCharValueFilter input value is list .......................................")
+                # print("MultipleCharValueFilter input value is list .......................................")
                 mylist = value
-                print(mylist)
+                # print(mylist)
             
         if value in EMPTY_VALUES:
             return qs
         
         qs = super().filter(qs, mylist)
-        print("MultipleCharValueFilter  return =" + str(qs.count()) + " data points ******************")
+        # print("MultipleCharValueFilter  return =" + str(qs.count()) + " data points ******************")
        
         return qs
 class MultipleCharValueFilter_0(Filter):
     
     def filter(self, qs, value):
         #print(type(self))
-        print(self.field_name)
+        # print(self.field_name)
         if value in EMPTY_VALUES:
             return qs
-        print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-        print(value)
+        # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+        # print(value)
         value_list = value.split(",")
         # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         # print(value)
@@ -73,7 +73,7 @@ class MultipleCharValueFilter_0(Filter):
         for item in value_list:
           mylist.append(item.replace("‑", ","))
           
-        print(qs)
+        # print(qs)
         qs = super().filter(qs, mylist)
         return qs
     
@@ -83,28 +83,28 @@ class NumberRangeFilter(BaseRangeFilter, NumberFilter):
         
 
 class MultipleNumberRangeFilter(BaseRangeFilter, NumberFilter):
-    print("YYYYYYYYYYYYYYYYYYYYYYY")
+    # print("YYYYYYYYYYYYYYYYYYYYYYY")
     def filter(self, qs, value):
-        print("MultipleCharValueFilter filter input parameters=")
-        print("value=")
-        print(value)
+        # print("MultipleCharValueFilter filter input parameters=")
+        # print("value=")
+        # print(value)
         
        # value is string
         mylist = []
         if value is not None:
             if isinstance(value, str):
-                print("MultipleCharValueFilter input value is string .......................................")
+                #print("MultipleCharValueFilter input value is string .......................................")
                 mylist = value.split("-")
             else:
-                print("MultipleCharValueFilter input value is list .......................................")
+                #print("MultipleCharValueFilter input value is list .......................................")
                 mylist = value
-                print(mylist)
+                #print(mylist)
             
         if value in EMPTY_VALUES:
             return qs
         
         qs = super().filter(qs, mylist)
-        print("MultipleCharValueFilter  return =" + str(qs.count()) + " data points ******************")
+        #print("MultipleCharValueFilter  return =" + str(qs.count()) + " data points ******************")
        
         return qs
        
@@ -120,11 +120,11 @@ class EbsSearchFilter(SearchFilter):
         search_fields = self.get_search_fields(view, request)
         search_terms = self.get_search_terms(request)
 
-        print("I am in EbsSearchFilter*********************************")
-        print("search_fields type=")
-        print(type(search_fields))
-        print("search_fields=")
-        print(search_fields)
+        # print("I am in EbsSearchFilter*********************************")
+        # print("search_fields type=")
+        # print(type(search_fields))
+        # print("search_fields=")
+        # print(search_fields)
 
         if not search_fields or not search_terms:
             return queryset
@@ -173,13 +173,13 @@ class EbsSearchFilter(SearchFilter):
                         dd = {}
                         dd[nested_cat] = d
                         nested_qlist.append(Q(**dd))
-                        print(nested_qlist)
+                        #print(nested_qlist)
                         
             
-            print("nested_qlist.................................")
-            print(nested_qlist)
+            # print("nested_qlist.................................")
+            # print(nested_qlist)
             nested_conditions.append(reduce(operator.or_, nested_qlist))
-            print(nested_conditions)
+            # print(nested_conditions)
         nested_queryset = queryset.filter(
             reduce(operator.and_, nested_conditions)
         )

@@ -7,13 +7,13 @@ class FlattenMixin(object):
             serializer_class=self.__class__.__name__
         )
         rep = super(FlattenMixin, self).to_representation(obj)
-        print(rep)
+        #print(rep)
         for field in self.Meta.flatten:
-            print(field)
+            #print(field)
             objrep = rep.pop(field)
-            print("objrep ******************************************************")
-            print(type(objrep))
-            print(objrep)
+            # print("objrep ******************************************************")
+            # print(type(objrep))
+            # print(objrep)
             
             if objrep is None:
                 continue
@@ -32,5 +32,6 @@ class FlattenMixin(object):
                 #        rep[field  + "__" + key + "_" + str(i)] = item[key]
                 #    i += 1
             else:
-                print(field, rep)
+                print("")
+                #print(field, rep)
         return rep
