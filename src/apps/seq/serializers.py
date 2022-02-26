@@ -6,7 +6,7 @@ from rest_framework.compat import distinct
 from django.db.models.functions import TruncDate
 #from rest_meets_djongo.serializers import DjongoModelSerializer
 
-from .models import Sequence, SeqFile, MetadataFile, Project
+from .models import Sequence, SeqFile, MetadataFile, Project, Seqstat
 
 from gizmos.util import ObjectIdField
 
@@ -27,38 +27,46 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = "__all__"
         #fields = ['id', 'owner', 'title', 'description', 'DateCreated', 'LastUpdate', 'sequences']
 
-    
-#class SequenceSerializer(FlattenMixin, DjongoModelSerializer):
-class SequenceSerializer_org(serializers.Serializer):
+#class ProjectSerializer(DjongoModelSerializer):
+class SeqstatSerializer(serializers.ModelSerializer):
     _id = ObjectIdField(read_only=True)
     owner = serializers.ReadOnlyField(source="owner.username")
-    project__id = serializers.CharField(source='project.id')
-    project__title = serializers.CharField(source='project.title')
     class Meta:
-        model = Sequence
+        model = Seqstat
         fields = "__all__"
-        read_only_fields = ["owner"]
-
-        flatten = [
-            "RawStats",
-            "QcStats",
-        ]
         
-        
-class SequenceSerializer(FlattenMixin, serializers.ModelSerializer):
+class SequenceSerializer(serializers.ModelSerializer):
     _id = ObjectIdField(read_only=True)
+    
     owner = serializers.ReadOnlyField(source="owner.username")
     project__id = serializers.CharField(source='project.id')
     project__title = serializers.CharField(source='project.title')
     
+    seqstat__id = serializers.CharField(source='seqstat.id')
+    seqstat__r_Reads = serializers.IntegerField(source='seqstat.r_Reads')
+    seqstat__r_Yield = serializers.CharField(source='seqstat.r_Yield')
+    seqstat__r_GeeCee = serializers.CharField(source='seqstat.r_GeeCee')
+    seqstat__r_MinLen = serializers.CharField(source='seqstat.r_MinLen')
+    seqstat__r_AvgLen = serializers.CharField(source='seqstat.r_AvgLen')
+    seqstat__r_MaxLen = serializers.CharField(source='seqstat.r_MaxLen')
+    seqstat__r_AvgQual = serializers.CharField(source='seqstat.r_AvgQual')
+    seqstat__r_ErrQual = serializers.CharField(source='seqstat.r_ErrQual')
+    seqstat__r_Ambiguous = serializers.CharField(source='seqstat.r_Ambiguous')
+    
+    seqstat__q_Reads = serializers.CharField(source='seqstat.q_Reads')
+    seqstat__q_Yield = serializers.CharField(source='seqstat.q_Yield')
+    seqstat__q_GeeCee = serializers.CharField(source='seqstat.q_GeeCee')
+    seqstat__q_MinLen = serializers.CharField(source='seqstat.q_MinLen')
+    seqstat__q_AvgLen = serializers.CharField(source='seqstat.q_AvgLen')
+    seqstat__q_MaxLen = serializers.CharField(source='seqstat.q_MaxLen')
+    seqstat__q_AvgQual = serializers.CharField(source='seqstat.q_AvgQual')
+    seqstat__q_ErrQual = serializers.CharField(source='seqstat.q_ErrQual')
+    seqstat__q_Ambiguous = serializers.CharField(source='seqstat.q_Ambiguous')
+    
     class Meta:
         model = Sequence
         fields = "__all__"
-        read_only_fields = ["owner"]
-        flatten = [
-            "RawStats",
-            "QcStats",
-        ]
+       
         
 class SeqFileSerializer(serializers.ModelSerializer):
     class Meta:

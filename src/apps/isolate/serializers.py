@@ -6,7 +6,6 @@ from gizmos.mixins import FlattenMixin
 from .models import (
     Assembly,
     Stats,
-    Annotation,
     Mlst,
     Virulome,
     Resistome,
@@ -327,37 +326,6 @@ class VirulomeMetadataSerializer(serializers.Serializer):
         return queryset.annotate(
                 total=Count("assembly__sequence__project__id", distinct=True)
             ).order_by("assembly__sequence__project__id")
-
-#class AnnotationSerializer(FlattenMixin, DjongoModelSerializer):
-class AnnotationSerializer(FlattenMixin, serializers.ModelSerializer):
-
-    owner = serializers.ReadOnlyField(source='owner.username')
-    assembly = serializers.ReadOnlyField(source='assembly.id')
-
-    # reterieve fields from the related collection
-    assembly__sequence__project__id = serializers.CharField(
-        source='assembly.sequence.project.id')
-    assembly__sequence__project__title = serializers.CharField(
-        source='assembly.sequence.project.title')
-
-    assembly__sequence__LibrarySource = serializers.CharField(
-        source='assembly.sequence.LibrarySource')
-    assembly__sequence__LibraryLayout = serializers.CharField(
-        source='assembly.sequence.LibraryLayout')
-    assembly__sequence__SequencerModel = serializers.CharField(
-        source='assembly.sequence.SequencerModel')
-    assembly__sequence__CenterName = serializers.CharField(
-        source='assembly.sequence.CenterName')
-
-    class Meta:
-        model = Annotation
-        fields = '__all__'
-        read_only_fields = ['owner']
-        flatten = [
-            "attr"
-        ]
-
-
 
 class TbProfileSerializer(FlattenMixin, serializers.ModelSerializer):
     sequence= serializers.HyperlinkedRelatedField(

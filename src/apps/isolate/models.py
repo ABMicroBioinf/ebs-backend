@@ -107,8 +107,6 @@ class Mlst(models.Model):
     def __str__(self):
         return str(self.id)
 
-
-
 class Resistome(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
     
@@ -159,35 +157,6 @@ class Virulome(models.Model):
     def __str__(self):
         return str(self.id)
 
-
-class Annotation(models.Model):
-    id = models.CharField(primary_key=True, max_length=100)
-    seqid = models.CharField(max_length=100)
-    source = models.CharField(max_length=100)
-    ftype = models.CharField(max_length=100)
-    start = models.IntegerField()
-    end = models.IntegerField()
-    score = models.CharField(max_length=100)
-    strand = models.CharField(max_length=1)
-    phase = models.CharField(max_length=100)
-    attr = models.ArrayField(
-        model_container = TagValue
-    )
-    seqtype = models.CharField(max_length=100)
-    assembly = models.ForeignKey(Assembly, related_name='annotations', on_delete=models.CASCADE)
-    
-    owner = models.ForeignKey(
-        Account, related_name="annotations", on_delete=models.CASCADE, null=True)
-    DateCreated = models.DateTimeField(
-        verbose_name='date created', auto_now=True)
-    LastUpdate = models.DateTimeField(
-        verbose_name='last update', auto_now=True)
-    Description = models.TextField()
-
-    objects = models.DjongoManager()
-    
-    def __str__(self):
-        return str(self.id)
 
 
 class TbProfileSummary(models.Model):

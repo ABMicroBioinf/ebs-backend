@@ -11,67 +11,6 @@ import xml.etree.ElementTree as ET
 
 class Seq(Dataset):
 
-    def add2seq_stat(self, rawStatFilePath, qcStatFilePath, sep):
-        """
-        add new entries into the genome collection
-        
-        Sample_id       CDS     CRISPR  ncRNA   oriC    rRNA    region  regulatory_region       tRNA    tmRNA
-        ERR1679637      4160    3       19      2       3       449     13      46      1
-        """
-        
-        results = {}
-        with open(rawStatFilePath) as rfile:
-            reader = csv.DictReader(rfile, delimiter=sep)
-            list_stats = list(reader)
-            newrow = {}
-            for rowindex, row in enumerate(list_stats):
-                id = row['Isolate']
-                del row['Isolate']
-                newrow['id'] = id
-                #print(row)
-                for x in row:
-                    try:
-                        newrow['r_' + x] = int(row[x])
-                    except ValueError:
-                        newrow['r_' + x] = float(row[x])
-                
-                newrow['owner_id'] = ObjectId(self._owner_id)
-                results[id]= newrow
-                print("**********************=" + id, end='\n')
-                print(results[id], end='\n')
-            #print(list_stats, end='\n')
-           
-            
-        with open(qcStatFilePath) as qfile:
-            reader = csv.DictReader(qfile, delimiter=sep)
-            list_stats = list(reader)
-            newrow = {}
-            for rowindex, row in enumerate(list_stats):
-                id = row['Isolate']
-                del row['Isolate']
-                newrow['id'] = id
-                #print(row)
-                #newrow['qid'] = id
-                for x in row:
-                    try:
-                        newrow['q_' + x] = int(row[x])
-                    except ValueError:
-                        newrow['q_' + x] = float(row[x])
-                
-                results[id] = dict(results[id], **newrow)
-
-            #print(list_stats, end='\n')
-            print(results.values())
-            """ for key, value in results.items():
-                print(key, '->', value) """
-            try: 
-                self._mongo_db_collection.create_index([("id", pymongo.ASCENDING)], unique=True)
-                self._mongo_db_collection.insert_many(results.values())
-                return "add2seq_seqstat: " + rawStatFilePath + ', ' + qcStatFilePath+ " success"
-            except Exception as e:
-                print("An exception occurred ::", e)
-                return "add2seq_seqstat: " + rawStatFilePath + ', ' + qcStatFilePath+  " failed"
-            
     def parse_seqstats(self, filePath, newkey, sep):
         
         pp = pprint.PrettyPrinter(indent=4)
@@ -107,10 +46,67 @@ class Seq(Dataset):
 
         return list_seqstats
     
-   
+    def add2seq_stat(self, rawStatFilePath, qcStatFilePath, sep):
+        """
+        add new entries into the genome collection
+        
+        Sample_id       CDS     CRISPR  ncRNA   oriC    rRNA    region  regulatory_region       tRNA    tmRNA
+        ERR1679637      4160    3       19      2       3       449     13      46      1
+        """
+        
+        results = {}
+        with open(rawStatFilePath) as rfile:
+            reader = csv.DictReader(rfile, delimiter=sep)
+            list_stats = list(reader)
+            newrow = {}
+            for rowindex, row in enumerate(list_stats):
+                id = row['Isolate']
+                del row['Isolate']
+                newrow['id'] = id
+                #print(row)
+                for x in row:
+                    try:
+                        newrow['r_' + x] = int(row[x])
+                    except ValueError:
+                        newrow['r_' + x] = float(row[x])
+                
+                
+                results[id]= newrow
+                print("**********************=" + id, end='\n')
+                print(results[id], end='\n')
+            #print(list_stats, end='\n')
+           
+            
+        with open(qcStatFilePath) as qfile:
+            reader = csv.DictReader(qfile, delimiter=sep)
+            list_stats = list(reader)
+            newrow = {}
+            for rowindex, row in enumerate(list_stats):
+                id = row['Isolate']
+                del row['Isolate']
+                newrow['id'] = id
+                #print(row)
+                #newrow['qid'] = id
+                for x in row:
+                    try:
+                        newrow['q_' + x] = int(row[x])
+                    except ValueError:
+                        newrow['q_' + x] = float(row[x])
+                
+                results[id] = dict(results[id], **newrow)
 
-    
-    
+            #print(list_stats, end='\n')
+            print(results.values())
+            """ for key, value in results.items():
+                print(key, '->', value) """
+            try: 
+                self._mongo_db_collection.create_index([("id", pymongo.ASCENDING)], unique=True)
+                self._mongo_db_collection.insert_many(results.values())
+                return "add2seq_seqstat: " + rawStatFilePath + ', ' + qcStatFilePath+ " success"
+            except Exception as e:
+                print("An exception occurred ::", e)
+                return "add2seq_seqstat: " + rawStatFilePath + ', ' + qcStatFilePath+  " failed"
+
     def parse_runinfo(self, filePath, type):
         
         #column id of the selected metadata downloaded using esearch
@@ -159,66 +155,7 @@ class Seq(Dataset):
                 row['LastUpdate'] = datetime.now()
                 row['Description'] = ""
                 row['TaxID'] = int(row['TaxID'])
-                row['seqstat_id'] = row['id']
-            #print(list_runinfo)
-        
-        try: 
-            self._mongo_db_collection.create_index([("id", pymongo.ASCENDING)], unique=True)
-            self._mongo_db_collection.insert_many(list_runinfo)
-            return "loading json True"
-        except Exception as e:
-            print("An exception occurred ::", e)
-            return "parse_runinfo: " + filePath + " failed"
-        return list_runinfo
-    
-    def add2seq_sequence(self, filePath, type):
-        #column id of the selected metadata downloaded using esearch
-        selected_fileds = (
-            "BioProject", 
-            "SampleName", 
-            "CenterName",
-            "ScientificName",
-            "TaxID",
-            "Run", 
-            # "avgLength", 
-            # "bases", 
-            # "spots", 
-            # "size_MB", 
-            "Experiment", 
-            "Platform", 
-            "LibraryName",
-            #"InsertSize", 
-            #"InsertDev", 
-            "LibrarySelection", 
-            "Model", 
-            "LibraryStrategy", 
-            "LibraryLayout", 
-            "LibrarySource", 
-            "ReleaseDate"
-        )
-        pp = pprint.PrettyPrinter(indent=4)
-        with open(filePath) as file:
-            reader = csv.DictReader(file, delimiter=",")
-            list_runinfo = list(reader)
-            for rowindex, row in enumerate(list_runinfo):
-                
-                for key, value in row.copy().items():
-                    
-                    if (key not in selected_fileds):
-                        del row[key]
 
-                row['owner_id'] = ObjectId(self._owner_id)
-                row['project_id'] = row.pop('BioProject')
-                
-                row['SequencerModel'] = row.pop('Model')
-                row['DateCreated'] = dateutil.parser.parse(row.pop('ReleaseDate'))
-                row['id'] = row.pop('Run')
-                row['assembly_id'] = row['id']
-                row['seqtype'] = type
-                row['LastUpdate'] = datetime.now()
-                row['Description'] = ""
-                row['TaxID'] = int(row['TaxID'])
-                row['seqstat_id'] = row['id']
             #print(list_runinfo)
         
         try: 
@@ -229,9 +166,8 @@ class Seq(Dataset):
             print("An exception occurred ::", e)
             return "parse_runinfo: " + filePath + " failed"
         return list_runinfo
-    
-    
-    def update2seq_sequence_with_bracken_output(self, dir):
+
+    def parse_bracken_output(self, dir):
 
         #ERR036228.bracken.output.txt
         for filename in os.listdir(dir):
@@ -270,41 +206,9 @@ class Seq(Dataset):
 
 def main():
   
-    sequence = Seq("ebsdb", "seq_sequence", "60d4dfba7109403cf2d20636")
-    seqstat = Seq("ebsdb", "seq_seqstat", "60d4dfba7109403cf2d20636")
-    
-   
-    # data.parse_runinfo("data/seq/tb_runinfo.txt", "TB")
-    # raw_list = data.parse_seqstats("data/seq/raw_stats.txt", "RawStats", "\t")
-    # qc_list = data.parse_seqstats("data/seq/qc_stats.txt", "QcStats", "\t")
-    # braken_list = data.parse_bracken_output("data/seq/classifier")
-    sequence.add2seq_sequence("data/seq/tb_runinfo.txt", "TB")
-    sequence.update2seq_sequence_with_bracken_output("data/seq/classifier")
-    seqstat.add2seq_stat("data/seq/raw_stats.txt", "data/seq/qc_stats.txt", ",")
-    
-    print("parse cpo")
-    # data.parse_runinfo("data/cpo/PRJNA725227/cpo_SraRunInfo_PRJNA725227.csv", "CPO")
-    # raw_list = data.parse_seqstats("data/cpo/PRJNA725227/Report/short_reads_raw_seqstats.tsv", "RawStats", "\t")
-    # qc_list = data.parse_seqstats("data/cpo/PRJNA725227/Report/short_reads_qc_seqstats.tsv", "QcStats", "\t")
-    # braken_list = data.parse_bracken_output("data/cpo/PRJNA725227/Report/Taxonomy/kraken2")
-    
-    sequence.add2seq_sequence("data/cpo/PRJNA725227/cpo_SraRunInfo_PRJNA725227.csv", "CPO")
-    sequence.update2seq_sequence_with_bracken_output("data/cpo/PRJNA725227/Report/Taxonomy/kraken2")
+    seqstat = Seq("ebsdb", "seq_stat", "60d4dfba7109403cf2d20636")
     seqstat.add2seq_stat("data/cpo/PRJNA725227/Report/short_reads_raw_seqstats.tsv", "data/cpo/PRJNA725227/Report/short_reads_qc_seqstats.tsv", "\t")
     
-    # data.parse_runinfo("data/cpo/PRJNA640134/cpo_SraRunInfo_PRJNA640134.csv", "CPO")
-    # raw_list = data.parse_seqstats("data/cpo/PRJNA640134/Report/short_reads_raw_seqstats.tsv", "RawStats", "\t")
-    # qc_list = data.parse_seqstats("data/cpo/PRJNA640134/Report/short_reads_qc_seqstats.tsv", "QcStats", "\t")
-    # braken_list = data.parse_bracken_output("data/cpo/PRJNA640134/Report/Taxonomy/kraken2")
-    
-    sequence.add2seq_sequence("data/cpo/PRJNA640134/cpo_SraRunInfo_PRJNA640134.csv", "CPO")
-    sequence.update2seq_sequence_with_bracken_output("data/cpo/PRJNA640134/Report/Taxonomy/kraken2")
-    seqstat.add2seq_stat("data/cpo/PRJNA640134/Report/short_reads_raw_seqstats.tsv", "data/cpo/PRJNA640134/Report/short_reads_qc_seqstats.tsv", "\t")
-    
-    # data.parse_runinfo("data/seq/mg_PRJNA234047_paired_SraRunInfo.csv", "MG")
-    # data.parse_runinfo("data/seq/mg_PRJNA234047_nanopore_SraRunInfo.csv", "MG")
-    
-   
     
 
 if __name__ == '__main__':

@@ -391,7 +391,7 @@ class IsolateDataset(Dataset):
                         index_2 = item.index(')') 
                         locus = item[0:index_1]
                         allele = item[index_1+1:index_2]
-                        mlst_list.append({'locus': locus, 'alleleId': allele})
+                        mlst_list.append({'locus': locus, 'allele': locus + '_' + allele})
                     
                     
                 results.append({

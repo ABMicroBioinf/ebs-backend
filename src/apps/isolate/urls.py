@@ -7,7 +7,6 @@ from .api import (
     MlstViewSet,
     ResistomeViewSet,
     VirulomeViewSet,
-    AnnotationViewSet,
     TbProfileViewSet,
     TbProfileSummaryViewSet
 )
@@ -19,7 +18,6 @@ router.register(r'stats', StatsViewSet, basename='stats')
 router.register(r'mlst', MlstViewSet, basename='mlst')
 router.register(r'resistome', ResistomeViewSet, basename='resistome')
 router.register(r'virulome', VirulomeViewSet, basename='virulome')
-router.register(r'annot', AnnotationViewSet, basename='annot')
 router.register(r'tbprofile', TbProfileViewSet, basename='tbprofile')
 router.register(r'tbprofilesummary', TbProfileSummaryViewSet, basename='tbprofilesummary')
 urlpatterns = [

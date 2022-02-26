@@ -6,12 +6,14 @@ from .api import (
     SeqFileViewSet,
     MetadataFileViewSet,
     MyFileUploadViewSet,
-    SequenceMetadataViewSet
+    SequenceMetadataViewSet,
+    SeqstatViewSet
 )
 app_name = "seq"
 router = DefaultRouter()
 router.register(r'sequence', SequenceViewSet, basename='sequence')
 router.register(r'project', ProjectViewSet, basename='project')
+router.register(r'seqstat', SeqstatViewSet, basename='seqstat')
 router.register(r'seqfile', SeqFileViewSet, basename='seqfile')
 router.register(r'metadatafile', MetadataFileViewSet, basename='metadatafile')
 router.register(r'myfiles', MyFileUploadViewSet, basename='files')

@@ -40,3 +40,8 @@ insights.viral.ai
 https://insights.viral.ai/
 outbreak.info
 https://outbreak.info
+
+populate database using script
+https://stackoverflow.com/questions/51227687/django-2-0-populating-database-with-a-script
+
+https://stackoverflow.com/questions/68595183/how-to-create-model-with-nested-object-in-django

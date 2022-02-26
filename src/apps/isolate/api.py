@@ -16,7 +16,7 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.filters import OrderingFilter, SearchFilter
 from django_filters import rest_framework as filters
 from gizmos.pagination import CustomPagination
-from .models import Assembly, Stats, Annotation, Virulome, Mlst, Resistome
+from .models import Assembly, Stats, Virulome, Mlst, Resistome
 from .filters import (
     AssemblyFilter,
     AssemblySearchFilter,
@@ -27,9 +27,7 @@ from .filters import (
     ResistomeFilter,
     ResistomeSearchFilter,
     VirulomeFilter,
-    VirulomeSearchFilter,
-    AnnotationFilter,
-    AnnotationSearchFilter
+    VirulomeSearchFilter
 
 )
 
@@ -38,7 +36,6 @@ from .serializers import (
     AssemblyMetadataSerializer,
     StatsSerializer,
     StatsMetadataSerializer,
-    AnnotationSerializer,
     VirulomeSerializer,
     VirulomeMetadataSerializer,
     MlstSerializer,
@@ -305,38 +302,6 @@ class VirulomeViewSet(GenericViewSet,  # generic view functionality
         viru = self.filter.qs
         serializer = VirulomeMetadataSerializer(viru)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-class AnnotationViewSet(GenericViewSet,  # generic view functionality
-                        CreateModelMixin,  # handles POSTs
-                        RetrieveModelMixin,  # handles GETs for 1 Company
-                        UpdateModelMixin,  # handles PUTs and PATCHes
-                        ListModelMixin,  # handles GETs for many Companies
-                        DestroyModelMixin,):  # handle delete
-
-    queryset = Annotation.objects.all()
-    serializer_class = AnnotationSerializer
-    filterset_class = AnnotationFilter
-    pagination_class = CustomPagination
-    filter_backends = (
-        # SearchFilter,
-        AnnotationSearchFilter,
-        OrderingFilter,
-        filters.DjangoFilterBackend,
-    )
-
-    # filterset_fields define equaity based searching, this is defined in SequenceFilter class
-    print("equaity based search fields: *******************************************")
-    print(AnnotationFilter.Meta.fields)
-    search_fields = AnnotationFilter.Meta.fields
-    ordering = ['DateCreated']
-
-    # This method should be overriden
-    # if we dont want to modify query set based on current instance attributes
-    def get_queryset(self):
-        return self.queryset.filter(owner=self.request.user)
-
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
 
 
 class TbProfileViewSet(GenericViewSet,  # generic view functionality

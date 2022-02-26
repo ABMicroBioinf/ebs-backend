@@ -29,7 +29,7 @@ class Pipeline(models.Model):
 
 class Allele(models.Model):
     locus = models.CharField(max_length=50)
-    allele = models.CharField(max_length=10)
+    alleleId = models.IntegerField()
     class Meta:
         abstract = True
 

@@ -5,7 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
-from .filters import SequenceFilter, SequenceSearchFilter, SequenceOrderingFilter
+from .filters import SequenceFilter, SequenceSearchFilter
 from rest_framework.mixins import (
     CreateModelMixin,
     DestroyModelMixin,
@@ -16,7 +16,7 @@ from rest_framework.mixins import (
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
-from apps.seq.models import MetadataFile, SeqFile, Sequence, Project
+from apps.seq.models import MetadataFile, SeqFile, Sequence, Project, Seqstat
 
 from .serializers import (
     MetadataFileSerializer,
@@ -24,7 +24,8 @@ from .serializers import (
     SeqFileSerializer,
     SequenceMetadataSerializer,
     SequenceSerializer,
-    ProjectSerializer
+    ProjectSerializer,
+    SeqstatSerializer
 )
 
 class ProjectViewSet(
@@ -75,6 +76,55 @@ class ProjectViewSet(
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+class SeqstatViewSet(
+    GenericViewSet,  # generic view functionality
+    CreateModelMixin,  # handles POSTs
+    RetrieveModelMixin,  # handles GETs for 1 Company
+    UpdateModelMixin,  # handles PUTs and PATCHes
+    ListModelMixin,  # handles GETs for many Companies
+    DestroyModelMixin,
+):  # handle delete
+    
+    queryset = Seqstat.objects.all()
+    serializer_class = SeqstatSerializer
+    pagination_class = CustomPagination
+    
+    filter_backends = (
+        SearchFilter,
+        OrderingFilter,
+        DjangoFilterBackend
+        
+    )
+    # #equality-based filtering
+    # filterset_fields = [
+    #     'id',
+    #     'title',
+    #     'description',
+    #     'owner__username',
+    # ]
+
+    # #generic filtering only for text, char field
+    # search_fields = [
+    #     'id',
+    #     'title',
+    #     'description',
+    #     'owner__username',
+    # ]
+    # ordering_fields =  [
+    #     'id',
+    #     'title',
+    #     'DateCreated',
+    #     'LastUpdate',
+    #     'owner__username',
+    # ]
+    # ordering = ['DateCreated']
+ 
+    def get_queryset(self):
+        return self.queryset.filter(owner=self.request.user)
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+
 class SequenceViewSet(
     GenericViewSet,  # generic view functionality
     CreateModelMixin,  # handles POSTs
@@ -93,6 +143,7 @@ class SequenceViewSet(
         #SearchFilter,
         SequenceSearchFilter,
         OrderingFilter,
+        #RelatedOrderingFilter,
         #SequenceOrderingFilter,
         DjangoFilterBackend,
         
@@ -103,7 +154,8 @@ class SequenceViewSet(
     search_fields = SequenceSearchFilter.Meta.fields
    
     #ordering_fields = '__all__'
-   
+    ordering_fields = SequenceFilter.Meta.fields
+    print(ordering_fields)
     ordering = ['project']
     
     # This method should be overriden
