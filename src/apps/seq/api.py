@@ -5,7 +5,12 @@ from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
-from .filters import SequenceFilter, SequenceSearchFilter
+from .filters import (
+    SequenceFilter, 
+    SequenceSearchFilter,
+    BioSampleFilter,
+    BioSampleSearchFilter
+)
 from rest_framework.mixins import (
     CreateModelMixin,
     DestroyModelMixin,
@@ -16,7 +21,14 @@ from rest_framework.mixins import (
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
-from apps.seq.models import MetadataFile, SeqFile, Sequence, Project, Seqstat
+from .models import (
+    MetadataFile, 
+    SeqFile, 
+    Sequence, 
+    Project, 
+    Seqstat,
+    BioSample
+)
 
 from .serializers import (
     MetadataFileSerializer,
@@ -25,7 +37,8 @@ from .serializers import (
     SequenceMetadataSerializer,
     SequenceSerializer,
     ProjectSerializer,
-    SeqstatSerializer
+    SeqstatSerializer,
+    BioSampleSerializer,
 )
 
 class ProjectViewSet(
@@ -75,6 +88,39 @@ class ProjectViewSet(
         return self.queryset.filter(owner=self.request.user)
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+        
+class BioSampleViewSet(
+    GenericViewSet,  # generic view functionality
+    CreateModelMixin,  # handles POSTs
+    RetrieveModelMixin,  # handles GETs for 1 Company
+    UpdateModelMixin,  # handles PUTs and PATCHes
+    ListModelMixin,  # handles GETs for many Companies
+    DestroyModelMixin,
+):  # handle delete
+    
+    queryset = BioSample.objects.all()
+    serializer_class = BioSampleSerializer
+    pagination_class = CustomPagination
+    
+    filter_backends = (
+        #SearchFilter,
+        BioSampleSearchFilter,
+        OrderingFilter,
+        DjangoFilterBackend
+        
+    )
+    
+    search_fields = BioSampleSearchFilter.Meta.fields
+   
+    #ordering_fields = '__all__'
+    ordering_fields = BioSampleFilter.Meta.fields
+    
+    ordering = ['DateCreated']
+ 
+    def get_queryset(self):
+        return self.queryset.filter(owner=self.request.user)
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 class SeqstatViewSet(
     GenericViewSet,  # generic view functionality
@@ -88,6 +134,8 @@ class SeqstatViewSet(
     queryset = Seqstat.objects.all()
     serializer_class = SeqstatSerializer
     pagination_class = CustomPagination
+    #this define nested field
+    filterset_class = BioSampleFilter
     
     filter_backends = (
         SearchFilter,
@@ -178,8 +226,8 @@ class SequenceViewSet(
     @action(detail=False)
     def metadata_0(self, request):
         seq = (
-          Sequence.objects.filter(seqtype = request.query_params["seqtype"])
-          if "seqtype" in request.GET
+          Sequence.objects.filter(sampleType = request.query_params["sampleType"])
+          if "sampleType" in request.GET
           else Sequence.objects.all()
         )
         

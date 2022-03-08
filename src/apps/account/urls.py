@@ -14,6 +14,7 @@ from .api import (
     login_view,
     logout_view,
     MyTokenObtainPairView,
+  
 
 )
 
@@ -41,5 +42,5 @@ urlpatterns = [
     path('delete', delete_view, name="delete"),
     path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    
+   
 ]

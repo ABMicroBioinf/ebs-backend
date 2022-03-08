@@ -10,7 +10,16 @@ from django_filters.filters import (
 ) 
 from rest_framework.filters import SearchFilter
 import django_filters
-from .models import Assembly, Stats, Mlst, Resistome, Virulome
+from .models import (
+    Assembly, 
+    Stats, 
+    Mlst, 
+    Resistome, 
+    Virulome,
+    Plasmid,
+    TbProfileSummary, 
+    TbProfile
+)
 from gizmos.filter import (
     EbsSearchFilter, 
     NestedFilter, 
@@ -24,7 +33,8 @@ from gizmos.filter import (
 
 class AssemblyFilter(rest_framework.FilterSet):
     seqtype = MultipleCharValueFilter(lookup_expr="in")
-    sequence__project__id = MultipleCharValueFilter(lookup_expr="in")
+    #sequence__project__id = MultipleCharValueFilter(lookup_expr="in")
+    biosample__project__id = MultipleCharValueFilter(lookup_expr="in")
     
     #http://localhost:8000/api/isolate/assembly/?count_range=100,200
     min_count = django_filters.NumberFilter(field_name="count", lookup_expr='gte')
@@ -37,7 +47,7 @@ class AssemblyFilter(rest_framework.FilterSet):
         #equality-based filtering
         fields = [field.name for field in Assembly._meta.fields]
         fields.remove("owner")
-        fields.remove("sequence")
+        #fields.remove("project")
         extra = [
             # "sequence__project__id",
             # "sequence__project__title",
@@ -46,6 +56,8 @@ class AssemblyFilter(rest_framework.FilterSet):
             # "sequence__SequencerModel",
             # "sequence__CenterName",
             # "owner__username",
+            #"biosample__project__id ",
+            "biosample__project__id",
             "min_count",
             "max_count",
             "min_bp",
@@ -77,23 +89,26 @@ class AssemblySearchFilter(SearchFilter):
         #equality-based filtering
         fields = [field.name for field in Assembly._meta.fields]
         fields.remove("owner")
-        fields.remove("sequence")
+        #fields.remove("sequence")
         exclude = [ 'count', 'bp', 'Ns', 'gaps', 'min', 'max', 'avg', 'N50']
         extra = [
-            "sequence__project__id",
+           """  "sequence__project__id",
             "sequence__project__title",
             "sequence__LibrarySource",
             "sequence__LibraryLayout",
             "sequence__SequencerModel",
-            "sequence__CenterName",
+            "sequence__CenterName", """
+            
+             "biosample__project__id",
+           
             "owner__username",
         ]
         fields = fields + extra
         
         
 class StatsFilter(rest_framework.FilterSet):
-    assembly__sequence__project__id = MultipleCharValueFilter(lookup_expr="in")
-    seqtype = MultipleCharValueFilter(lookup_expr="in")
+    assembly__biosample__project__id = MultipleCharValueFilter(lookup_expr="in")
+    assembly__biosample__sampleType= MultipleCharValueFilter(lookup_expr="in")
    
     class Meta:
         model = Stats
@@ -105,12 +120,12 @@ class StatsFilter(rest_framework.FilterSet):
         """ 
         extra = [
             "owner__username",
-            "assembly__sequence__project__id",
-            "assembly__sequence__project__title",
-            "assembly__sequence__LibrarySource",
-            "assembly__sequence__LibraryLayout",
-            "assembly__sequence__SequencerModel",
-            "assembly__sequence__CenterName",
+            "assembly__biosample__project__id",
+            "assembly__biosample__project__title",
+            # "assembly__biosample__LibrarySource",
+            # "assembly__biosample__LibraryLayout",
+            # "assembly__biosample__SequencerModel",
+            # "assembly__biosample__CenterName",
           
         ]
         fields = fields + extra """
@@ -137,22 +152,21 @@ class StatsSearchFilter(SearchFilter):
         
         fields = [
             'id',
-            'seqtype'
+           # 'seqtype'
         ]
         extra = [
              "owner__username",
-            "assembly__sequence__project__id",
-            "assembly__sequence__project__title",
-            "assembly__sequence__LibrarySource",
-            "assembly__sequence__LibraryLayout",
-            "assembly__sequence__SequencerModel",
-            "assembly__sequence__CenterName",
+            "assembly__biosample__project__id",
+            "assembly__biosample__project__title",
+            "assembly__biosample__sampleType",
         ]
         fields = fields + extra
         
 
 class MlstFilter(rest_framework.FilterSet):
-    assembly__sequence__project__id = MultipleCharValueFilter(lookup_expr="in")
+    assembly__biosample__project__id = MultipleCharValueFilter(lookup_expr="in")
+    assembly__biosample__sampleType= MultipleCharValueFilter(lookup_expr="in")
+   
     profile__locus = NestedFilter(
         field_name="profile__locus", lookup_expr="icontains"
     )
@@ -160,7 +174,7 @@ class MlstFilter(rest_framework.FilterSet):
         field_name="profile__alleleId", lookup_expr="iexact"
     )
     
-    seqtype = MultipleCharValueFilter(lookup_expr="in")
+    #seqtype = MultipleCharValueFilter(lookup_expr="in")
     scheme = MultipleCharValueFilter(lookup_expr="in")
     st = MultipleCharValueFilter(lookup_expr="in")
     
@@ -174,18 +188,18 @@ class MlstFilter(rest_framework.FilterSet):
         fields.remove("assembly")
         fields.remove("profile")
     
-        extra = [
+        """   extra = [
             "profile__alleleId",
             "profile__locus",
             "owner__username",
-            "assembly__sequence__project__id",
-            "assembly__sequence__project__title",
-            "assembly__sequence__LibrarySource",
-            "assembly__sequence__LibraryLayout",
-            "assembly__sequence__SequencerModel",
-            "assembly__sequence__CenterName",
+            "assembly__biosample__project__id",
+            "assembly__biosample__project__title",
+            # "assembly__biosample__LibrarySource",
+            # "assembly__biosample__LibraryLayout",
+            # "assembly__biosample__SequencerModel",
+            # "assembly__biosample__CenterName",
         ]
-        fields = fields + extra
+        fields = fields + extra """
         
         #it is possible to override default filters for all the models fields of the same kind using filter_overrides on the Meta class:
         filter_overrides = {
@@ -216,8 +230,8 @@ class MlstSearchFilter(EbsSearchFilter):
 
 
 class ResistomeFilter(rest_framework.FilterSet):
-    assembly__sequence__project__id = MultipleCharValueFilter(lookup_expr="in")
-    
+    assembly__biosample__project__id = MultipleCharValueFilter(lookup_expr="in")
+    assembly__biosample__sampleType= MultipleCharValueFilter(lookup_expr="in")
     profile__geneName = NestedFilter(
         field_name="profile__geneName", lookup_expr="icontains"
     )
@@ -264,12 +278,13 @@ class ResistomeFilter(rest_framework.FilterSet):
             "profile__pctCoverage",
             "profile__pctIdentity",
             "owner__username",
-            "assembly__sequence__project__id",
-            "assembly__sequence__project__title",
-            "assembly__sequence__LibrarySource",
-            "assembly__sequence__LibraryLayout",
-            "assembly__sequence__SequencerModel",
-            "assembly__sequence__CenterName",
+            "assembly__biosample__project__id",
+            "assembly__biosample__project__title",
+            "assembly__biosample__sampleType",
+            # "assembly__biosample__LibrarySource",
+            # "assembly__biosample__LibraryLayout",
+            # "assembly__biosample__SequencerModel",
+            # "assembly__biosample__CenterName",
         ]
         fields = fields + extra
         
@@ -322,24 +337,26 @@ class ResistomeSearchFilter(EbsSearchFilter):
             "profile__dclass",
             "profile__method",
             "owner__username",
-            "assembly__sequence__project__id",
-            "assembly__sequence__project__title",
-            "assembly__sequence__LibrarySource",
-            "assembly__sequence__LibraryLayout",
-            "assembly__sequence__SequencerModel",
-            "assembly__sequence__CenterName",
+            "assembly__biosample__project__id",
+            "assembly__biosample__project__title",
+            "assembly__biosample__sampleType",
+            # "assembly__biosample__LibrarySource",
+            # "assembly__biosample__LibraryLayout",
+            # "assembly__biosample__SequencerModel",
+            # "assembly__biosample__CenterName",
         ]
         fields = fields + extra
 
 class VirulomeFilter(rest_framework.FilterSet):
-    assembly__sequence__project__id = MultipleCharValueFilter(lookup_expr="in")
+    assembly__biosample__project__id = MultipleCharValueFilter(lookup_expr="in")
+    assembly__biosample__sampleType= MultipleCharValueFilter(lookup_expr="in")
     profile__geneName = NestedFilter(
         field_name="profile__geneName", lookup_expr="icontains"
     )
     profile__pctCoverage = NestedFilter(
         field_name="profile__pctCoverage", lookup_expr="icontains"
     ) 
-    seqtype = MultipleCharValueFilter(lookup_expr="in")
+   
     num_found = MultipleCharValueFilter(lookup_expr="in")
     class Meta:
         model = Virulome
@@ -353,12 +370,13 @@ class VirulomeFilter(rest_framework.FilterSet):
             "profile__geneName",
             "profile__pctCoverage",
             "owner__username",
-            "assembly__sequence__project__id",
-            "assembly__sequence__project__title",
-            "assembly__sequence__LibrarySource",
-            "assembly__sequence__LibraryLayout",
-            "assembly__sequence__SequencerModel",
-            "assembly__sequence__CenterName",
+            "assembly__biosample__project__id",
+            "assembly__biosample__project__title",
+            "assembly__biosample__sampleType",
+            # "assembly__biosample__LibrarySource",
+            # "assembly__biosample__LibraryLayout",
+            # "assembly__biosample__SequencerModel",
+            # "assembly__biosample__CenterName",
         ]
         fields = fields + extra
         
@@ -399,16 +417,17 @@ class VirulomeSearchFilter(EbsSearchFilter):
         extra = [
             "profile__geneName",
             "owner__username",
-            "assembly__sequence__project__id",
-            "assembly__sequence__project__title",
-            "assembly__sequence__LibrarySource",
-            "assembly__sequence__LibraryLayout",
-            "assembly__sequence__SequencerModel",
-            "assembly__sequence__CenterName",
+            "assembly__biosample__project__id",
+            "assembly__biosample__project__title",
+            "assembly__biosample__sampleType",
+            # "assembly__biosample__LibrarySource",
+            # "assembly__biosample__LibraryLayout",
+            # "assembly__biosample__SequencerModel",
+            # "assembly__biosample__CenterName",
         ]
         fields = fields + extra
 
-from .models import TbProfileSummary, TbProfile
+
 
 class TbProfileSummaryFilter(rest_framework.FilterSet): 
    sequence__project__id = MultipleCharValueFilter(lookup_expr="in")
@@ -635,5 +654,72 @@ class TbProfileSearchFilter(EbsSearchFilter):
             'dr_variants',
             'other_variants',
             'dr_resistances'
+           
+        ]
+        
+class PlasmidFilter(rest_framework.FilterSet):
+    assembly__biosample__project__id = MultipleCharValueFilter(lookup_expr="in")
+    assembly__biosample__sampleType= MultipleCharValueFilter(lookup_expr="in")
+   
+    profile__contig_id = NestedFilter(
+        field_name="profile__contig_id", lookup_expr="icontains"
+    )
+    profile__size = NestedFilter(
+        field_name="profile__size", lookup_expr="iexact"
+    )
+  
+    profile__mash_nearest_neighbor  = NestedFilter(
+        field_name="profile__mash_nearest_neighbor", lookup_expr="iexact"
+    )
+    profile__mash_neighbor_identification  = NestedFilter(
+        field_name="profile__mash_neighbor_identification", lookup_expr="iexact"
+    )
+    
+    class Meta:
+        model = Plasmid
+        
+        #equality-based filtering
+        fields = [field.name for field in Plasmid._meta.fields]
+        #print(fields)
+        fields.remove("owner")
+        fields.remove("assembly")
+        fields.remove("profile")
+        extra = [
+            "profile__contig_id",
+            "profile__size",
+            "profile__mash_nearest_neighbor",
+            "profile__mash_neighbor_identification",
+            "assembly__biosample__project__id",
+            "assembly__biosample__sampleType",
+        ]
+        fields = fields + extra
+        
+        
+        #it is possible to override default filters for all the models fields of the same kind using filter_overrides on the Meta class:
+        filter_overrides = {
+            models.CharField: {
+                'filter_class': CharFilter,
+                'extra': lambda f: {
+                    'lookup_expr': 'icontains',
+                },
+            },
+            models.IntegerField: {
+                'filter_class': NumberFilter,
+                'extra': lambda f: {
+                    'lookup_expr': 'exact',
+                },
+            },
+        }
+
+class PlasmidSearchFilter(EbsSearchFilter):
+    def __init__(self):
+        self.nested_fields =  [
+            "profile__contig_id",
+            "profile__size",
+            "profile__mash_nearest_neighbor",
+            "profile__mash_neighbor_identification"
+        ]
+        self.nested_cats = [
+            'profile',
            
         ]

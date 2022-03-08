@@ -29,7 +29,7 @@ class Pipeline(models.Model):
 
 class Allele(models.Model):
     locus = models.CharField(max_length=50)
-    alleleId = models.IntegerField()
+    alleleId = models.CharField(max_length=15)
     class Meta:
         abstract = True
 
@@ -37,6 +37,16 @@ class Gene(models.Model):
     geneName = models.CharField(max_length=100)
     pctCoverage = models.FloatField()
 
+    class Meta:
+        abstract = True
+        
+class Plasmidhit(models.Model):
+    contig_id = models.CharField(max_length=50)
+    rep_types = models.CharField(max_length=100)
+    size = models.IntegerField()
+    mash_nearest_neighbor = models.CharField(max_length=100)
+    mash_neighbor_identification = models.CharField(max_length=100)
+    
     class Meta:
         abstract = True
 

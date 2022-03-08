@@ -8,7 +8,8 @@ from .api import (
     ResistomeViewSet,
     VirulomeViewSet,
     TbProfileViewSet,
-    TbProfileSummaryViewSet
+    TbProfileSummaryViewSet,
+    PlasmidViewSet,
 )
 
 app_name = "isolate"
@@ -18,6 +19,7 @@ router.register(r'stats', StatsViewSet, basename='stats')
 router.register(r'mlst', MlstViewSet, basename='mlst')
 router.register(r'resistome', ResistomeViewSet, basename='resistome')
 router.register(r'virulome', VirulomeViewSet, basename='virulome')
+router.register(r'plasmid', PlasmidViewSet, basename='plasmid')
 router.register(r'tbprofile', TbProfileViewSet, basename='tbprofile')
 router.register(r'tbprofilesummary', TbProfileSummaryViewSet, basename='tbprofilesummary')
 urlpatterns = [

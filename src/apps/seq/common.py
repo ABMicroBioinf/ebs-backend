@@ -109,7 +109,7 @@ seq_exp_layouts = (
         ('PAIRED', 'PAIRED'),
         ('SINGLE', 'SINGLE')
     )
-seqtypes = (
+sampleTypes = (
     ('TB', 'mycobacterium tuberculosis'),   
     ('CPO', 'cpo'),
     ('MG', 'metagenome')

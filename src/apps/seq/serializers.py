@@ -4,9 +4,15 @@ from gizmos.mixins import FlattenMixin
 from rest_framework import serializers
 from rest_framework.compat import distinct
 from django.db.models.functions import TruncDate
-#from rest_meets_djongo.serializers import DjongoModelSerializer
 
-from .models import Sequence, SeqFile, MetadataFile, Project, Seqstat
+from .models import (
+    Sequence, 
+    SeqFile, 
+    MetadataFile, 
+    Project, 
+    Seqstat,
+    BioSample
+)
 
 from gizmos.util import ObjectIdField
 
@@ -26,6 +32,23 @@ class ProjectSerializer(serializers.ModelSerializer):
         model = Project
         fields = "__all__"
         #fields = ['id', 'owner', 'title', 'description', 'DateCreated', 'LastUpdate', 'sequences']
+#class ProjectSerializer(DjongoModelSerializer):
+class BioSampleSerializer(serializers.ModelSerializer):
+    _id = ObjectIdField(read_only=True)
+    project__id =  serializers.ReadOnlyField(source='project.id')
+    project__title =  serializers.ReadOnlyField(source='project.title')
+    
+    owner = serializers.ReadOnlyField(source="owner.username")
+    sequences = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='seq:sequence-detail'
+    )
+    
+    class Meta:
+        model = BioSample
+        fields = "__all__"
+        #fields = ['id', 'owner', 'title', 'description', 'DateCreated', 'LastUpdate', 'sequences']
 
 #class ProjectSerializer(DjongoModelSerializer):
 class SeqstatSerializer(serializers.ModelSerializer):
@@ -41,6 +64,9 @@ class SequenceSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source="owner.username")
     project__id = serializers.CharField(source='project.id')
     project__title = serializers.CharField(source='project.title')
+    
+    biosample__id = serializers.CharField(source='biosample.id')
+    biosample__ScientificName = serializers.CharField(source='biosample.ScientificName')
     
     seqstat__id = serializers.CharField(source='seqstat.id')
     seqstat__r_Reads = serializers.IntegerField(source='seqstat.r_Reads')
@@ -89,8 +115,8 @@ class MyFileSerializer(serializers.Serializer):
 class SequenceMetadataSerializer(serializers.Serializer):
     
    
-    seqtype = serializers.SerializerMethodField(
-        "get_distinct_count_for_seqtype"
+    sampleType= serializers.SerializerMethodField(
+        "get_distinct_count_for_sampleType"
     )
     project__id = serializers.SerializerMethodField(
         "get_distinct_count_for_project"
@@ -154,8 +180,8 @@ class SequenceMetadataSerializer(serializers.Serializer):
             "SequencerModel",
         )
         
-    def get_distinct_count_for_seqtype(self, seq):
-        return seq.values("seqtype").annotate(total=Count("seqtype")).order_by("seqtype")
+    def get_distinct_count_for_sampleType(self, seq):
+        return seq.values("sampleType").annotate(total=Count("sampleType")).order_by("sampleType")
     
     def get_distinct_count_for_library_strategy(self, seq):
         return seq.values("LibraryStrategy").annotate(total=Count("LibraryStrategy")).order_by('LibraryStrategy')
@@ -181,9 +207,6 @@ class SequenceMetadataSerializer(serializers.Serializer):
     def get_distinct_count_for_sequencer_model(self, seq):
         return seq.values("SequencerModel").annotate(total=Count("SequencerModel")).order_by('SequencerModel')
     
-    """ def get_distinct_count_for_sequencer_model(self, seq):
-        return seq.values("seqtype", "SequencerModel").annotate(total=Count("SequencerModel")).order_by('SequencerModel')
-     """
     def get_distinct_count_for_project(self, seq):
         return seq.values("project__id").annotate(total=Count("project__id")).order_by('project__id')
     

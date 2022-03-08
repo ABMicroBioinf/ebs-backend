@@ -49,15 +49,15 @@ class IsolateDataset(Dataset):
                 
                 row['id'] = id
                 #row['genome_id'] = id,
-                row['sequence_id'] = id
-                row['seqtype'] = seqtype
+                row['biosample_id'] = id
+                #row['seqtype'] = seqtype
                 row['owner_id'] = ObjectId(self._owner_id)
                 row['DateCreated'] = datetime.now()
                 row['LastUpdate'] = datetime.now()
                 row['Description'] = ""
 
 
-            print(list_contig_stats)
+            #print(list_contig_stats)
         
             try: 
                 self._mongo_db_collection.create_index([("id", pymongo.ASCENDING)], unique=True)
@@ -67,6 +67,29 @@ class IsolateDataset(Dataset):
                 print("An exception occurred ::", e)
                 return "add2collection_assembly_tab: " + filePath + " failed"
     
+    def add2isolate_assembly_sequences(self, filePath, sep):
+        """
+        add new entries into the genome collection
+        """
+        with open(filePath) as file:
+            reader = csv.DictReader(file, delimiter=sep)
+            mylist = list(reader)
+            #Run,BioSample
+            #SRR14338799,SAMN18872758
+           
+            for rowindex, row in enumerate(mylist):
+                row['assembly_id'] = row.pop('BioSample')
+                row['sequence_id'] = row.pop('Run')
+            #print(mylist)
+        
+            try: 
+                self._mongo_db_collection.create_index([("assembly_id", pymongo.ASCENDING)], unique=False)
+                self._mongo_db_collection.insert_many(mylist)
+                return "add2isolate_assembly_sequences: " + filePath + " success"
+            except Exception as e:
+                print("An exception occurred ::", e)
+                return "add2isolate_assembly_sequences: " + filePath + " failed"
+            
     def add2isolate_stats(self, filePath, seqtype):
         """
         add new entries into the genome collection
@@ -80,7 +103,7 @@ class IsolateDataset(Dataset):
             for rowindex, row in enumerate(list_stats):
                 id = row['Sample_id']
                 del row['Sample_id']
-                print(row)
+                #print(row)
                 for x in row:
                     if row[x]:
                         row[x] = int(float(row[x]))
@@ -89,14 +112,14 @@ class IsolateDataset(Dataset):
                 
                 row['id'] = id
                 row['assembly_id'] = id
-                row['seqtype'] = seqtype
+                #row['seqtype'] = seqtype
                 row['owner_id'] = ObjectId(self._owner_id)
                 row['DateCreated'] = datetime.now()
                 row['LastUpdate'] = datetime.now()
                 row['Description'] = ""
 
 
-            print(list_stats)
+            #print(list_stats)
         
             try: 
                 self._mongo_db_collection.create_index([("id", pymongo.ASCENDING)], unique=True)
@@ -215,7 +238,7 @@ class IsolateDataset(Dataset):
                         "id": id,
                         'assembly_id': id,
                         #"sequence_id": id,
-                        "seqtype": seqtype,
+                        #"seqtype": seqtype,
                         "num_found": num_found, 
                         "profile": virulome_list, 
                         "Description": "", 
@@ -282,7 +305,7 @@ class IsolateDataset(Dataset):
                     results.append({
                         "id": preid,
                         'assembly_id': preid,
-                        "seqtype": seqtype,
+                        #"seqtype": seqtype,
                         "num_found": len(my_amrs), 
                         "profile": my_amrs, 
                         "Description": "", 
@@ -298,7 +321,7 @@ class IsolateDataset(Dataset):
             results.append({
                         "id": id,
                         'assembly_id': id,
-                        "seqtype": seqtype,
+                        #"seqtype": seqtype,
                         "num_found": len(my_amrs), 
                         "profile": my_amrs, 
                         "Description": "", 
@@ -349,7 +372,7 @@ class IsolateDataset(Dataset):
                         "id": id,
                         'assembly_id': id,
                         #"sequence_id": id,
-                        "seqtype": seqtype,
+                        #"seqtype": seqtype,
                         "num_found": int(num_found), 
                         "profile": resistome_list, 
                         "Description": "", 
@@ -366,7 +389,7 @@ class IsolateDataset(Dataset):
                     return "parse_denovo_tab: " + filePath + " failed"   
 
             return "success"
-    
+    import re
     def add2mlst_tab(self, filePath, seqtype):
     
         with open(filePath) as file:
@@ -391,6 +414,8 @@ class IsolateDataset(Dataset):
                         index_2 = item.index(')') 
                         locus = item[0:index_1]
                         allele = item[index_1+1:index_2]
+                        #only_allele = re.sub("[^0-9]", "", allele)
+                        #mlst_list.append({'locus': locus, 'alleleId': only_allele})
                         mlst_list.append({'locus': locus, 'alleleId': allele})
                     
                     
@@ -398,7 +423,7 @@ class IsolateDataset(Dataset):
                     "id": id,
                     'assembly_id': id,
                     #'sequence_id': id,
-                    "seqtype": seqtype, 
+                    #"seqtype": seqtype, 
                     "scheme": scheme, 
                     "st": st, 
                     "profile": mlst_list, 
@@ -427,7 +452,7 @@ class IsolateDataset(Dataset):
             
             
             if filename.endswith(".gff"): 
-                print(filename)
+                #print(filename)
                 #fname = ntpath.basename(filename)
                 sampleid = os.path.splitext(filename)[0]
                 
@@ -445,7 +470,7 @@ class IsolateDataset(Dataset):
                             print(segment)
 
                         #print(segment)
-                        print(segment[8])
+                        #print(segment[8])
                         attributesString = re.split(';', segment[8].rstrip())
                         attributes = []
                         id = ""
@@ -465,7 +490,7 @@ class IsolateDataset(Dataset):
                         if not id:
                             id = sampleid + "_" + segment[2] + "_" + str(int(segment[3])-1) + "_" + segment[4]
                         
-                        print("myid=" + id)
+                        #print("myid=" + id)
                         data['id'] = id
                         
                         data['seqid'] = segment[0]
@@ -480,7 +505,7 @@ class IsolateDataset(Dataset):
                          
                         #data['sequence_id'] = sampleid
                         data['assembly_id'] = sampleid
-                        data['seqtype'] = seqtype
+                        #data['seqtype'] = seqtype
                         data['Description'] = ""
                         data['owner_id'] = ObjectId(self._owner_id)
                         data['DateCreated'] = datetime.now()
@@ -493,51 +518,112 @@ class IsolateDataset(Dataset):
                             print("load gff An exception occurred ::", e)
                             return "loading gff False"
     
-
+    def add2isolate_plasmid(self, dir, endwith):
+        selected_fields = (
+            "sample_id", 
+            "molecule_type",
+            "contig_id",
+             "size",
+             "rep_type(s)",
+             "mash_nearest_neighbor",
+             "mash_neighbor_identification"
+             
+        )
+        results = []
+        #ERR036228.bracken.output.txt
+        for filename in os.listdir(dir):
+            if filename.endswith(endwith): 
+                plasmid_list = []
+                id = ""
+                count = 0
+                filePath = os.path.join(dir, filename)
+                with open(filePath) as file:
+                    reader = csv.DictReader(file, delimiter="\t")
+                    lines = list(reader)
+                    for rowindex, row in enumerate(lines):
+                        mytype = 'chromosome'
+                        #print(row)
+                        for key, value in row.copy().items():
+                            if (key not in selected_fields):
+                                del row[key]
+                            if key == 'molecule_type':
+                                mytype = row[key]
+                                del row[key]
+                            if key == 'sample_id':
+                                id = row[key]
+                                del row[key]
+                        row['rep_types'] = row.pop('rep_type(s)') 
+                        #print(row)
+                        if mytype != 'plasmid':
+                            continue
+                        count += 1
+                        plasmid_list.append(row)
+                
+                results.append({
+                    "id": id,
+                    'assembly_id': id,
+                    'num_found': count,
+                    "profile": plasmid_list, 
+                    "Description": "", 
+                    "DateCreated": datetime.now(), 
+                    "LastUpdate": datetime.now(),
+                    "owner_id": ObjectId(self._owner_id)
+                    })   
+        try: 
+            self._mongo_db_collection.create_index([("id", pymongo.ASCENDING)], unique=True)
+            self._mongo_db_collection.insert_many(results)
+            return "add2isolate_plasmid: " + filePath + " success"
+        except Exception as e:
+            print("An exception occurred ::", e)
+            return "add2isolate_plasmid: " + filePath + " failed"   
+        return "success"
+        
             
 def main():
-    #add entries to genome collection
-    # genome = IsolateDataset("ebsdb", "isolate_assembly", "60d4dfba7109403cf2d20636")
-    # genome.add2collection_denovo_tab("data/isolate/denovo.tab", "TB")
-
-    # virulome = IsolateDataset("ebsdb", "isolate_virulome", "60d4dfba7109403cf2d20636")
-    # virulome.add2collection_virulome_tab("data/isolate/virulome.tab", "TB")
-
-    # resistome = IsolateDataset("ebsdb", "isolate_resistome", "60d4dfba7109403cf2d20636")
-    # resistome.add2collection_resistome_tab("data/isolate/resistome.tab", "TB")
-
+    
+    # assembly = IsolateDataset("ebsdb", "isolate_assembly", "60d4dfba7109403cf2d20636")
+    # assembly.add2collection_assembly_tab("data/tb/Report_biosampleid/assembly_stats.tsv", "TB")
+    # assembly.add2collection_assembly_tab("data/cpo/PRJNA640134/Report_biosampleid/assembly_stats.tsv", "CPO")
+    # assembly.add2collection_assembly_tab("data/cpo/PRJNA725227/Report_biosampleid/assembly_stats.tsv", "CPO") 
+    # assembly.add2collection_assembly_tab("data/cpo/PRJEB30134/Report_long/assembly_stats.tsv", "CPO") 
+    
+    # assembly_sequences = IsolateDataset("ebsdb", "isolate_assembly_sequences", "60d4dfba7109403cf2d20636")
+    # assembly_sequences.add2isolate_assembly_sequences("data/cpo/PRJNA725227/Report_biosampleid/cpo_runid2biosampleid_PRJNA725227.csv", ",")
+    # assembly_sequences.add2isolate_assembly_sequences("data/cpo/PRJNA640134/Report_biosampleid/runid2biosampleid_PRJNA640134.csv", ",")
+    # assembly_sequences.add2isolate_assembly_sequences("data/tb/Report_biosampleid/tb_runid2biosampleid.csv", ",")
+    # assembly_sequences.add2isolate_assembly_sequences("data/cpo/PRJEB30134//runid2biosampleid.csv", ",")
+    
     # mlst = IsolateDataset("ebsdb", "isolate_mlst", "60d4dfba7109403cf2d20636")
-    # mlst.add2collection_mlst_tab("data/isolate/mlst.tab", "TB")
-    # annotation = IsolateDataset("ebsdb", "isolate_annotation", "60d4dfba7109403cf2d20636")
-    # annotation.add2collection_parse_gff("data/isolate/gff", "TB")
+    # mlst.add2mlst_tab("data/tb/Report_biosampleid/mlst.tsv", "TB")
+    # mlst.add2mlst_tab("data/cpo/PRJNA725227/Report_biosampleid/mlst.tsv", "CPO")
+    # mlst.add2mlst_tab("data/cpo/PRJNA640134/Report_biosampleid/mlst.tsv", "CPO")
+    # mlst.add2mlst_tab("data/cpo/PRJEB30134/Report_long/mlst.tsv", "CPO")
+    
+    # resistome = IsolateDataset("ebsdb", "isolate_resistome", "60d4dfba7109403cf2d20636")
+    # resistome.parse_amrfinderplus("data/tb/Report_biosampleid/amrfinderplus.tsv", "TB")
+    # resistome.parse_amrfinderplus("data/cpo/PRJNA640134/Report_biosampleid/amrfinderplus.tsv", "CPO")
+    # resistome.parse_amrfinderplus("data/cpo/PRJNA725227/Report_biosampleid/amrfinderplus.tsv", "CPO")
+    # resistome.parse_amrfinderplus("data/cpo/PRJEB30134/Report_long/amrfinderplus.tsv", "CPO")
     
     
-    genome = IsolateDataset("ebsdb", "isolate_assembly", "60d4dfba7109403cf2d20636")
-    genome.add2collection_assembly_tab("data/tb/Report/assembly_stats.tsv", "TB")
-    genome.add2collection_assembly_tab("data/cpo/PRJNA640134/Report/assembly_stats.tsv", "CPO")
-    genome.add2collection_assembly_tab("data/cpo/PRJNA725227/Report/assembly_stats.tsv", "CPO")
+    # virulome = IsolateDataset("ebsdb", "isolate_virulome", "60d4dfba7109403cf2d20636")
+    # virulome.add2collection_virulome_tab("data/tb/Report_biosampleid/vf.tsv", "TB")
+    # virulome.add2collection_virulome_tab("data/cpo/PRJNA640134/Report_biosampleid/vf.tsv", "CPO")
+    # virulome.add2collection_virulome_tab("data/cpo/PRJNA725227/Report_biosampleid/vf.tsv", "CPO")
+    # virulome.add2collection_virulome_tab("data/cpo/PRJEB30134/Report_long/vf.tsv", "CPO")
     
-    mlst = IsolateDataset("ebsdb", "isolate_mlst", "60d4dfba7109403cf2d20636")
-    mlst.add2mlst_tab("data/tb/Report/mlst.tsv", "TB")
-    mlst.add2mlst_tab("data/cpo/PRJNA725227/Report/mlst.tsv", "CPO")
-    mlst.add2mlst_tab("data/cpo/PRJNA640134/Report/mlst.tsv", "CPO")
+    # stats = IsolateDataset("ebsdb", "isolate_stats", "60d4dfba7109403cf2d20636")
+    # stats.add2isolate_stats("data/tb/Report_biosampleid/bakta.tsv", "TB")
+    # stats.add2isolate_stats("data/cpo/PRJNA640134/Report_biosampleid/bakta.tsv", "CPO")
+    # stats.add2isolate_stats("data/cpo/PRJNA725227/Report_biosampleid/bakta.tsv", "CPO")
+    #stats.add2isolate_stats("data/cpo/PRJEB30134/Report_long/bakta.tsv", "CPO")
     
-    resistome = IsolateDataset("ebsdb", "isolate_resistome", "60d4dfba7109403cf2d20636")
-    resistome.parse_amrfinderplus("data/tb/Report/amrfinderplus.tsv", "TB")
-    resistome.parse_amrfinderplus("data/cpo/PRJNA640134/Report/amrfinderplus.tsv", "CPO")
-    resistome.parse_amrfinderplus("data/cpo/PRJNA725227/Report/amrfinderplus.tsv", "CPO")
-    
-    virulome = IsolateDataset("ebsdb", "isolate_virulome", "60d4dfba7109403cf2d20636")
-    virulome.add2collection_virulome_tab("data/tb/Report/vf.tsv", "TB")
-    virulome.add2collection_virulome_tab("data/cpo/PRJNA640134/Report/vf.tsv", "CPO")
-    virulome.add2collection_virulome_tab("data/cpo/PRJNA725227/Report/vf.tsv", "CPO")
-    
-    stats = IsolateDataset("ebsdb", "isolate_stats", "60d4dfba7109403cf2d20636")
-    stats.add2isolate_stats("data/tb/Report/bakta.tsv", "TB")
-    stats.add2isolate_stats("data/cpo/PRJNA640134/Report/bakta.tsv", "CPO")
-    stats.add2isolate_stats("data/cpo/PRJNA725227/Report/bakta.tsv", "CPO")
-    
-    
+    plasmid = IsolateDataset("ebsdb", "isolate_plasmid", "60d4dfba7109403cf2d20636")
+    plasmid.add2isolate_plasmid("data/cpo/PRJEB30134/Report_long/Plasmid/mobsuite", ".contig_report.txt")
+    plasmid.add2isolate_plasmid("data/cpo/PRJNA640134/Report/Plasmid/mobsuite", ".contig_report.txt.runid2biosampleid.txt")
+    plasmid.add2isolate_plasmid("data/cpo/PRJNA725227/Report/Plasmid/mobsuite", ".contig_report.txt.runid2biosampleid.txt")
+    plasmid.add2isolate_plasmid("data/tb/Report/Plasmid/mobsuite", ".contig_report.txt.runid2biosampleid.txt")
+     
 
 if __name__ == '__main__':
   main()

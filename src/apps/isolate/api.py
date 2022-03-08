@@ -1,5 +1,11 @@
 from .filters import TbProfileFilter, TbProfileSummaryFilter, TbProfileSearchFilter
-from .serializers import TbProfileSerializer, TbProfileSummarySerializer, TbProfileSummaryMetadataSerializer
+from .serializers import (
+    TbProfileSerializer, 
+    TbProfileSummarySerializer, 
+    TbProfileSummaryMetadataSerializer,
+    PlasmidMetadataSerializer,
+    PlasmidSerializer
+)
 from .models import TbProfile, TbProfileSummary
 from rest_framework.decorators import action
 from rest_framework import status
@@ -16,7 +22,7 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.filters import OrderingFilter, SearchFilter
 from django_filters import rest_framework as filters
 from gizmos.pagination import CustomPagination
-from .models import Assembly, Stats, Virulome, Mlst, Resistome
+from .models import Assembly, Stats, Virulome, Mlst, Resistome, Plasmid
 from .filters import (
     AssemblyFilter,
     AssemblySearchFilter,
@@ -27,7 +33,10 @@ from .filters import (
     ResistomeFilter,
     ResistomeSearchFilter,
     VirulomeFilter,
-    VirulomeSearchFilter
+    VirulomeSearchFilter,
+    PlasmidFilter,
+    PlasmidSearchFilter
+    
 
 )
 
@@ -71,22 +80,11 @@ class AssemblyViewSet(GenericViewSet,  # generic view functionality
     search_fields = AssemblySearchFilter.Meta.fields
     print(search_fields)
     
-    ordering = ['sequence__project__id']
-    
-    """ def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-      
-      def get(self, request, format=None, **kwargs):
-        dict_params = dict(request.query_params.lists())
-        filter = AssemblyFilter(dict_params, queryset=Assembly.objects.all())
-        return filter.queryset """
 
     def get_queryset(self):
         return self.queryset.filter(owner=self.request.user)
     
     def perform_create(self, serializer):
-        # print("I am in perform_create...................................")
-        # print(self.queryset)
         serializer.save(owner=self.request.user)
 
        # https://stackoverflow.com/questions/58855861/dynamically-set-filterset-class-in-django-listview
@@ -119,8 +117,10 @@ class StatsViewSet(GenericViewSet,  # generic view functionality
     )
 
     search_fields = StatsSearchFilter.Meta.fields
-    ordering = ['assembly__sequence__project__id']
     
+   
+    #ordering = ['assembly__sequence__project__id']
+    #ordering = ['assembly__biosample__project__id']
   # This method should be overriden
     # if we dont want to modify query set based on current instance attributes
     def get_queryset(self):
@@ -179,7 +179,9 @@ class MlstViewSet(GenericViewSet,  # generic view functionality
     print(MlstFilter.Meta.fields)
     search_fields = MlstFilter.Meta.fields
     
-    ordering = ['assembly__sequence__project__id']
+    #ordering_fields = MlstFilter.Meta.fields
+    #
+    
     # This method should be overriden
     # if we dont want to modify query set based on current instance attributes
     def get_queryset(self):
@@ -224,7 +226,7 @@ class ResistomeViewSet(GenericViewSet,  # generic view functionality
 
     queryset = Resistome.objects.all()
     serializer_class = ResistomeSerializer
-    #filterset_class = ResistomeFilter
+    filterset_class = ResistomeFilter
     pagination_class = CustomPagination
     filter_backends = (
         #SearchFilter,
@@ -236,7 +238,6 @@ class ResistomeViewSet(GenericViewSet,  # generic view functionality
     #print(ResistomeSearchFilter.Meta.fields)
     search_fields = ResistomeSearchFilter.Meta.fields
     
-    ordering = ['assembly__sequence__project__id']
 
     # This method should be overriden
     # if we dont want to modify query set based on current instance attributes
@@ -282,7 +283,7 @@ class VirulomeViewSet(GenericViewSet,  # generic view functionality
     # print("equaity based search fields: *******************************************")
     # print(VirulomeSearchFilter.Meta.fields)
     search_fields = VirulomeSearchFilter.Meta.fields
-    ordering = ['assembly__sequence__project__id']
+    #ordering = ['assembly__sequence__project__id']
 
     # This method should be overriden
     # if we dont want to modify query set based on current instance attributes
@@ -301,6 +302,50 @@ class VirulomeViewSet(GenericViewSet,  # generic view functionality
         self.filter = self.filterset_class(dict_params, queryset=qs)
         viru = self.filter.qs
         serializer = VirulomeMetadataSerializer(viru)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class PlasmidViewSet(GenericViewSet,  # generic view functionality
+                  CreateModelMixin,  # handles POSTs
+                  RetrieveModelMixin,  # handles GETs for 1 Company
+                  UpdateModelMixin,  # handles PUTs and PATCHes
+                  ListModelMixin,  # handles GETs for many Companies
+                  DestroyModelMixin,):  # handle delete
+    queryset = Plasmid.objects.all()
+    serializer_class = PlasmidSerializer
+    filterset_class = PlasmidFilter
+    pagination_class = CustomPagination
+
+    filter_backends = (
+        # SearchFilter,
+        PlasmidSearchFilter,
+        OrderingFilter,
+        filters.DjangoFilterBackend,
+    )
+
+    # filterset_fields define equaity based searching, this is defined in SequenceFilter class
+    print("equaity based search fields: *******************************************")
+    print(PlasmidFilter.Meta.fields)
+    search_fields = PlasmidFilter.Meta.fields
+   
+    # This method should be overriden
+    # if we dont want to modify query set based on current instance attributes
+    def get_queryset(self):
+        print(self.queryset)
+        return self.queryset.filter(owner=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+       # https://stackoverflow.com/questions/58855861/dynamically-set-filterset-class-in-django-listview
+    @action(detail=False)
+    def metadata(self, request):
+        qs = super().get_queryset()
+        self.filterset_class = PlasmidFilter
+        dict_params = dict(request.query_params.lists())
+        self.filter = self.filterset_class(dict_params, queryset=qs)
+
+        plasmid = self.filter.qs
+        serializer = PlasmidMetadataSerializer(plasmid)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 

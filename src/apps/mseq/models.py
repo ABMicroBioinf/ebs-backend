@@ -2,9 +2,7 @@ from djongo import models
 from django.conf import settings
 from django.utils.text import slugify
 from apps.account.models import Account
-#from apps.isolate.gbase.models import Assembly
 from .common import *
-from apps.common.models import SeqStat
 
 class Project(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
@@ -14,23 +12,71 @@ class Project(models.Model):
         Account, related_name="mprojects", on_delete=models.CASCADE, null=True)
     DateCreated = models.DateTimeField(
         verbose_name='date created', auto_now=True)
-    LastUpdate = models.DateTimeField(verbose_name='last update', auto_now=True)
+    LastUpdate = models.DateTimeField(verbose_name='last update', auto_now=True) 
     
+    def __str__(self):
+        return str(self.id)
+    
+class BioSample(models.Model):
+    id = models.CharField(primary_key=True, max_length=100)
+    sampleType = models.CharField(max_length=100, choices=sampleTypes, null=True, blank=True) # WGS
+    ScientificName = models.CharField(max_length=100)
+    description = models.TextField(null=True, blank=True)
+    owner = models.ForeignKey(
+        Account, related_name="mbiosamples", on_delete=models.CASCADE, null=True)
+    DateCreated = models.DateTimeField(
+        verbose_name='date created', auto_now=True)
+    LastUpdate = models.DateTimeField(verbose_name='last update', auto_now=True)
+    project = models.ForeignKey(
+        Project, related_name="biosamples", on_delete=models.CASCADE, null=True)
         
     def __str__(self):
         return str(self.id)
 
+class Seqstat(models.Model):
+    id = models.CharField(primary_key=True, max_length=100)
+    r_Reads = models.IntegerField(null=True, blank=True)
+    r_Yield = models.IntegerField(null=True, blank=True)
+    r_GeeCee = models.FloatField(null=True, blank=True)
+    r_MinLen = models.IntegerField(null=True, blank=True)
+    r_AvgLen = models.IntegerField(null=True, blank=True)
+    r_MaxLen = models.IntegerField(null=True, blank=True)
+    r_AvgQual = models.FloatField(null=True, blank=True)
+    r_ErrQual = models.FloatField(null=True, blank=True)
+    r_Ambiguous = models.FloatField(null=True, blank=True)
+    
+    q_Reads = models.IntegerField(null=True, blank=True)
+    q_Yield = models.IntegerField(null=True, blank=True)
+    q_GeeCee = models.FloatField(null=True, blank=True)
+    q_MinLen = models.IntegerField(null=True, blank=True)
+    q_AvgLen = models.IntegerField(null=True, blank=True)
+    q_MaxLen = models.IntegerField(null=True, blank=True)
+    q_AvgQual = models.FloatField(null=True, blank=True)
+    q_ErrQual = models.FloatField(null=True, blank=True)
+    q_Ambiguous = models.FloatField(null=True, blank=True)
+    
+    owner = models.ForeignKey(
+        Account, related_name="mseqstats", on_delete=models.CASCADE, null=True)
+    objects = models.DjongoManager()
+    
+    def __str__(self):
+        return str(self.id)
+    
 class Sequence(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
-    #Projectid = models.CharField(max_length=100)
     project = models.ForeignKey(
-        Project, related_name="msequences", on_delete=models.CASCADE, null=True)
-    # assembly = models.ForeignKey(
-    #     Assembly, related_name="sequences", on_delete=models.CASCADE, null=True)
-
+        Project, related_name="sequences", on_delete=models.CASCADE, null=True)
+    biosample = models.ForeignKey(
+        BioSample, related_name="sequences", on_delete=models.CASCADE, null=True)
+    seqstat = models.OneToOneField(
+        Seqstat,
+        on_delete=models.CASCADE,
+       
+    )
+   
     TaxID = models.IntegerField()
+    sampleType = models.CharField(max_length=100, choices=sampleTypes, null=True, blank=True) # WGS
     ScientificName = models.CharField(max_length=100)
-    seqtype = models.CharField(max_length=100, choices=seqtypes, null=True, blank=True) # WGS
     Experiment = models.CharField(max_length=100)
     LibraryName = models.CharField(max_length=100)
     LibraryStrategy = models.CharField(max_length=100, choices=seq_exp_strategies, null=True, blank=True) # WGS
@@ -41,24 +87,13 @@ class Sequence(models.Model):
     # InsertDev = models.FloatField()
     Platform = models.CharField(max_length=100, choices=seq_exp_platforms, null=True, blank=True) #illumina MiSeq
     SequencerModel = models.CharField(max_length=100, null=True, blank=True)
-    
-    SampleName = models.CharField(max_length=100)
     CenterName = models.CharField(max_length=100)
-    
-    taxName_1 = models.CharField(max_length=100, null=True, blank=True)
-    taxFrac_1 = models.FloatField(null=True, blank=True)
-    taxName_2 = models.CharField(max_length=100, null=True, blank=True)
-    taxFrac_2 = models.FloatField(null=True, blank=True)
-    taxName_3 = models.CharField(max_length=100, null=True, blank=True)
-    taxFrac_3 = models.FloatField(null=True, blank=True)
-    taxName_4 = models.CharField(max_length=100, null=True, blank=True)
-    taxFrac_4 = models.FloatField(null=True, blank=True)
-    
+   
 
     owner = models.ForeignKey(
         Account, related_name="msequences", on_delete=models.CASCADE, null=True)
 
-    RawStats = models.EmbeddedField(
+    """  RawStats = models.EmbeddedField(
         model_container=SeqStat,
         null=True,
         blank= True     
@@ -67,7 +102,7 @@ class Sequence(models.Model):
         model_container=SeqStat,    
         null=True,
         blank= True
-    )
+    ) """
     DateCreated = models.DateTimeField(
         verbose_name='date created', auto_now=True)
     LastUpdate = models.DateTimeField(verbose_name='last update', auto_now=True)

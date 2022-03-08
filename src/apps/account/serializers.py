@@ -4,7 +4,7 @@ from gizmos.util import ObjectIdField
 
 class AccountSerializer(serializers.ModelSerializer):
     _id = ObjectIdField(read_only=True)
-    
+     
     def create(self, validated_data):
         password = validated_data.pop('password', None)
         instance = self.Meta.model(**validated_data)
@@ -25,7 +25,7 @@ class AccountSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Account
-        fields = ('email', 'username', 'password')
+        fields = ('email', 'username', 'password', '_id', 'projects', 'biosamples')
         extra_kwargs = {
             'password': {'write_only': True}
         }

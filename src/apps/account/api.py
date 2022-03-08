@@ -11,6 +11,10 @@ from rest_framework.parsers import JSONParser,FormParser, MultiPartParser
 from .models import Account
 from .serializers import AccountSerializer, MyTokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.decorators import action
+
+
+
 
 @api_view(['POST', ])
 @permission_classes([AllowAny, ])
@@ -143,3 +147,5 @@ def logout_view(request):
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+    
+ 

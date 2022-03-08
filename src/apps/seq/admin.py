@@ -8,8 +8,7 @@ class SequenceAdmin(admin.ModelAdmin):
 	list_display = [
         "id",
         "Experiment",
-        "SampleName",
-        #"Projectid",
+        "project",
         "owner",
      
         "DateCreated"

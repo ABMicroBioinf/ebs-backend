@@ -7,7 +7,11 @@ from django_filters.filters import (
     NumberFilter,    
 )
 from rest_framework.filters import SearchFilter
-from .models import Sequence
+from .models import (
+    Sequence,
+    BioSample,
+)
+
 from gizmos.filter import (
     EbsSearchFilter, 
     NestedFilter,
@@ -15,11 +19,72 @@ from gizmos.filter import (
     EbsOrderingFilter
 )
 from typing import Tuple, List
+
+class BioSampleFilter(rest_framework.FilterSet):
+    
+    project__id = MultipleCharValueFilter(lookup_expr="in")
+    project__title = MultipleCharValueFilter(lookup_expr="icontains")
+    DateCreated  = MultipleCharValueFilter(lookup_expr="in")
+    LastUpdate = MultipleCharValueFilter(lookup_expr="in")
+    
+
+    class Meta:
+        model = BioSample
+        
+        #equality-based filtering
+        fields = [field.name for field in BioSample._meta.fields]
+        # fields.remove("owner")
+        # fields.remove("project")
+        extra = [
+            "project__id",
+            "project__title",
+            "owner__username",
+        ]
+        fields = fields + extra
+        
+        #it is possible to override default filters for all the models fields of the same kind using filter_overrides on the Meta class:
+        filter_overrides = {
+            models.CharField: {
+                'filter_class': CharFilter,
+                'extra': lambda f: {
+                'lookup_expr': 'icontains',
+                },
+            },
+            models.IntegerField: {
+                'filter_class': NumberFilter,
+                'extra': lambda f: {
+                    'lookup_expr': 'exact',
+                },
+            },
+        }
+
+class BioSampleSearchFilter(SearchFilter):
+   
+    class Meta:
+        model = BioSample
+        
+        #equality-based filtering
+        fields = [field.name for field in BioSample._meta.fields]
+        # fields.remove("owner")
+        # fields.remove("project")
+        
+        extra = [
+           "project__id",
+            "project__title",
+            "owner__username"
+        ]
+        fields = fields + extra
+        
+
 #define equaity based filter
 class SequenceFilter(rest_framework.FilterSet):
     
     project__id = MultipleCharValueFilter(lookup_expr="in")
     project__title = MultipleCharValueFilter(lookup_expr="icontains")
+    
+    biosample__id = MultipleCharValueFilter(lookup_expr="in")
+    biosample__ScientificName = MultipleCharValueFilter(lookup_expr="icontains")
+    
     Experiment = MultipleCharValueFilter(lookup_expr="in")
     LibraryName = MultipleCharValueFilter(lookup_expr="in")
     LibraryStrategy = MultipleCharValueFilter(lookup_expr="in")
@@ -29,8 +94,7 @@ class SequenceFilter(rest_framework.FilterSet):
     Platform = MultipleCharValueFilter(lookup_expr="in")
     SequencerModel = MultipleCharValueFilter(lookup_expr="in")
     CenterName = MultipleCharValueFilter(lookup_expr="in")
-    seqtype = MultipleCharValueFilter(field_name ="seqtype", lookup_expr="in")
-    #seqtype = CharFilter(lookup_expr="in")
+    sampleType = MultipleCharValueFilter(field_name ="sampleType", lookup_expr="in")
     DateCreated  = MultipleCharValueFilter(lookup_expr="in")
     LastUpdate = MultipleCharValueFilter(lookup_expr="in")
     
@@ -45,6 +109,8 @@ class SequenceFilter(rest_framework.FilterSet):
         extra = [
             "project__id",
             "project__title",
+            "biosample__id",
+            "biosample__ScientificName",
             "owner__username",
             "seqstat__r_Reads",
              "seqstat__r_GeeCee",
@@ -96,6 +162,8 @@ class SequenceSearchFilter(SearchFilter):
         extra = [
            "project__id",
             "project__title",
+            "biosample__id",
+            "biosample__ScientificName",
             "owner__username"
         ]
         fields = fields + extra

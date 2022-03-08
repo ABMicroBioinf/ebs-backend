@@ -11,6 +11,7 @@ from bson import ObjectId
 from bson.errors import InvalidId
 from rest_framework import serializers
 
+from django.utils.encoding import smart_text
 class ObjectIdField(serializers.Field):
     
     """ Serializer field for Djongo ObjectID fields """

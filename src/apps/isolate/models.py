@@ -4,7 +4,7 @@ from django.conf import settings
 from django.db.models.signals import pre_save
 from django.utils.text import slugify
 from apps.account.models import Account
-from apps.seq.models import Sequence
+from apps.seq.models import Sequence, BioSample
 from apps.common.models import (
     Allele,
     TagValue,
@@ -12,20 +12,17 @@ from apps.common.models import (
     Variant,
     Gene,
     Resistance,
-    Amr
+    Amr,
+    Plasmidhit,
 )
 
 
 class Assembly(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
-    # sequence = models.ForeignKey(
-    #     Sequence, related_name="assemblies", on_delete=models.CASCADE, null=True)
-    sequence = models.OneToOneField(
-        Sequence,
-        on_delete=models.CASCADE,
-        #primary_key=True,
-    )
-    seqtype = models.CharField(max_length=100, null=True, blank=True)
+    sequences = models.ManyToManyField(to=Sequence, related_name='assemblies', blank=True)
+    biosample = models.ForeignKey(
+        BioSample, related_name="assemblies", on_delete=models.CASCADE, null=True)
+   
     count = models.IntegerField(null=True, blank=True)
     bp = models.IntegerField(null=True, blank=True)
     Ns = models.IntegerField(null=True, blank=True)
@@ -42,7 +39,7 @@ class Assembly(models.Model):
     LastUpdate = models.DateTimeField(
         verbose_name='last update', auto_now=True)
     
-    Description = models.TextField()
+    description = models.TextField(null=True, blank=True)
      
     objects = models.DjongoManager()
     
@@ -54,8 +51,9 @@ class Stats(models.Model):
     assembly = models.OneToOneField(
         Assembly,
         on_delete=models.CASCADE,
+       
     )
-    seqtype = models.CharField(max_length=100, null=True, blank=True)
+   
     CDS = models.IntegerField(null=True, blank=True)
     CRISPR = models.IntegerField(null=True, blank=True)
     ncRNA = models.IntegerField(null=True, blank=True)
@@ -82,8 +80,12 @@ class Stats(models.Model):
 
 class Mlst(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
-    seqtype = models.CharField(max_length=100)
+   
     scheme = models.CharField(max_length=100)
+    assembly = models.OneToOneField(
+        Assembly,
+        on_delete=models.CASCADE,
+    )
     #st = models.IntegerField(null=True, blank=True)
     st =  models.CharField(max_length=10)
     profile = models.ArrayField(
@@ -95,10 +97,7 @@ class Mlst(models.Model):
         verbose_name='last update', auto_now=True)
     
     Description = models.TextField()
-    assembly = models.OneToOneField(
-        Assembly,
-        on_delete=models.CASCADE,
-    )
+   
     owner = models.ForeignKey(
         Account, related_name="mlsts", on_delete=models.CASCADE)
     
@@ -114,7 +113,7 @@ class Resistome(models.Model):
         Assembly,
         on_delete=models.CASCADE,
     )
-    seqtype = models.CharField(max_length=100)
+    
     num_found = models.IntegerField()
     profile = models.ArrayField(
         model_container = Amr
@@ -139,7 +138,7 @@ class Virulome(models.Model):
         Assembly,
         on_delete=models.CASCADE,
     )
-    seqtype = models.CharField(max_length=100)
+    
     num_found = models.IntegerField()
     profile = models.ArrayField(
         model_container = Gene
@@ -156,6 +155,34 @@ class Virulome(models.Model):
     
     def __str__(self):
         return str(self.id)
+
+
+
+        
+class Plasmid(models.Model):
+    id = models.CharField(primary_key=True, max_length=100)
+    assembly = models.OneToOneField(
+        Assembly,
+        on_delete=models.CASCADE,
+    )
+    
+    num_found = models.IntegerField()
+    profile = models.ArrayField(
+        model_container = Plasmidhit
+    )
+    owner = models.ForeignKey(
+        Account, related_name="plasmids", on_delete=models.CASCADE)
+    DateCreated = models.DateTimeField(
+        verbose_name='date created', auto_now=True)
+    LastUpdate = models.DateTimeField(
+        verbose_name='last update', auto_now=True)
+    Description = models.TextField()
+
+    objects = models.DjongoManager()
+    
+    def __str__(self):
+        return str(self.id)
+
 
 
 
