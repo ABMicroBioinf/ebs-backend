@@ -104,7 +104,7 @@ sudo service mongod start
 
 
 ################# deploy 
-rsync  -av --exclude '.git' --exclude 'examples' --exclude '.venv' ebs-backend xdong@itappgenwebd02.ucalgary.ca:/data/web
+rsync  -av --exclude '.git' --exclude 'examples' --exclude '.venv' ebs-backend yourhost:/data/web
 
 cd /data/web/ebs-backend/src
 python3 -m venv .venv
